@@ -417,7 +417,1216 @@
                     }
                   }
                 ]
+              },
+              {
+                "id": "net.mcreator:academy_core:1.0.0",
+                "name": "AcademyCore",
+                "type": "ForgeMod",
+                "required": {
+                  "value": true
+              },
+                "artifact": {
+                    "size": 1538139,
+                    "MD5": "dff04b2dd2b7adc2a00d0ed251d551a0",
+                    "url": "http://94.23.44.138/download/mods/academy_core-1.0.0.jar"
+                }
+              },
+              {
+                "id": "squeek.appleskin:appleskin:2.5.1",
+                "name": "appleskin",
+                "type": "ForgeMod",
+                "required": {
+                  "value": true
+              },
+                "artifact": {
+                    "size": 47428,
+                    "MD5": "dae63cea9c951dda542a4005ceef3953",
+                    "url": "http://94.23.44.138/download/mods/appleskin-forge-mc1.20.1-2.5.1.jar"
+                }
+            },
+            {
+              "id": "com.starfish_studios:another_furniture:1.20.1-3.0.1",
+              "name": "AnotherFurniture",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 2746864,
+                  "MD5": "85653aaf197fa4e74c1e06c05e494f29",
+                  "url": "http://94.23.44.138/download/mods/another_furniture-forge-1.20.1-3.0.1.jar"
               }
+            },
+            {
+              "id": "data:architects_palette:A1.20.1-1.3.6.1",
+              "name": "ArchitectsPalette",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 2538637,
+                  "MD5": "0622fec812ffb8d1fd777788198b9322",
+                  "url": "http://94.23.44.138/download/mods/Architects-Palette-1.20.1-1.3.6.1.jar"
+              }
+            },
+            {
+              "id": "dev:architectury:9.1.13",
+              "name": "Architectury",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 577285,
+                  "MD5": "147508b30e41ae2c1608d9e6788b2672",
+                  "url": "http://94.23.44.138/download/mods/architectury-9.1.13-forge.jar"
+              }
+            },
+            {
+              "id": "bagu_chan:bagus_lib:1.20.1-4.3.0",
+              "name": "Bagus Lib",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 88317,
+                  "MD5": "e36eb8b23d06d97827d4cdcf5d27e7af",
+                  "url": "http://94.23.44.138/download/mods/bagus_lib-1.20.1-4.3.0.jar"
+              }
+            },
+            {
+              "id": "baguchan:bagus_cosmetic:1.20.1-0.2.3",
+              "name": "Bagus Cosmetic",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 43387,
+                  "MD5": "db4644724a9c4941ea3b25ff03007881",
+                  "url": "http://94.23.44.138/download/mods/BagusCosmetic-1.20.1-0.2.3.jar"
+              }
+            },
+            {
+              "id": "io.socol:betterthirdperson:1.20-1.9.0",
+              "name": "BetterThirdPerson",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 61525,
+                  "MD5": "298625b2f4567069bcfbea3dceba294d",
+                  "url": "http://94.23.44.138/download/mods/BetterThirdPerson-Forge-1.20-1.9.0.jar"
+              }
+            },
+            {
+              "id": "com.tterrag:blur:3.1.1",
+              "name": "Blur",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 177259,
+                  "MD5": "1eb8a13698f8d4204094b5ea189c31d3",
+                  "url": "http://94.23.44.138/download/mods/blur-forge-3.1.1.jar"
+              }
+            },
+            {
+              "id": "com.abdelaziz:canary:1.20.1-0.3.3",
+              "name": "CanaryMC",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 594191,
+                  "MD5": "1bd8bdb43c190ddc671c5ea0bf3b8cb1",
+                  "url": "http://94.23.44.138/download/mods/canary-mc1.20.1-0.3.3.jar"
+              }
+            },
+            {
+              "id": "dzwdz:chat_heads:0.10.31",
+              "name": "ChatHeads",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 207152,
+                  "MD5": "85ed31913d400f2752a456c4282c8647",
+                  "url": "http://94.23.44.138/download/mods/chat_heads-0.10.31-forge-1.20.jar"
+              }
+            },
+            {
+              "id": "pregenerator:1.20-4.4.2",
+              "name": "ChunkPregenerator",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 987180,
+                  "MD5": "667d43806d687e9582f6d4a76f94695c",
+                  "url": "http://94.23.44.138/download/mods/Chunk-Pregenerator-1.20-4.4.2.jar"
+              }
+            },
+            {
+              "id": "com:connectivity:1.20.1-4.9",
+              "name": "Connectivity",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 83326,
+                  "MD5": "7476681cc13f0fe78ba6689e9d33e8cf",
+                  "url": "http://94.23.44.138/download/mods/connectivity-1.20.1-4.9.jar"
+              }
+            },
+            {
+              "id": "com.corosus:coroutil:1.20.1-1.3.7",
+              "name": "Coroutil",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 64187,
+                  "MD5": "6fb9ccbe8c05c1da61c224d1127e9643",
+                  "url": "http://94.23.44.138/download/mods/coroutil-forge-1.20.1-1.3.7.jar"
+              }
+            },
+            {
+              "id": "de.maxhenkel:corpse:1.20.1-1.0.9",
+              "name": "Corpse",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 243102,
+                  "MD5": "2fbad049b3961dfa72c2ce9824ac3158",
+                  "url": "http://94.23.44.138/download/mods/corpse-1.20.1-1.0.9.jar"
+              }
+            },
+            {
+              "id": "lain.mods:cos:1.20.1-v1a",
+              "name": "Cosmetic carmor reworked",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 88752,
+                  "MD5": "2454075e9a25cbadc0fce66502e3261d",
+                  "url": "http://94.23.44.138/download/mods/cosmeticarmorreworked-1.20.1-v1a.jar"
+              }
+            },
+            {
+              "id": "plus.dragons:createcentralkitchen:1.20.1-for-create-0.5.1.f-1.3.9.e",
+              "name": "Create Central Kitchen",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 814394,
+                  "MD5": "721e28bafa76a16a079357c60a25af95",
+                  "url": "http://94.23.44.138/download/mods/create_central_kitchen-1.20.1-for-create-0.5.1.f-1.3.9.e.jar"
+              }
+            },
+            {
+              "id": "plus.dragons:createenchantmentindustry:1.20.1-for-create-0.5.1.f-1.2.7.h",
+              "name": "Create Enchantment Industry",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 494783,
+                  "MD5": "b04ecf05a3fd53a1c28f1fea617220ea",
+                  "url": "http://94.23.44.138/download/mods/create_enchantment_industry-1.20.1-for-create-0.5.1.f-1.2.7.h.jar"
+              }
+            },
+            {
+              "id": "net.mcreator:creategravity:1.20.1-1.1.0",
+              "name": "Create Gravity",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 53094,
+                  "MD5": "7799b419e66cf05fdbefa65e7394e2fc",
+                  "url": "http://94.23.44.138/download/mods/create_gravity-1.20.1-1.1.0.jar"
+              }
+            },
+            {
+              "id": "net.mcreator:createatam:1.20.1_4.0A",
+              "name": "Create Misc and Things",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 1014347,
+                  "MD5": "fc477f3364e0e6096f8619f610c94e17",
+                  "url": "http://94.23.44.138/download/mods/create_misc_and_things_ 1.20.1_4.0A.jar"
+              }
+            },
+            {
+              "id": "com.simibubi:create:1.20.1-0.5.1.f",
+              "name": "Create",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 14964127,
+                  "MD5": "6a097aa0bfc73a4f8372a16e763f9f02",
+                  "url": "http://94.23.44.138/download/mods/create-1.20.1-0.5.1.f.jar"
+              }
+            },
+            {
+              "id": "net.mcreator:createconfectionery:1.20.1_v1.1.0",
+              "name": "Create Confectionery",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 2123089,
+                  "MD5": "12760e582e8e0bd77e1b3a9421bb7e01",
+                  "url": "http://94.23.44.138/download/mods/create-confectionery1.20.1_v1.1.0.jar"
+              }
+            },
+            {
+              "id": "net.mcreator:createstuffadditions:1.20.1_v2.0.4a",
+              "name": "Create Stuff Additions",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 1151274,
+                  "MD5": "45e388e35136df2ab1e027a0be5a2071",
+                  "url": "http://94.23.44.138/download/mods/create-stuff-additions1.20.1_v2.0.4a.jar"
+              }
+            },
+            {
+              "id": "com.github.talrey:createdeco:2.0.1-1.20.1",
+              "name": "CreateDeco",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 2854352,
+                  "MD5": "cb5dd36b4275e360b34f44fd9aebef96",
+                  "url": "http://94.23.44.138/download/mods/createdeco-2.0.1-1.20.1-forge.jar"
+              }
+            },
+            {
+              "id": "team.creative:creativecore:v2.11.24_mc1.20.1",
+              "name": "CreativeCore",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 1088112,
+                  "MD5": "e5661a8000a4aeb1a0acaf4b0af47f6b",
+                  "url": "http://94.23.44.138/download/mods/CreativeCore_FORGE_v2.11.24_mc1.20.1.jar"
+              }
+            },
+            {
+              "id": "com:cupboard:1.20.1-2.3",
+              "name": "CupBoard",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 22378,
+                  "MD5": "b66657b72fcaf7f1c91597321b8fa3b5",
+                  "url": "http://94.23.44.138/download/mods/cupboard-1.20.1-2.3.jar"
+              }
+            },
+            {
+              "id": "top.theillusivec4:curios:5.7.0+1.20.1",
+              "name": "Curios",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 331413,
+                  "MD5": "4fd755d241e7ff1237288d4cda26e44d",
+                  "url": "http://94.23.44.138/download/mods/curios-forge-5.7.0+1.20.1.jar"
+              }
+            },
+            {
+              "id": "de.markusbordihn:dailyrewards:1.20.1-5.2.0",
+              "name": "DailyRewards",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 159124,
+                  "MD5": "399b088e03f635380134b1fc9e1092d1",
+                  "url": "http://94.23.44.138/download/mods/daily_rewards_1.20.1-5.2.0.jar"
+              }
+            },
+            {
+              "id": "dev.lambdaurora:lambdynlights:1.20.1_v1.6.0",
+              "name": "DynamicLightsReforged",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 94614,
+                  "MD5": "f8f506d864082aa61b3e38d249542f40",
+                  "url": "http://94.23.44.138/download/mods/dynamiclightsreforged-1.20.1_v1.6.0.jar"
+              }
+            },
+            {
+              "id": "de.markusbordihn:easynpc:1.20.1-3.8.0",
+              "name": "EasyNPC",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 1044634,
+                  "MD5": "b3b96178422082ad1ee086911c3fef5d",
+                  "url": "http://94.23.44.138/download/mods/easy_npc_1.20.1-3.8.0.jar"
+              }
+            },
+            {
+              "id": "org.embeddedt:embeddium:0.3.4",
+              "name": "Embeddium",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 973758,
+                  "MD5": "3da0eeddb380363eec72f16c67ce166f",
+                  "url": "http://94.23.44.138/download/mods/embeddium-0.3.4+mc1.20.1.jar"
+              }
+            },
+            {
+              "id": "toni:embeddiumextras:2.0.0",
+              "name": "EmbeddiumExtras",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 783145,
+                  "MD5": "f9da26ce55a6f2ecc6db3075a26bfa4b",
+                  "url": "http://94.23.44.138/download/mods/embeddiumextras-1.20.1-v2.0.0.jar"
+              }
+            },
+            {
+              "id": "com.hrznstudio:emojiful:4.2.0",
+              "name": "Emojiful",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 262412,
+                  "MD5": "0ba360de4747e64c6325b74c0055479a",
+                  "url": "http://94.23.44.138/download/mods/Emojiful-Forge-1.20.1-4.2.0.jar"
+              }
+            },
+            {
+              "id": "com.chaosthedude:endermail:1.2.9",
+              "name": "EnderMail",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 143999,
+                  "MD5": "9247e924f46a097b583fdf240454a6b1",
+                  "url": "http://94.23.44.138/download/mods/EnderMail-1.20.1-1.2.9.jar"
+              }
+            },
+            {
+              "id": "com.axedgaming:endersdelight:1.0.3",
+              "name": "endersdelight",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 118584,
+                  "MD5": "62482eda8558ee1c1e21a1c46bfe02f5",
+                  "url": "http://94.23.44.138/download/mods/endersdelight-1.20.1-1.0.3.jar"
+              }
+            },
+            {
+              "id": "gg.moonflower:etched:3.0.1",
+              "name": "etched",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 605674,
+                  "MD5": "9061665e69b48330b50f2e7d45673faf",
+                  "url": "http://94.23.44.138/download/mods/etched-3.0.1.jar"
+              }
+            },
+            {
+              "id": "net.mehvahdjukaar:every_compat:2.6.33",
+              "name": "everycomp",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 1943192,
+                  "MD5": "05c92609e6d77fb1efb96a4bbe512197",
+                  "url": "http://94.23.44.138/download/mods/everycomp-1.20-2.6.33.jar"
+              }
+            },
+            {
+              "id": "vectorwing:farmersdelight:1.2.4",
+              "name": "FarmersDelight",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 2915349,
+                  "MD5": "5b6bee961b278a3edd6e3935b061fbaa",
+                  "url": "http://94.23.44.138/download/mods/FarmersDelight-1.20.1-1.2.4.jar"
+              }
+            },
+            {
+              "id": "net.olafski:fastleafdecay:31",
+              "name": "FastLeafDecay",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 9833,
+                  "MD5": "f9962d78568b9f71b70916238253d33c",
+                  "url": "http://94.23.44.138/download/mods/FastLeafDecay-31.jar"
+              }
+            },
+            {
+              "id": "malte0811:ferritecore:6.0.1",
+              "name": "ferritecore",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 123034,
+                  "MD5": "f52f538207a4829d7060550092ce2383",
+                  "url": "http://94.23.44.138/download/mods/ferritecore-6.0.1-forge.jar"
+              }
+            },
+            {
+              "id": "dev.ftb.mods:ftbchunks:2001.2.5",
+              "name": "ftb-chunks",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 878265,
+                  "MD5": "a4db908f061a4fdab8ca0abda685f86f",
+                  "url": "http://94.23.44.138/download/mods/ftb-chunks-forge-2001.2.5.jar"
+              }
+            },
+            {
+              "id": "dev.ftb.mods:ftbessentials:22001.2.2",
+              "name": "ftb-essentials",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 155952,
+                  "MD5": "af57dc19d6a359ba3eb59494026bca8d",
+                  "url": "http://94.23.44.138/download/mods/ftb-essentials-forge-2001.2.2.jar"
+              }
+            },
+            {
+              "id": "dev.ftb.mods:ftblibrary:2001.1.5",
+              "name": "ftb-library",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 619473,
+                  "MD5": "98f6fa2b69234be5386d7648cc4ee4a3",
+                  "url": "http://94.23.44.138/download/mods/ftb-library-forge-2001.1.5.jar"
+              }
+            },
+            {
+              "id": "dev.ftb.mods:ftbquests:2001.3.3",
+              "name": "ftb-quests",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 1170984,
+                  "MD5": "a19c2b5ab285ae3315cc63f1b8d5e6d0",
+                  "url": "http://94.23.44.138/download/mods/ftb-quests-forge-2001.3.3.jar"
+              }
+            },
+            {
+              "id": "dev.ftb.mods:ftbranks:2001.1.3",
+              "name": "ftb-ranks",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 85218,
+                  "MD5": "3a2157d8b065b9c94229589e11632ebb",
+                  "url": "http://94.23.44.138/download/mods/ftb-ranks-forge-2001.1.3.jar"
+              }
+            },
+            {
+              "id": "dev.ftb.mods:ftbteams:2001.1.4",
+              "name": "ftb-teams",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 240019,
+                  "MD5": "c3bc5ac7c14e198df40b2b448322f66a",
+                  "url": "http://94.23.44.138/download/mods/ftb-teams-forge-2001.1.4.jar"
+              }
+            },
+            {
+              "id": "net.dark_roleplay:globalpacks:1.19.4-1.16.2",
+              "name": "global_packs-forge",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 19367,
+                  "MD5": "cbd0adc9a47ffa6bf5e8ea9f7848b534",
+                  "url": "http://94.23.44.138/download/mods/global_packs-forge-1.19.4-1.16.2_forge.jar"
+              }
+            },
+            {
+              "id": "com:gpumemleakfix:1.8",
+              "name": "gpumemleakfix",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 7997,
+                  "MD5": "e5028e9da74761f26c00c546c8ebdc4d",
+                  "url": "http://94.23.44.138/download/mods/gpumemleakfix-1.20.1-1.8.jar"
+              }
+            },
+            {
+              "id": "snownee:jade:11.7.1",
+              "name": "Jade",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 523256,
+                  "MD5": "7ef11e0e67625f29c73d226bc6d94a7a",
+                  "url": "http://94.23.44.138/download/mods/Jade-1.20.1-forge-11.7.1.jar"
+              }
+            },
+            {
+              "id": "snownee:jadeaddons:5.2.2",
+              "name": "JadeAddons",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 58529,
+                  "MD5": "2f1d72f5d532e421b360ecf8f8b31ba5",
+                  "url": "http://94.23.44.138/download/mods/JadeAddons-1.20.1-forge-5.2.2.jar"
+              }
+            },
+            {
+              "id": "mezz:jei:15.3.0.4",
+              "name": "jei",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 1127828,
+                  "MD5": "8f2c0bbb8f691be76f0b44c1d61d94e7",
+                  "url": "http://94.23.44.138/download/mods/jei-1.20.1-forge-15.3.0.4.jar"
+              }
+            },
+            {
+              "id": "jeresources:jeresources:1.4.0.247",
+              "name": "JustEnoughResources",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 276231,
+                  "MD5": "bd7166a2e9361ef5e8b616edfa2028f4",
+                  "url": "http://94.23.44.138/download/mods/JustEnoughResources-1.20.1-1.4.0.247.jar"
+              }
+            },
+            {
+              "id": "de.keksuccino:konkrete:1.8.0",
+              "name": "konkrete",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 625185,
+                  "MD5": "d69107c593e361e1b7b96733250bd098",
+                  "url": "http://94.23.44.138/download/mods/konkrete_forge_1.8.0_MC_1.20-1.20.1.jar"
+              }
+            },
+            {
+              "id": "me.steinborn:krypton:0.2.3",
+              "name": "KryptonReforged",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 206758,
+                  "MD5": "5b6b46d86a9a3858c766182a4cb9c3f1",
+                  "url": "http://94.23.44.138/download/mods/KryptonReforged-0.2.3.jar"
+              }
+            },
+            {
+              "id": "noobanidus.mods:lootr:0.7.31.78",
+              "name": "lootr",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 314819,
+                  "MD5": "be52fd421b6fde5d04d7104b58ca4239",
+                  "url": "http://94.23.44.138/download/mods/lootr-1.20-0.7.31.78.jar"
+              }
+            },
+            {
+              "id": "org.embeddedt:modernfix:5.13.0+mc1.20.1",
+              "name": "modernfix",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 751240,
+                  "MD5": "d5c9342e651cdf6fba92c8fa16695da8",
+                  "url": "http://94.23.44.138/download/mods/modernfix-forge-5.13.0+mc1.20.1.jar"
+              }
+            },
+            {
+              "id": "cn.mcmod_mmf:mysterious_mountain_lib:1.4.2",
+              "name": "mysterious_mountain_lib",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 289018,
+                  "MD5": "ca82f7a6b5103d8aa2a138de9120ccd1",
+                  "url": "http://94.23.44.138/download/mods/mysterious_mountain_lib-1.4.2-1.20.1.jar"
+              }
+            },
+            {
+              "id": "net.mcreator:nethers_exoticism:1.2.7",
+              "name": "nether-s-exoticism",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 2948273,
+                  "MD5": "e95cf5958a1cdce1300936dd829e344f",
+                  "url": "http://94.23.44.138/download/mods/nether-s-exoticism-1.20.1-1.2.7.jar"
+              }
+            },
+            {
+              "id": "oculus:oculus:1.6.15a",
+              "name": "oculus",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 2806358,
+                  "MD5": "b6d1e02b5fccf72570fa19606006d711",
+                  "url": "http://94.23.44.138/download/mods/oculus-mc1.20.1-1.6.15a.jar"
+              }
+            },
+            {
+              "id": "su.plo:plasmovoice:2.0.8",
+              "name": "plasmovoice",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 11540065,
+                  "MD5": "6262cb5cc548348edb1578ffc3d952da",
+                  "url": "http://94.23.44.138/download/mods/plasmovoice-forge-1.20.1-2.0.8.jar"
+              }
+            },
+            {
+              "id": "team.creative:playerrevive:2.0.24",
+              "name": "PlayerRevive",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 5296573,
+                  "MD5": "93fb43fc4a089ba60d0a6ed0798c8a0b",
+                  "url": "http://94.23.44.138/download/mods/PlayerRevive_FORGE_v2.0.24_mc1.20.1.jar"
+              }
+            },
+            {
+              "id": "com.breakinblocks:plonk:10.0.5",
+              "name": "plonk",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 151684,
+                  "MD5": "c59949bc880bb748900a0eba4f76d6ff",
+                  "url": "http://94.23.44.138/download/mods/plonk-1.20.1-10.0.5-forge.jar"
+              }
+            },
+            {
+              "id": "questadditions:questsadditions:1.4.3a",
+              "name": "questsadditions",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 111315,
+                  "MD5": "31ed9676a4b9b9e41d7cd663187dcb57",
+                  "url": "http://94.23.44.138/download/mods/questsadditions-1.4.3a.jar"
+              }
+            },
+            {
+              "id": "com:recipeessentials:3.2",
+              "name": "recipeessentials",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 44071,
+                  "MD5": "668bd3d13faf837fd4563e70056c1806",
+                  "url": "http://94.23.44.138/download/mods/recipeessentials-1.20.1-3.2.jar"
+              }
+            },
+            {
+              "id": "net.mcreator:seeds:1.1.5",
+              "name": "seeds",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 1572893,
+                  "MD5": "541e163628dcc7500e961b0863dc4bea",
+                  "url": "http://94.23.44.138/download/mods/seeds-1.20.1-1.1.5.jar"
+              }
+            },
+            {
+              "id": "de.melanx:simplebackups:3.1.3",
+              "name": "SimpleBackups",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 32680,
+                  "MD5": "3c2b3071b3cf12d2f9f43ab588d86940",
+                  "url": "http://94.23.44.138/download/mods/SimpleBackups-1.20.1-3.1.3.jar"
+              }
+            },
+            {
+              "id": "com:smoothchunk:3.5",
+              "name": "smoothchunk",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 10942,
+                  "MD5": "bbd2b1ef75dd533254f8c16b790c4da7",
+                  "url": "http://94.23.44.138/download/mods/smoothchunk-1.20.1-3.5.jar"
+              }
+            },
+            {
+              "id": "net.mcreator:sonsofsins:2.1.5",
+              "name": "sons-of-sins",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 4282205,
+                  "MD5": "767178d7f91ee3687af7c1d8114206fd",
+                  "url": "http://94.23.44.138/download/mods/sons-of-sins-1.20.1-2.1.5.jar"
+              }
+            },
+            {
+              "id": "me.lucko:spark:1.10.53",
+              "name": "spark",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 3114590,
+                  "MD5": "95dcd3b5400cc5eb5d0478a744e6ef98",
+                  "url": "http://94.23.44.138/download/mods/spark-1.10.53-forge.jar"
+              }
+            },
+            {
+              "id": "net.mcreator:stalwartdungeons:1.2.8",
+              "name": "stalwart-dungeons",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 1049721,
+                  "MD5": "07df68fc601833f1e5f7f5822c80cb24",
+                  "url": "http://94.23.44.138/download/mods/stalwart-dungeons-1.20.1-1.2.8.jar"
+              }
+            },
+            {
+              "id": "ca.spottedleaf:starlight:1.1.2",
+              "name": "starlight",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 110583,
+                  "MD5": "da99a054428fb62342b6767b993c4c8d",
+                  "url": "http://94.23.44.138/download/mods/starlight-1.1.2+forge.1cda73c.jar"
+              }
+            },
+            {
+              "id": "com.railwayteam:railways:1.5.3",
+              "name": "Steam_Rails",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 6704629,
+                  "MD5": "b92819435eb2bbb44c9418e1b5f247a4",
+                  "url": "http://94.23.44.138/download/mods/Steam_Rails-1.5.3+forge-mc1.20.1.jar"
+              }
+            },
+            {
+              "id": "net.mehvahdjukaar:supplementaries:2.7.36",
+              "name": "supplementaries",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 14600087,
+                  "MD5": "cd5d559cbc4bf3adcbbccd789a0d55ab",
+                  "url": "http://94.23.44.138/download/mods/supplementaries-1.20-2.7.36.jar"
+              }
+            },
+            {
+              "id": "net.mehvahdjukaar:suppsquared:1.1.12",
+              "name": "suppsquared",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 811488,
+                  "MD5": "d8447b64a80fa491d10bfa1ba44856cd",
+                  "url": "http://94.23.44.138/download/mods/suppsquared-1.20-1.1.12.jar"
+              }
+            },
+            {
+              "id": "me.flashyreese.mods:textrues_embeddium_options:0.1.5",
+              "name": "textrues_embeddium_options",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 163631,
+                  "MD5": "5b858b143f394778683fbb7595665da8",
+                  "url": "http://94.23.44.138/download/mods/textrues_embeddium_options-0.1.5+mc1.20.1.jar"
+              }
+            },
+            {
+              "id": "com.tom:toms_storage:1.6.5",
+              "name": "toms_storage",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 510408,
+                  "MD5": "76a1deaa44b21cc6f569eb37d9b3257e",
+                  "url": "http://94.23.44.138/download/mods/toms_storage-1.20-1.6.5.jar"
+              }
+            },
+            {
+              "id": "net.valheisia:valhelsia_core:1.1.1",
+              "name": "valhelsia_core",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 195882,
+                  "MD5": "d1dff5d3640a789152f2774d06de53cf",
+                  "url": "http://94.23.44.138/download/mods/valhelsia_core-forge-1.20.1-1.1.1.jar"
+              }
+            },
+            {
+              "id": "net.valheisia:valhelsia_furniture:1.1.2",
+              "name": "valhelsia_furniture",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 5095123,
+                  "MD5": "b3c0233a42dbbc00647e8bbff3965c51",
+                  "url": "http://94.23.44.138/download/mods/valhelsia_furniture-forge-1.20.1-1.1.2.jar"
+              }
+            },
+            {
+              "id": "com.github.NGoedix:videoplayer:2.6",
+              "name": "VideoPlayer",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 116768,
+                  "MD5": "90095edd772dbff3a3fc92677d72d0a7",
+                  "url": "http://94.23.44.138/download/mods/VideoPlayer-2.6-FORGE-1.20.X.jar"
+              }
+            },
+            {
+              "id": "com.negodya1:vintageimprovements:0.1.1.0",
+              "name": "vintageimprovements",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 399978,
+                  "MD5": "09c0544270b21293c7365734d2557b89",
+                  "url": "http://94.23.44.138/download/mods/vintageimprovements-1.20.1-0.1.1.0.jar"
+              }
+            },
+            {
+              "id": "net.mcreator:wanderingbags:2.0.7",
+              "name": "wandering-bags",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 1838335,
+                  "MD5": "a1486a59859c4af350174f435520da3c",
+                  "url": "http://94.23.44.138/download/mods/wandering-bags-1.20.1-2.0.7.jar"
+              }
+            },
+            {
+              "id": "me.srrapero720:waterframes:2.0.0-beta5.1",
+              "name": "waterframes",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 192453,
+                  "MD5": "d7897af2ad1569ef01a9b3803b65c1e5",
+                  "url": "http://94.23.44.138/download/mods/waterframes-1.20.1-2.0.0-beta5.1.jar"
+              }
+            },
+            {
+              "id": "me.srrapero720:watermedia:2.0.27-beta",
+              "name": "watermedia",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 56611263,
+                  "MD5": "0fa93cc14ac3f37e2e80c6ae015a1634",
+                  "url": "http://94.23.44.138/download/mods/watermedia-2.0.27-beta.jar"
+              }
+            },
+            {
+              "id": "com.corosus:watut:1.1.0",
+              "name": "watut",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 328322,
+                  "MD5": "befa45bf2a973a89c8ad2675b523a23b",
+                  "url": "http://94.23.44.138/download/mods/watut-forge-1.20.1-1.1.0.jar"
+              }
+            },
+            {
+              "id": "com.sk89q:worldedit:7.2.15",
+              "name": "worldedit",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 5825402,
+                  "MD5": "bd0e7cff7896348faab92e43300d0639",
+                  "url": "http://94.23.44.138/download/mods/worldedit-mod-7.2.15.jar"
+              }
+            },
+            {
+              "id": "elocindev:ysns:1.0.4",
+              "name": "YSNS",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 6551,
+                  "MD5": "57650b115c3795611b9a7299ce2af57a",
+                  "url": "http://94.23.44.138/download/mods/YSNS-Forge-MC1.20-1.0.4.jar"
+              }
+            },
+            {
+              "id": "net.mehvahdjukaar:moonlight:1.20-2.9.17",
+              "name": "moonlight",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 1128350,
+                  "MD5": "bb1a3fe8554393cb677ed0efbf237ea6",
+                  "url": "http://94.23.44.138/download/mods/moonlight-1.20-2.9.17-forge.jar"
+              }
+            },
+            {
+              "id": "littlechasiu.ctm:createtrackmap:1.4",
+              "name": "create-track-map",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 4397995,
+                  "MD5": "7e7ea26358ffd7a87c9d7ae7ffbc7a89",
+                  "url": "http://94.23.44.138/download/mods/create-track-map-1.4+mc1.19.2-forge-create-0.5.1.jar"
+              }
+            },
+            {
+              "id": "com.abdelaziz:saturn:0.1.3",
+              "name": "saturn",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 92319,
+                  "MD5": "56a9a1cc126425b04acc5f8bd7ed67f1",
+                  "url": "http://94.23.44.138/download/mods/saturn-mc1.20.1-0.1.3.jar"
+              }
+            },
+            {
+              "id": "dev.ftb.mods:ftbxmodcompat:2.1.0",
+              "name": "ftb-xmod-compat",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 129225,
+                  "MD5": "e8edc5679ce0372f44d06173ffbc0d35",
+                  "url": "http://94.23.44.138/download/mods/ftb-xmod-compat-forge-2.1.0.jar"
+              }
+            },
+            {
+              "id": "thedarkcolour:kotlinforforge:4.10.0",
+              "name": "kotlinforforge",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 7778600,
+                  "MD5": "66104f85db917822d99311bcb6c71f97",
+                  "url": "http://94.23.44.138/download/mods/kotlinforforge-4.10.0-all.jar"
+              }
+            },
+            {
+              "id": "dev.tr7zw:notenoughanimations:1.7.1",
+              "name": "notenoughanimations",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 420640,
+                  "MD5": "653460b15915e84314f931469fe55110",
+                  "url": "http://94.23.44.138/download/mods/notenoughanimations-forge-1.7.1-mc1.20.1.jar"
+              }
+            },
+            {
+              "id": "com.aizistral:nochatreports:2.2.2",
+              "name": "NoChatReports",
+              "type": "ForgeMod",
+              "required": {
+                  "value": true
+              },
+              "artifact": {
+                  "size": 272740,
+                  "MD5": "3153d1e860c6fefe6dac26efdb5c40c6",
+                  "url": "http://94.23.44.138/download/mods/NoChatReports-FORGE-1.20.1-v2.2.2.jar"
+              }
+            }
             ]
           }
     ]
