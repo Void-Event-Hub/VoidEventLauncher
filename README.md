@@ -157,5 +157,6 @@ The best way to contact the developers is on [Discord](https://discord.com/users
 
 ### Special Thanks
 
-[@dscalzi](https://github.com/dscalzi) and his [project](https://github.com/dscalzi/HeliosLauncher) for the original launcher.
-[@Ax3dGaming](https://github.com/Ax3dGaming): for help me and create the jsonCreator.
+* [@dscalzi](https://github.com/dscalzi) and his [project](https://github.com/dscalzi/HeliosLauncher) for the original launcher.
+
+* [@Ax3dGaming](https://github.com/Ax3dGaming): for help me and create the jsonCreator.
