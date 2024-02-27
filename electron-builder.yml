@@ -1,4 +1,4 @@
-appId: 'createacademylauncher'
+appId: 'helioslauncher'
 productName: 'Create Academy Launcher'
 artifactName: '${productName}-setup-${version}.${ext}'
 
