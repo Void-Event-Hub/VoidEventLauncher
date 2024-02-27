@@ -426,8 +426,8 @@
                   "value": true
               },
                 "artifact": {
-                    "size": 1538139,
-                    "MD5": "dff04b2dd2b7adc2a00d0ed251d551a0",
+                    "size": 1594468,
+                    "MD5": "f36c73d47c0766fc0b81ff349d9d1f3e",
                     "url": "http://94.23.44.138/download/mods/academy_core-1.0.0.jar"
                 }
               },
@@ -1625,6 +1625,39 @@
                   "size": 272740,
                   "MD5": "3153d1e860c6fefe6dac26efdb5c40c6",
                   "url": "http://94.23.44.138/download/mods/NoChatReports-FORGE-1.20.1-v2.2.2.jar"
+              }
+            },
+            {
+              "id": "com.porut:porut:2024",
+              "name": "Porut",
+              "type": "file",
+               "artifact": {
+                  "size": 13594744,
+                  "MD5": "ca5f2ac61290d9c2083034e9be5791f7",
+                  "path": "resourcepacks/porut.zip",
+                  "url": "http://94.23.44.138/download/resourcepacks/porut.zip"
+              }
+            },
+            {
+              "id": "com.porut:porut:2024",
+              "name": "Porut",
+              "type": "file",
+               "artifact": {
+                  "size": 13594744,
+                  "MD5": "ca5f2ac61290d9c2083034e9be5791f7",
+                  "path": "resourcepacks/porut.zip",
+                  "url": "http://94.23.44.138/download/resourcepacks/porut.zip"
+              }
+            },
+            {
+              "id": "server.dat:server:2024",
+              "name": "servers.dat",
+              "type": "file",
+               "artifact": {
+                  "size": 103,
+                  "MD5": "d41e4532848eac07363304ce2c05622e",
+                  "path": "servers.dat",
+                  "url": "http://94.23.44.138/download/servers.dat"
               }
             }
             ]

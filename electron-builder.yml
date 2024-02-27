@@ -1,8 +1,8 @@
-appId: 'helioslauncher'
+appId: 'createacademylauncher'
 productName: 'Create Academy Launcher'
 artifactName: '${productName}-setup-${version}.${ext}'
 
-copyright: 'Copyright © 2018-2024 Armand CHANAL'
+copyright: 'Copyright © 2024 Armand CHANAL'
 
 asar: true
 compression: 'maximum'
