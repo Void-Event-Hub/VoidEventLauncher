@@ -19,7 +19,7 @@ elif (type=="f"):
 else:
     print("Type de fichier non valable")
 
-url = ("http://94.23.44.138/download/" + file_name)
+url = ("# your ip" + file_name)
 
 isr = bool(input("Le mod est-il nécessaire ? (true/false) "))
 
