@@ -11,7 +11,7 @@ mediaYouTubeURL = "#"
 mediaDiscordURL = "https://discord.gg/zNWUXdt"
 
 [ejs.settings]
-sourceGithubLink = "https://github.com/fairy-code/CreateAcademyLauncher2"
+sourceGithubLink = "https://github.com/Fairy-Jeux/CreateAcademyLauncher"
 supportLink = "https://github.com/Fairy-Jeux/CreateAcademyLauncher/issues"
 
 [ejs.welcome]
