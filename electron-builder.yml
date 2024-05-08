@@ -1,6 +1,6 @@
 appId: 'helioslauncher'
 productName: 'Create Academy Launcher'
-artifactName: '${productName}-setup-${version}.${ext}'
+artifactName: '${productName}-setup.${ext}'
 
 copyright: 'Copyright © 2024 Fairy Jeux'
 
