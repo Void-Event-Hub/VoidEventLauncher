@@ -3295,6 +3295,7 @@ input:checked + .toggleSwitchSlider:before {
     padding: 0px 3px;
     text-align: center;
     letter-spacing: 1px;
+    white-space: nowrap;
 }
 
 /* Wrapper container for mojang service information. */
