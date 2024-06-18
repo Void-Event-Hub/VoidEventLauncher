@@ -1,6 +1,6 @@
 appId: 'helioslauncher'
 productName: 'Create Academy Launcher'
-artifactName: '${productName}-setup.${ext}'
+artifactName: '${productName}-setup-.${ext}'
 
 copyright: 'Copyright © 2024 Fairy Jeux'
 
@@ -21,7 +21,7 @@ win:
 
 # Windows Installer Configuration
 nsis:
-  oneClick: false
+  oneClick: true
   perMachine: false
   allowElevation: true
   allowToChangeInstallationDirectory: true
@@ -33,7 +33,7 @@ mac:
       arch:
         - 'x64'
         - 'arm64'
-  artifactName: '${productName}-setup-${arch}.${ext}'
+  artifactName: '${productName}-setup-${arch}-${version}.${ext}'
   category: 'public.app-category.games'
 
 # Linux Configuration
