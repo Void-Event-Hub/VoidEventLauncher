@@ -4,7 +4,7 @@
 title = "Create Academy Launcher"
 
 [ejs.landing]
-mediaGitHubURL = "https://github.com/Fairy-Jeux/CreateAcademyLauncher"
+mediaGitHubURL = "http://store.createacademy.net/"
 mediaTwitterURL = "https://x.com/CreateAcademyMC"
 mediaInstagramURL = "http://94.23.44.138:8100/"
 mediaYouTubeURL = "https://www.youtube.com/channel/UCQlkADwPgtfBdl9XFWfrRVw"
