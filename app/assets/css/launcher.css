@@ -1,9 +1,9 @@
 /* Github Code Highlighting. */
-@import "../../../node_modules/github-syntax-dark/lib/github-dark.css";
+@import '../../../node_modules/github-syntax-dark/lib/github-dark.css';
 
 /*******************************************************************************
  *                                                                             *
- * Fonts                                                                       *
+ * Fonts and Variables                                                         *
  *                                                                             *
  ******************************************************************************/
 
@@ -22,6 +22,81 @@
     src: url('../fonts/Ringbearer.ttf');
 }
 
+/* Minecraft (i.e. the text font) */
+@font-face {
+    font-family: 'Minecraft';
+    src: url('../fonts/Minecraft/MinecraftRegular-Bmg3.otf');
+}
+@font-face {
+    font-family: 'Minecraft';
+    src: url('../fonts/Minecraft/MinecraftItalic-R8Mo.otf');
+    font-style: italic;
+}
+@font-face {
+    font-family: 'Minecraft';
+    src: url('../fonts/Minecraft/MinecraftBold-nMK1.otf');
+    font-weight: bold;
+}
+@font-face {
+    font-family: 'Minecraft';
+    src: url('../fonts/Minecraft/MinecraftBoldItalic-1y1e.otf');
+    font-weight: bold;
+    font-style: italic;
+}
+
+/* Minecraft Ten (i.e. the title font) */
+@font-face {
+    font-family: 'Minecraft Ten';
+    src: url('../fonts/MinecraftTen/MinecraftTen-VGORe.ttf');
+    line-height: 1.2em;
+    ascent-override: 1em;
+}
+
+/* color palette */
+:root {
+    --color-white: #fff;
+    --color-black: #000;
+
+    --color-light: #eee;
+    --color-dark: #333;
+
+    --color-default: rgb(77, 82, 85);
+    /* --color-default: rgb(136, 145, 151); */
+    /* --color-primary: #9f844d; */
+    --color-primary: rgb(185, 140, 65);
+    --color-shine: rgb(182, 50, 187);
+}
+
+/* semantic variables */
+:root {
+    --color-text: var(--color-light);
+    --color-fg: var(--color-light);
+    --color-fg-dark: var(--color-dark);
+    --color-bg: var(--color-black);
+    --color-bg-transparent: rgba(0, 0, 0, 0.6);
+
+    --color-footer-bg: var(--color-bg);
+    --color-footer-fg: #555;
+
+    --flex-spacing: 0.5em;
+
+    --font-body: 'Minecraft', monospace;
+    --font-title: 'Minecraft Ten', 'Impact', sans-serif;
+
+    --button-depth: 8px;
+    --button-depth-active: 2px;
+    --button-depth-delta: calc(
+        var(--button-depth) - var(--button-depth-active)
+    );
+    --button-border: 3px;
+    --button-height: 3rem;
+    --button-height-large: 5rem;
+    --button-height-small: 2.5rem;
+    --button-tint: rgba(0, 0, 0, 0.1);
+    --button-tint-start: 40%;
+    --button-active-filter: saturate(0.9) brightness(1.15);
+}
+
 /*******************************************************************************
  *                                                                             *
  * Element Styles                                                              *
@@ -29,7 +104,9 @@
  ******************************************************************************/
 
 /* Reset body, html, and div presets. */
-body, html, div {
+body,
+html,
+div {
     margin: 0px;
     padding: 0px;
 }
@@ -41,8 +118,9 @@ p {
 }
 
 /* Set default font and color. */
-body, button {
-    font-family: 'Avenir Book';
+body,
+button {
+    font-family: var(--font-body);
     color: white;
 }
 
@@ -50,6 +128,131 @@ body, button {
     background: url('./../images/backgrounds/0.jpg') no-repeat center center fixed;
     background-size: cover;
 }*/
+
+/* === Button Styles === */
+.button {
+    position: relative;
+    margin: 0;
+    text-decoration: none;
+    box-sizing: content-box;
+
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    font-family: var(--font-mc);
+    font-size: 1.2em;
+    text-shadow: 0.1em 0.1em 0 rgba(0, 0, 0, 0.4);
+
+    color: var(--color-fg);
+    background-color: var(--color-default);
+    background-image: linear-gradient(
+        transparent 0%,
+        transparent var(--button-tint-start),
+        var(--button-tint) var(--button-tint-start),
+        var(--button-tint) 100%
+    );
+
+    padding: 0 2em var(--button-depth) 2em;
+    height: var(--button-height);
+    vertical-align: middle;
+    box-shadow: 0 calc(var(--button-depth) * -1) 0 0 rgba(0, 0, 0, 0.4) inset;
+    top: 0;
+    margin: 0;
+    border: var(--button-border) rgba(0, 0, 0, 0.6) solid;
+    cursor: pointer;
+}
+
+.button::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: var(--button-depth);
+    border: var(--button-border) rgba(255, 255, 255, 0.15) solid;
+}
+
+.button:hover {
+    filter: var(--button-active-filter);
+}
+
+.button > .button-content {
+    flex: 1;
+    position: relative;
+    z-index: 1;
+    bottom: calc(var(--button-depth) * 0.5);
+}
+
+.button:active {
+    box-shadow: 0 calc(var(--button-depth-active) * -1) 0 0 rgba(0, 0, 0, 0.2)
+        inset;
+    margin-top: var(--button-depth-delta);
+    height: calc(var(--button-height) - var(--button-depth-delta));
+    background-image: linear-gradient(
+        transparent 0%,
+        transparent
+            calc(var(--button-tint-start) + (var(--button-depth-delta) * 0.25)),
+        var(--button-tint)
+            calc(var(--button-tint-start) + (var(--button-depth-delta) * 0.25)),
+        var(--button-tint) 100%
+    );
+
+    &::after {
+        bottom: var(--button-depth-active);
+    }
+
+    & > .button-content {
+        bottom: calc(var(--button-depth-active) * 0.5);
+    }
+}
+
+.button.button-large {
+    height: var(--button-height-large);
+    font-size: 1.7em;
+
+    &:active {
+        height: calc(var(--button-height-large) - var(--button-depth-delta));
+    }
+}
+.button.button-small {
+    height: var(--button-height-small);
+    font-size: 1em;
+    padding-right: 1em;
+    padding-left: 1em;
+
+    &:active {
+        height: calc(var(--button-height-small) - var(--button-depth-delta));
+    }
+}
+
+.button.button-expanded {
+    display: flex;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.button.button-primary {
+    background-color: var(--color-primary);
+}
+
+.button.button-shine {
+    background-color: var(--color-shine);
+}
+
+.button.button-disabled,
+.button[disabled] {
+    background-color: var(--color-default);
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* Control styles */
+.hidden-when-inactive:not([active], .active) {
+    display: none;
+}
 
 /*******************************************************************************
  *                                                                             *
@@ -78,7 +281,7 @@ body, button {
 /* Flexbox to wrap the main frame content. */
 #frameMain {
     display: flex;
-    height: 20px
+    height: 20px;
 }
 
 /* Undraggable region on the left and right of the frame. */
@@ -110,7 +313,7 @@ body, button {
 }
 #frameTitleText {
     font-size: 14px;
-    font-family: 'Avenir Medium';
+    font-family: var(--font-title);
     letter-spacing: 0.5px;
 }
 
@@ -181,7 +384,7 @@ body, button {
 }
 #frameButtonDarwin_close:hover,
 #frameButtonDarwin_close:focus {
-    background-color: #FF9A8A;
+    background-color: #ff9a8a;
 }
 #frameButtonDarwin_close:active {
     background-color: #ff8d7b;
@@ -192,7 +395,7 @@ body, button {
 }
 #frameButtonDarwin_minimize:hover,
 #frameButtonDarwin_minimize:focus {
-    background-color: #FFE9A9;
+    background-color: #ffe9a9;
 }
 #frameButtonDarwin_minimize:active {
     background-color: #ffde7b;
@@ -203,7 +406,7 @@ body, button {
 }
 #frameButtonDarwin_restoredown:hover,
 #frameButtonDarwin_restoredown:focus {
-    background-color: #D6FFA6;
+    background-color: #d6ffa6;
 }
 #frameButtonDarwin_restoredown:active {
     background-color: #bfff76;
@@ -222,7 +425,7 @@ body, button {
     align-items: center;
     height: 100%;
     width: 100%;
-    background: rgba(0, 0, 0, 0.50);
+    background: rgba(0, 0, 0, 0.5);
 }
 
 #welcomeContent {
@@ -284,7 +487,7 @@ body, button {
 }
 
 #welcomeHeader {
-    font-family: 'Avenir Medium';
+    font-family: var(--font-title);
     text-align: center;
     color: white;
     margin-bottom: 25px;
@@ -297,14 +500,14 @@ body, button {
     text-align: justify;
     font-size: 13px;
     font-weight: 100;
-    text-shadow: rgba(255, 255, 255, 0.75) 0px 0px 20px
+    text-shadow: rgba(255, 255, 255, 0.75) 0px 0px 20px;
 }
 
 #welcomeDescCTA {
     text-align: center;
     font-size: 14px;
     font-weight: 100;
-    text-shadow: rgba(255, 255, 255, 0.75) 0px 0px 20px
+    text-shadow: rgba(255, 255, 255, 0.75) 0px 0px 20px;
 }
 
 /* Login button styles. */
@@ -385,7 +588,7 @@ body, button {
     height: 100%;
     width: 100%;
     transition: filter 0.25s ease;
-    background: rgba(0, 0, 0, 0.50);
+    background: rgba(0, 0, 0, 0.5);
 }
 
 /* Login cancel button styles. */
@@ -497,7 +700,7 @@ body, button {
 
 /* Header on login view. */
 #loginSubheader {
-    font-family: 'Avenir Medium';
+    font-family: var(--font-title);
     margin-bottom: 25px;
     font-size: 12px;
     letter-spacing: 1px;
@@ -522,7 +725,7 @@ body, button {
 
 /* Span which displays errors related to login field content. */
 .loginErrorSpan {
-    font-family: 'Avenir Medium';
+    font-family: var(--font-body);
     font-weight: bold;
     font-size: 8px;
     color: #ff1b0c;
@@ -535,30 +738,35 @@ body, button {
 }
 
 .shake {
-    animation: shake 0.82s cubic-bezier(.36,.07,.19,.97) both;
+    animation: shake 0.82s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
 }
 
 @keyframes shake {
-    10%, 90% {
+    10%,
+    90% {
         transform: translate3d(-1px, 0, 0);
     }
-    
-    20%, 80% {
+
+    20%,
+    80% {
         transform: translate3d(2px, 0, 0);
     }
-  
-    30%, 50%, 70% {
+
+    30%,
+    50%,
+    70% {
         transform: translate3d(-4px, 0, 0);
     }
-  
-    40%, 60% {
+
+    40%,
+    60% {
         transform: translate3d(4px, 0, 0);
     }
 }
 
 /* Login text input styles. */
 .loginField {
-    font-family: 'Avenir Book';
+    font-family: var(--font-body);
     background: none;
     border-width: 1.5px 0px 0px 0px;
     border-style: solid;
@@ -577,7 +785,7 @@ body, button {
     outline: none;
 }
 .loginField:disabled {
-    color: rgba(255, 255, 255, 0.50);
+    color: rgba(255, 255, 255, 0.5);
 }
 .loginField::-webkit-input-placeholder {
     color: rgba(255, 255, 255, 0.75);
@@ -635,7 +843,7 @@ body, button {
 }
 #loginButton:active {
     color: #c7c7c7;
-    text-shadow:  0px 0px 20px #c7c7c7;
+    text-shadow: 0px 0px 20px #c7c7c7;
 }
 #loginSVG {
     -webkit-transform: translate3d(0, 0, 0);
@@ -673,7 +881,6 @@ body, button {
 #loginButton #loginSVG {
     display: initial;
 }
-
 
 .circle-loader {
     margin-left: 20px;
@@ -746,8 +953,6 @@ body, button {
         opacity: 1;
     }
 }
-
-
 
 /*.spinningCircle {
     margin-left: 20px;
@@ -841,7 +1046,7 @@ body, button {
 /* For checked -> #checkmarkContainer input:checked ~ * */
 /* Create the checkmark/indicator (hidden when not checked). */
 .loginCheckmark:after {
-    content: "";
+    content: '';
     display: none;
 }
 /* Show the checkmark when checked. */
@@ -887,7 +1092,7 @@ body, button {
     height: 100%;
     width: 100%;
     transition: filter 0.25s ease;
-    background: rgba(0, 0, 0, 0.50);
+    background: rgba(0, 0, 0, 0.5);
 }
 
 #waitingContent {
@@ -936,19 +1141,19 @@ body, button {
 
 @keyframes rotateBefore {
     from {
-      transform: rotateX(60deg) rotateY(45deg) rotateZ(0deg);
+        transform: rotateX(60deg) rotateY(45deg) rotateZ(0deg);
     }
     to {
-      transform: rotateX(60deg) rotateY(45deg) rotateZ(-360deg);
+        transform: rotateX(60deg) rotateY(45deg) rotateZ(-360deg);
     }
 }
 
 @keyframes rotateAfter {
     from {
-      transform: rotateX(240deg) rotateY(45deg) rotateZ(0deg);
+        transform: rotateX(240deg) rotateY(45deg) rotateZ(0deg);
     }
     to {
-      transform: rotateX(240deg) rotateY(45deg) rotateZ(360deg);
+        transform: rotateX(240deg) rotateY(45deg) rotateZ(360deg);
     }
 }
 
@@ -966,7 +1171,7 @@ body, button {
     height: 100%;
     width: 100%;
     transition: filter 0.25s ease;
-    background: rgba(0, 0, 0, 0.50);
+    background: rgba(0, 0, 0, 0.5);
 }
 
 #loginOptionsContent {
@@ -1041,7 +1246,6 @@ body, button {
     pointer-events: none;
 }
 
-
 /*******************************************************************************
  *                                                                             *
  * Settings View (sttings.ejs)                                                 *
@@ -1053,8 +1257,8 @@ body, button {
     position: relative;
     height: 100%;
     display: flex;
-    background-color: rgba(0, 0, 0, 0.50);
-    transition: background-color 0.25s cubic-bezier(.02, .01, .47, 1);
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: background-color 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
 }
 
 /* Drop shadow displayed when content is scrolled out of view. */
@@ -1172,7 +1376,9 @@ body, button {
     text-shadow: 0px 0px 20px white, 0px 0px 20px white, 0px 0px 20px white;
 }
 #settingsNavDone:active {
-    text-shadow: 0px 0px 20px rgba(255, 255, 255, 0.75), 0px 0px 20px rgba(255, 255, 255, 0.75), 0px 0px 20px rgba(255, 255, 255, 0.75);
+    text-shadow: 0px 0px 20px rgba(255, 255, 255, 0.75),
+        0px 0px 20px rgba(255, 255, 255, 0.75),
+        0px 0px 20px rgba(255, 255, 255, 0.75);
     color: rgba(255, 255, 255, 0.75);
 }
 #settingsNavDone:disabled {
@@ -1201,7 +1407,7 @@ body, button {
 }
 .settingsTab::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.50);
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 /* Add spacing to the top of each settings tab. */
@@ -1222,7 +1428,7 @@ body, button {
 }
 .settingsTabHeaderText {
     font-size: 20px;
-    font-family: 'Avenir Medium';
+    font-family: var(--font-title);
 }
 .settingsTabHeaderDesc {
     font-size: 12px;
@@ -1261,7 +1467,7 @@ body, button {
     background: none;
     font-size: 12px;
     border-radius: 3px;
-    font-family: 'Avenir Medium';
+    font-family: var(--font-body);
     transition: 0.25s ease;
     cursor: pointer;
     outline: none;
@@ -1282,26 +1488,26 @@ body, button {
 }
 
 /* Remove spin button from number inputs. */
-#settingsContainer input[type=number]::-webkit-inner-spin-button {
+#settingsContainer input[type='number']::-webkit-inner-spin-button {
     -webkit-appearance: none;
 }
 
 /* Default styles for text/number inputs. */
-#settingsContainer input[type=number],
-#settingsContainer input[type=text] {
+#settingsContainer input[type='number'],
+#settingsContainer input[type='text'] {
     color: white;
     background: rgba(0, 0, 0, 0.25);
     border-radius: 3px;
     border: 1px solid rgba(126, 126, 126, 0.57);
-    font-family: 'Avenir Book';
+    font-family: var(--font-body);
     transition: 0.25s ease;
 }
-#settingsContainer input[type=number]:focus,
-#settingsContainer input[type=text]:focus {
+#settingsContainer input[type='number']:focus,
+#settingsContainer input[type='text']:focus {
     outline: none;
     border-color: rgba(126, 126, 126, 0.87);
 }
-#settingsContainer input[type=number][error] {
+#settingsContainer input[type='number'][error] {
     border-color: rgb(255, 27, 12);
     background: rgba(236, 0, 0, 0.25);
     color: rgb(255, 27, 12);
@@ -1314,7 +1520,7 @@ body, button {
     justify-content: space-between;
     padding: 20px 0px;
     width: 75%;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.50);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
 }
 .settingsFieldLeft {
     display: flex;
@@ -1322,12 +1528,12 @@ body, button {
 }
 .settingsFieldTitle {
     font-size: 14px;
-    font-family: 'Avenir Medium';
+    font-family: var(--font-body);
     color: rgba(255, 255, 255, 0.95);
 }
 .settingsFieldDesc {
     font-size: 12px;
-    color: rgba(255, 255, 255, .95);
+    color: rgba(255, 255, 255, 0.95);
     margin-top: 5px;
 }
 .settingsDivider {
@@ -1346,7 +1552,7 @@ body, button {
     box-sizing: border-box;
 }
 .toggleSwitch input {
-    display:none;
+    display: none;
 }
 .toggleSwitchSlider {
     position: absolute;
@@ -1356,13 +1562,13 @@ body, button {
     right: 0;
     bottom: 0;
     background-color: rgba(255, 255, 255, 0.35);
-    transition: .4s;
+    transition: 0.4s;
     border-radius: 50px;
     border: 1px solid rgba(126, 126, 126, 0.57);
 }
 .toggleSwitchSlider:before {
     position: absolute;
-    content: "";
+    content: '';
     height: 13px;
     width: 16px;
     left: 3px;
@@ -1370,7 +1576,7 @@ body, button {
     background-color: white;
     box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.75);
     border-radius: 50px;
-    transition: .4s;
+    transition: 0.4s;
 }
 input:checked + .toggleSwitchSlider {
     background-color: rgb(31, 140, 11);
@@ -1415,7 +1621,7 @@ input:checked + .toggleSwitchSlider:before {
 .settingsFileSelContainer {
     display: flex;
     flex-direction: column;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.50);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
     margin-bottom: 20px;
     margin-top: 20px;
     width: 75%;
@@ -1485,7 +1691,7 @@ input:checked + .toggleSwitchSlider:before {
     width: 89%;
 }
 .settingsFileSelDesc strong {
-    font-family: 'Avenir Medium';
+    font-family: var(--font-body);
 }
 
 /* * *
@@ -1529,7 +1735,9 @@ input:checked + .toggleSwitchSlider:before {
     text-shadow: 0px 0px 20px white, 0px 0px 20px white, 0px 0px 20px white;
 }
 .settingsAddAuthAccount:active {
-    text-shadow: 0px 0px 20px rgba(255, 255, 255, 0.75), 0px 0px 20px rgba(255, 255, 255, 0.75), 0px 0px 20px rgba(255, 255, 255, 0.75);
+    text-shadow: 0px 0px 20px rgba(255, 255, 255, 0.75),
+        0px 0px 20px rgba(255, 255, 255, 0.75),
+        0px 0px 20px rgba(255, 255, 255, 0.75);
     color: rgba(255, 255, 255, 0.75);
 }
 .settingsAddAuthAccount:disabled {
@@ -1593,7 +1801,7 @@ input:checked + .toggleSwitchSlider:before {
     font-size: 12px;
     color: grey;
     font-weight: bold;
-    font-family: 'Avenir Medium';
+    font-family: var(--font-title);
 }
 .settingsAuthAccountDetailValue {
     font-size: 14px;
@@ -1615,7 +1823,7 @@ input:checked + .toggleSwitchSlider:before {
     border: none;
     white-space: nowrap;
     background: none;
-    font-family: 'Avenir Medium';
+    font-family: var(--font-body);
     outline: none;
     transition: 0.25s ease;
 }
@@ -1640,7 +1848,7 @@ input:checked + .toggleSwitchSlider:before {
     background: none;
     font-size: 12px;
     border-radius: 3px;
-    font-family: 'Avenir Medium';
+    font-family: var(--font-body);
     transition: 0.25s ease;
     cursor: pointer;
     outline: none;
@@ -1669,7 +1877,7 @@ input:checked + .toggleSwitchSlider:before {
     display: flex;
     flex-direction: column;
     padding-bottom: 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.50);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
     width: 75%;
 }
 #settingsGameResolutionContent {
@@ -1774,7 +1982,10 @@ input:checked + .toggleSwitchSlider:before {
 }
 
 /* Set the status color of an enabled mod. */
-.settingsBaseMod[enabled] > .settingsModContent > .settingsModMainWrapper > .settingsModStatus {
+.settingsBaseMod[enabled]
+    > .settingsModContent
+    > .settingsModMainWrapper
+    > .settingsModStatus {
     background-color: rgb(165, 195, 37);
 }
 
@@ -1841,11 +2052,13 @@ input:checked + .toggleSwitchSlider:before {
 }
 .settingsDropinRemoveButton:hover,
 .settingsDropinRemoveButton:focus {
-    text-shadow: 0px 0px 20px #c32625, 0px 0px 20px #c32625, 0px 0px 20px #c32625;
+    text-shadow: 0px 0px 20px #c32625, 0px 0px 20px #c32625,
+        0px 0px 20px #c32625;
 }
 .settingsDropinRemoveButton:active {
     color: #9b1f1f;
-    text-shadow: 0px 0px 20px #9b1f1f, 0px 0px 20px #9b1f1f, 0px 0px 20px #9b1f1f;
+    text-shadow: 0px 0px 20px #9b1f1f, 0px 0px 20px #9b1f1f,
+        0px 0px 20px #9b1f1f;
 }
 
 /* Shaderpack settings description. */
@@ -1898,7 +2111,7 @@ input:checked + .toggleSwitchSlider:before {
 /* Style the arrow inside the select element. */
 .settingsSelectSelected:after {
     position: absolute;
-    content: "";
+    content: '';
     top: calc(50% - 3px);
     right: 10px;
     width: 0;
@@ -1941,7 +2154,7 @@ input:checked + .toggleSwitchSlider:before {
 }
 .settingsSelectOptions::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.50);
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 /* Shared styles between options and selection div. */
@@ -1963,7 +2176,8 @@ input:checked + .toggleSwitchSlider:before {
 }
 
 /* Hover + selected styles. */
-.settingsSelectOptions div:hover, .settingsSelectOptions div[selected] {
+.settingsSelectOptions div:hover,
+.settingsSelectOptions div[selected] {
     background-color: rgba(255, 255, 255, 0.25) !important;
 }
 
@@ -1994,7 +2208,7 @@ input:checked + .toggleSwitchSlider:before {
     width: 75%;
     display: flex;
     flex-direction: column;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.50);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
     margin-bottom: 20px;
 }
 
@@ -2049,7 +2263,7 @@ input:checked + .toggleSwitchSlider:before {
     display: flex;
     flex-direction: column;
 }
-#settingsMemoryStatus > .settingsMemoryStatusContainer:not(:last-child){
+#settingsMemoryStatus > .settingsMemoryStatusContainer:not(:last-child) {
     margin-bottom: 50%;
 }
 .settingsMemoryStatusContainer {
@@ -2195,7 +2409,7 @@ input:checked + .toggleSwitchSlider:before {
 /* Release type text. */
 #settingsAboutCurrentVersionTitle {
     font-size: 12px;
-    font-family: 'Avenir Medium';
+    font-family: var(--font-body);
     color: #23aa23;
     font-weight: bold;
 }
@@ -2284,10 +2498,10 @@ input:checked + .toggleSwitchSlider:before {
     background-color: rgba(255, 255, 255, 0.25);
     color: white;
     border-radius: 3px;
-    font-family: 'Avenir Book';
+    font-family: var(--font-body);
 }
-.settingsChangelogText li+li {
-    margin-top: .25em;
+.settingsChangelogText li + li {
+    margin-top: 0.25em;
 }
 .settingsChangelogText a.commit-link {
     font-weight: 400;
@@ -2311,7 +2525,7 @@ input:checked + .toggleSwitchSlider:before {
     text-decoration-color: black;
 }
 .settingsChangelogText .highlight {
-    background: rgba(0, 0, 0, 0.30);
+    background: rgba(0, 0, 0, 0.3);
     user-select: initial;
     padding: 5px 10px;
 }
@@ -2394,7 +2608,7 @@ input:checked + .toggleSwitchSlider:before {
 /* Release type text. */
 #settingsUpdateVersionTitle {
     font-size: 12px;
-    font-family: 'Avenir Medium';
+    font-family: var(--font-title);
     color: #23aa23;
     font-weight: bold;
 }
@@ -2432,7 +2646,8 @@ input:checked + .toggleSwitchSlider:before {
     text-shadow: 0px 0px 20px white, 0px 0px 20px white, 0px 0px 20px white;
 }
 #settingsUpdateActionButton:active {
-    text-shadow: 0px 0px 20px #c7c7c7, 0px 0px 20px #c7c7c7, 0px 0px 20px #c7c7c7;
+    text-shadow: 0px 0px 20px #c7c7c7, 0px 0px 20px #c7c7c7,
+        0px 0px 20px #c7c7c7;
     color: #c7c7c7;
 }
 #settingsUpdateActionButton:disabled {
@@ -2451,6 +2666,13 @@ input:checked + .toggleSwitchSlider:before {
     position: relative;
     transition: background 2s ease;
     overflow-y: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+#landingContainer > * {
+    width: 100%;
 }
 
 /* Upper content container. */
@@ -2458,24 +2680,28 @@ input:checked + .toggleSwitchSlider:before {
     position: relative;
     transition: top 2s ease;
     top: 0px;
-    height: 77%;
     display: flex;
 }
 #landingContainer > #upper > #left {
     display: inline-flex;
-    width: 15%;
+    flex: 0 1 15%;
     height: 100%;
     justify-content: flex-end;
+    align-items: center;
+    padding-left: 20px;
+    gap: 20px;
 }
-#landingContainer > #upper > #content {
+#landingContainer > #upper > .content {
     display: inline-flex;
-    width: 70%;
+    flex: 1 1 auto;
     height: 100%;
+    width: 100%;
 }
 #landingContainer > #upper > #right {
     display: inline-flex;
-    width: 15%;
+    flex: 1 1 15%;
     height: 100%;
+    padding-right: 20px;
 }
 
 /* Lower content container. */
@@ -2493,7 +2719,7 @@ input:checked + .toggleSwitchSlider:before {
     display: inline-flex;
     justify-content: center;
 }
-#landingContainer > #lower > #left #content {
+#landingContainer > #lower > #left .content {
     position: relative;
     top: 25px;
     display: inline-flex;
@@ -2509,7 +2735,7 @@ input:checked + .toggleSwitchSlider:before {
     display: inline-flex;
     justify-content: center;
 }
-#landingContainer > #lower > #center #content {
+#landingContainer > #lower > #center .content {
     position: relative;
     z-index: 500;
     transition: top 2s ease;
@@ -2593,7 +2819,7 @@ input:checked + .toggleSwitchSlider:before {
 #newsArticleTitle {
     font-size: 18px;
     font-weight: bold;
-    font-family: 'Avenir Medium';
+    font-family: var(--font-title);
     color: white;
     text-decoration: none;
     transition: 0.25s ease;
@@ -2703,7 +2929,7 @@ input:checked + .toggleSwitchSlider:before {
 }
 #newsArticleContentScrollable::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.50);
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.5);
 }
 .bbCodeSpoilerButton {
     background: none;
@@ -2718,18 +2944,19 @@ input:checked + .toggleSwitchSlider:before {
 }
 .bbCodeSpoilerButton:hover,
 .bbCodeSpoilerButton:focus {
-    text-shadow: 0px 0px 20px #ffffff, 0px 0px 20px #ffffff, 0px 0px 20px #ffffff;
+    text-shadow: 0px 0px 20px #ffffff, 0px 0px 20px #ffffff,
+        0px 0px 20px #ffffff;
 }
 .bbCodeSpoilerButton:active {
     color: #c7c7c7;
-    text-shadow: 0px 0px 20px #c7c7c7, 0px 0px 20px #c7c7c7, 0px 0px 20px #c7c7c7;
+    text-shadow: 0px 0px 20px #c7c7c7, 0px 0px 20px #c7c7c7,
+        0px 0px 20px #c7c7c7;
 }
 .bbCodeSpoilerText {
     display: none;
     padding: 15px 0px;
     border-bottom: 1px solid white;
 }
-
 
 #newsArticleContentWrapper {
     width: 80%;
@@ -2869,12 +3096,11 @@ input:checked + .toggleSwitchSlider:before {
     height: 70px;
     width: 70px;
     border-radius: 50%;
-    margin-top: 50px;
 }
 
 /* Logo container styles w/ update. */
-#image_seal_container[update]{
-    cursor: pointer
+#image_seal_container[update] {
+    cursor: pointer;
 }
 #image_seal_container[update]:before,
 #image_seal_container[update]:after {
@@ -2910,12 +3136,12 @@ input:checked + .toggleSwitchSlider:before {
     z-index: 1;
     top: 115%;
     left: -17.5px;
-    font-family: 'Avenir Medium';
+    font-family: var(--font-body);
     font-size: 12px;
     transition: visibility 0s linear 0.25s, opacity 0.25s ease;
 }
 #updateAvailableTooltip::after {
-    content: " ";
+    content: ' ';
     position: absolute;
     left: 50%;
     bottom: 100%;
@@ -2970,8 +3196,7 @@ input:checked + .toggleSwitchSlider:before {
 
 /* User profile avatar container. */
 #avatarContainer {
-    border-radius: 50%;
-    border: 2px solid #cad7e1;
+    border: 2px solid var(--color-primary);
     box-sizing: border-box;
     background: rgba(1, 2, 1, 0.5);
     height: 70px;
@@ -3013,9 +3238,8 @@ input:checked + .toggleSwitchSlider:before {
 
 /* User profile name text. */
 #user_text {
-    font-size: 12px;
+    font-size: 20pt;
     min-width: 135px;
-    font-weight: 900;
     letter-spacing: 1px;
     text-shadow: 0px 0px 20px black;
     position: absolute;
@@ -3035,10 +3259,18 @@ input:checked + .toggleSwitchSlider:before {
     align-items: center;
 }
 
+.media-content {
+    position: relative;
+}
+
 /* Social Media Icon division containers. */
-#internalMedia, #externalMedia {
+#internalMedia {
     display: flex;
     flex-direction: column;
+}
+#externalMedia {
+    display: flex;
+    gap: 5px;
 }
 
 /* Container object which wraps an icon to ensure fluid transitions. */
@@ -3046,7 +3278,6 @@ input:checked + .toggleSwitchSlider:before {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 27px;
 }
 
 /* Divider bar between the external and internal icons. */
@@ -3060,17 +3291,14 @@ input:checked + .toggleSwitchSlider:before {
 /* Social media icon shared styles. */
 .mediaSVG {
     fill: #ffffff;
-    height: 12px;
     transition: 0.25s ease;
-    cursor: pointer;
     height: 12px;
-    width: 25px;
 }
-.mediaSVG:hover,
+/* .mediaSVG:hover,
 .mediaURL:focus .mediaSVG,
 .mediaSVG:active {
     height: 20px;
-}
+} */
 
 /* Social media URL shared styles. */
 .mediaURL {
@@ -3079,9 +3307,6 @@ input:checked + .toggleSwitchSlider:before {
 
 /* Internal media button shared styles. */
 .mediaButton {
-    background: none;
-    border: none;
-    padding: 0px;
     display: flex;
     align-items: center;
     outline: none;
@@ -3119,7 +3344,7 @@ input:checked + .toggleSwitchSlider:before {
     transition: visibility 0s linear 0.25s, opacity 0.25s ease;
 }
 #settingsTooltip::after {
-    content: " ";
+    content: ' ';
     position: absolute;
     top: 50%;
     left: 100%;
@@ -3133,7 +3358,7 @@ input:checked + .toggleSwitchSlider:before {
 .mediaButton:active #settingsTooltip {
     visibility: visible;
     opacity: 1;
-    transition-delay:0s;
+    transition-delay: 0s;
 }
 
 /* Twitter icon colors. */
@@ -3148,11 +3373,11 @@ input:checked + .toggleSwitchSlider:before {
 /* Instagram icon colors. */
 #instagramSVG:hover,
 #instagramURL:focus #instagramSVG {
-    fill: url('#instaFill')
+    fill: url('#instaFill');
     /*fill: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); */
 }
 #instagramSVG:active {
-    fill: url('#instaFill')
+    fill: url('#instaFill');
 }
 
 /* Youtube icon colors. */
@@ -3181,9 +3406,9 @@ input:checked + .toggleSwitchSlider:before {
 
 /* Style for a general label on the bottom of the landing view. */
 .bot_label {
-    font-size: 9px;
+    font-size: 1em;
     letter-spacing: 1px;
-    font-weight: bold;
+    /* font-weight: bold; */
     text-shadow: 0px 0px 0px #bebcbb;
 }
 
@@ -3204,13 +3429,13 @@ input:checked + .toggleSwitchSlider:before {
 #server_status_wrapper {
     display: inline-flex;
     width: 75px;
+    align-items: center;
 }
 
 /* Span which displays the player count of the selected server. */
 #player_count {
     color: #949494;
-    font-size: 8px;
-    font-weight: 900;
+    font-size: 0.9em;
     text-shadow: 0px 0px 20px #949494;
     margin-left: 10px;
 }
@@ -3220,6 +3445,7 @@ input:checked + .toggleSwitchSlider:before {
     position: relative;
     display: flex;
     cursor: pointer;
+    align-items: center;
 }
 
 /* Icon which displays the status of the mojang services. */
@@ -3242,7 +3468,7 @@ input:checked + .toggleSwitchSlider:before {
     border-radius: 4px;
     padding: 5px 10px;
     z-index: 1;
-    font-family: 'Avenir Medium';
+    font-family: var(--font-body);
     font-size: 12px;
     transition: visibility 0s linear 0.25s, opacity 0.25s ease;
     bottom: calc(100% + 15px);
@@ -3252,7 +3478,7 @@ input:checked + .toggleSwitchSlider:before {
     cursor: default;
 }
 #mojangStatusTooltip:after {
-    content: " ";
+    content: ' ';
     position: absolute;
     left: 50%;
     top: 100%;
@@ -3295,6 +3521,7 @@ input:checked + .toggleSwitchSlider:before {
     padding: 0px 3px;
     text-align: center;
     letter-spacing: 1px;
+    white-space: nowrap;
 }
 
 /* Wrapper container for mojang service information. */
@@ -3319,127 +3546,83 @@ input:checked + .toggleSwitchSlider:before {
 }
 
 /* * *
-* Landing View (Bottom Styles) | Center Content
+* New Landing View (Bottom Styles)
 * * */
 
-/* Button which opens the news view. */
-#newsButton {
-    background: none;
-    border: none;
-    cursor: pointer;
-    outline: none;
-}
-#newsButton:hover #newsButtonText,
-#newsButton:focus #newsButtonText {
-    text-shadow: 0px 0px 20px #fff, 0px 0px 20px #fff;
-}
-#newsButton:active {
-    color: #c7c7c7;
-    text-shadow: 0px 0px 20px #c7c7c7, 0px 0px 20px #c7c7c7;
+#landingLower {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    max-width: 600px;
+    margin-bottom: 30px;
 }
 
-#newsButton:hover #newsButtonSVG,
-#newsButton:focus #newsButtonSVG {
-    -webkit-filter: drop-shadow(0px 0px 2px #fff);
-}
-#newsButton:active #newsButtonSVG .arrowLine {
-    stroke: #c7c7c7;
-}
-#newsButton:active #newsButtonSVG {
-    -webkit-filter: drop-shadow(0px 0px 2px #c7c7c7);
-}
-#newsButton:disabled #newsButtonSVG .arrowLine {
-    stroke: rgba(255, 255, 255, 0.75);
-}
-
-/* Icon which indicates there is new news. */
-#newsButtonAlert {
-    width: 5px;
-    height: 5px;
-    position: absolute;
-    border-radius: 50%;
-    background: red;
-    right: -1px;
-    top: 50%;
-}
-
-/* Arrow image which floats above the news button. */
-#newsButtonSVG {
-    height: 11px;
-    margin-left: -2px;
-    transition: 0.25s ease;
-}
-
-/* Span which contains the news button text. */
-#newsButtonText {
-    color: white;
-    font-weight: 900;
-    letter-spacing: 2px;
-    text-shadow: 0px 0px 0px #bebcbb;
-    font-size: 11px;
-    line-height: 30px;
+.landing-lower-left {
+    text-align: left;
     display: flex;
-    transition: 0.25s ease;
+    align-items: flex-end;
 }
+
+.landing-lower-right {
+    text-align: right;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+}
+
+/* The Launch button area */
+.landing-lower-center {
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    grid-column-end: span 2;
+}
+.landing-lower-center > .content {
+    width: 100%;
+}
+
+#launchButton {
+    width: 100%;
+}
+
 
 /* * *
 * Landing View (Bottom Styles) | Right Content
 * * */
 
 /* Main launch content container. */
-#landingContainer > #lower > #right #launch_content {
+#launch_content {
     position: relative;
     top: 25px;
     display: inline-flex;
 }
 
-/* The launch button. */
-#launch_button {
-    background: none;
-    border: none;
-    cursor: pointer;
-    font-weight: 900;
-    letter-spacing: 2px;
-    text-shadow: 0px 0px 0px #bebcbb;
-    font-size: 22px;
-    padding: 0px;
-    transition: 0.25s ease;
-    outline: none;
-}
-#launch_button:hover,
-#launch_button:focus {
-    text-shadow: 0px 0px 20px #fff, 0px 0px 20px #fff;
-}
-#launch_button:active {
-    color: #c7c7c7;
-    text-shadow: 0px 0px 20px #c7c7c7, 0px 0px 20px #c7c7c7;
-}
-#launch_button:disabled {
-    color: #c7c7c7;
-    cursor: default;
-    pointer-events: none;
-}
 
 /* Launch details main container, hidden until launch processing begins. */
-#launch_details {
+#launchDetails {
     position: relative;
     top: 25px;
-    display: none;
+    opacity: 0;
+    grid-template-columns: 1fr auto 1fr;
 }
- 
+#launchDetails[active] {
+    opacity: 1;
+}
+
 /* Left side of launch details container, displays percentage and a divider. */
 #launch_details_left {
     display: flex;
 }
 
 /* Span which displays percentage complete. */
-#launch_progress_label {
+#launchProgressLabel {
     font-weight: 900;
     letter-spacing: 1px;
     text-shadow: 0px 0px 0px #bebcbb;
     font-size: 20px;
-    min-width: 53.21px;
-    max-width: 53.21px;
+    width: 100%;
     text-align: right;
 }
 
@@ -3452,38 +3635,26 @@ input:checked + .toggleSwitchSlider:before {
 
 /* Button which opens the server selection view. */
 #server_selection_button {
-    background: none;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    line-height: 24px;
-    padding: 0px;
-    transition: 0.25s ease;
-}
-#server_selection_button:hover,
-#server_selection_button:focus {
-    text-shadow: 0px 0px 20px #fff, 0px 0px 20px #fff, 0px 0px 20px #fff;
-}
-#server_selection_button:active {
-    color: #c7c7c7;
-    text-shadow: 0px 0px 20px #c7c7c7, 0px 0px 20px #c7c7c7, 0px 0px 20px #c7c7c7;
+    /* */
 }
 
 /* Progress bar styles. */
-#launch_progress[value] {
+#launchProgress[value] {
     height: 3px;
-    width: 265px;
+    width: 100%;
+    grid-column-end: span 3;
+    display: inline-block;
     -webkit-appearance: none;
 }
-#launch_progress[value]::-webkit-progress-bar {
+#launchProgress[value]::-webkit-progress-bar {
     background-color: transparent;
 }
-#launch_progress[value]::-webkit-progress-value {
+#launchProgress[value]::-webkit-progress-value {
     background-color: #fff;
 }
 
 /* Span which displays information about the status of the launch process. */
-#launch_details_text {
+#launchDetailsText {
     font-size: 11px;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -3510,7 +3681,7 @@ input:checked + .toggleSwitchSlider:before {
     justify-content: center;
     width: 100%;
     height: calc(100% - 22px);
-    background: rgba(0, 0, 0, 0.50);
+    background: rgba(0, 0, 0, 0.5);
 }
 
 /* Main overlay content. */
@@ -3557,7 +3728,7 @@ input:checked + .toggleSwitchSlider:before {
 
 /* Overlay title styles. */
 #overlayTitle {
-    font-family: 'Avenir Medium';
+    font-family: var(--font-title);
     font-size: 20px;
     font-weight: bold;
     letter-spacing: 1px;
@@ -3583,7 +3754,7 @@ input:checked + .toggleSwitchSlider:before {
     background: none;
     border: 1px solid #ffffff;
     color: white;
-    font-family: 'Avenir Medium';
+    font-family: var(--font-body);
     font-weight: bold;
     border-radius: 2px;
     padding: 0px 8.1px;
@@ -3635,7 +3806,7 @@ input:checked + .toggleSwitchSlider:before {
 /* Server selection header. */
 #serverSelectHeader,
 #accountSelectHeader {
-    font-family: 'Avenir Medium';
+    font-family: var(--font-title);
     font-size: 20px;
     font-weight: bold;
     color: #fff;
@@ -3670,7 +3841,7 @@ input:checked + .toggleSwitchSlider:before {
 #serverSelectListScrollable::-webkit-scrollbar-thumb,
 #accountSelectListScrollable::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.50);
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 /* Content container for a server listing. */
@@ -3690,12 +3861,12 @@ input:checked + .toggleSwitchSlider:before {
 }
 .serverListing[selected] {
     cursor: default;
-    opacity: 1.0;
+    opacity: 1;
 }
 .serverListing:hover,
 .serverListing:focus {
     outline: none;
-    opacity: 1.0;
+    opacity: 1;
 }
 
 .accountListing {
@@ -3715,12 +3886,12 @@ input:checked + .toggleSwitchSlider:before {
 }
 .accountListing[selected] {
     cursor: default;
-    opacity: 1.0;
+    opacity: 1;
 }
 .accountListing:hover,
 .accountListing:focus {
     outline: none;
-    opacity: 1.0;
+    opacity: 1;
 }
 
 .accountListingName {
@@ -3732,7 +3903,8 @@ input:checked + .toggleSwitchSlider:before {
 
 /* Add spacing between server listings. */
 #serverSelectListScrollable > .serverListing:not(:first-child):not(:last-child),
-#accountSelectListScrollable > .accountListing:not(:first-child):not(:last-child) {
+#accountSelectListScrollable
+    > .accountListing:not(:first-child):not(:last-child) {
     margin: 5px 0px;
 }
 #serverSelectListScrollable > .serverListing:first-child,
@@ -3817,7 +3989,7 @@ input:checked + .toggleSwitchSlider:before {
     visibility: hidden;
     opacity: 0;
     width: 65px;
-    background-color: rgba(0, 0, 0, 0.40);
+    background-color: rgba(0, 0, 0, 0.4);
     text-align: center;
     border-radius: 4px;
     position: absolute;
@@ -3827,19 +3999,19 @@ input:checked + .toggleSwitchSlider:before {
     transition: visibility 0s linear 0.25s, opacity 0.25s ease;
 }
 .serverListingStarTooltip::after {
-    content: " ";
+    content: ' ';
     position: absolute;
     top: 50%;
     right: 100%; /* To the left of the tooltip */
     margin-top: -5px;
     border-width: 5px;
     border-style: solid;
-    border-color: transparent rgba(0, 0, 0, 0.40) transparent transparent;
+    border-color: transparent rgba(0, 0, 0, 0.4) transparent transparent;
 }
 .serverListingStarWrapper:hover .serverListingStarTooltip {
     visibility: visible;
     opacity: 1;
-    transition-delay:0s;
+    transition-delay: 0s;
 }
 
 /* Content container which contains the server select actions. */
@@ -3858,7 +4030,7 @@ input:checked + .toggleSwitchSlider:before {
     background: none;
     border: 1px solid #ffffff;
     color: white;
-    font-family: 'Avenir Medium';
+    font-family: var(--font-body);
     font-weight: bold;
     border-radius: 2px;
     padding: 0px 8.1px;
