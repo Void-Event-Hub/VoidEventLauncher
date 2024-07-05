@@ -916,7 +916,7 @@ function bindDropinModsRemoveButton(){
 function bindDropinModFileSystemButton(){
     const fsBtn = document.getElementById('settingsDropinFileSystemButton')
     fsBtn.onclick = () => {
-        DropinModUtil.validateDir(CACHE_SETTINGS_MODS_DIR)
+        /* DropinModUtil.validateDir(CACHE_SETTINGS_MODS_DIR) */
         shell.openPath(CACHE_SETTINGS_MODS_DIR)
     }
     fsBtn.ondragenter = e => {
