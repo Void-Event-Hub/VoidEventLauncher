@@ -7,7 +7,7 @@
     <link type="text/css" rel="stylesheet" href="./assets/css/launcher.css">
     <style>
         body {
-            background: url('assets/images/backgrounds/<%=bkid%>.jpg') no-repeat center center fixed;
+            background: url('assets/images/backgrounds/<%=backgroundPath%>') no-repeat center center fixed;
             transition: background-image 1s ease;
             background-size: cover;
             -webkit-user-select: none;
@@ -25,7 +25,7 @@
         }
     </style>
 </head>
-<body bkid="<%=bkid%>">
+<body>
     <%- include('frame') %>
     <div id="main">
         <%- include('welcome') %>

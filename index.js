@@ -240,8 +240,18 @@ function createWindow() {
     })
     remoteMain.enable(win.webContents)
 
+    // sometimes it picks up on `.DS_Store` , `Thumbs.db`, etc. (thanks macOS)
+    const supportedBackgroundTypes = ['.jpg', '.jpeg', '.png', '.gif', '.webp']
+    const availableBackgrounds = fs.readdirSync(path.join(__dirname, 'app', 'assets', 'images', 'backgrounds'), {withFileTypes: true})
+        .filter(file => file.isFile() && supportedBackgroundTypes.includes(path.extname(file.name).toLowerCase()))
+
+    const backgroundPath = availableBackgrounds[
+        availableBackgrounds.length > 1
+            ? Math.floor(Math.random() * availableBackgrounds.length)
+            : 0
+    ]?.name ?? 'empty.png'
     const data = {
-        bkid: 1 + Math.floor((Math.random() * (fs.readdirSync(path.join(__dirname, 'app', 'assets', 'images', 'backgrounds')).length))),
+        backgroundPath,
         lang: (str, placeHolders) => LangLoader.queryEJS(str, placeHolders)
     }
     Object.entries(data).forEach(([key, val]) => ejse.data(key, val))
