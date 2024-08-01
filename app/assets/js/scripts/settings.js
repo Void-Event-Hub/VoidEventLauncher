@@ -43,7 +43,7 @@ bindSettingsSelect()
 
 function bindFileSelectors(){
     for(let ele of document.getElementsByClassName('settingsFileSelButton')){
-        
+
         ele.onclick = async e => {
             const isJavaExecSel = ele.id === 'settingsJavaExecSel'
             const directoryDialog = ele.hasAttribute('dialogDirectory') && ele.getAttribute('dialogDirectory') == 'true'
@@ -237,7 +237,7 @@ let selectedSettingsTab = 'settingsTabAccount'
 /**
  * Modify the settings container UI when the scroll threshold reaches
  * a certain poin.
- * 
+ *
  * @param {UIEvent} e The scroll event.
  */
 function settingsTabScrollListener(e){
@@ -264,7 +264,7 @@ function setupSettingsTabs(){
 /**
  * Settings nav item onclick lisener. Function is exposed so that
  * other UI elements can quickly toggle to a certain tab from other views.
- * 
+ *
  * @param {Element} ele The nav item which has been clicked.
  * @param {boolean} fade Optional. True to fade transition.
  */
@@ -314,7 +314,7 @@ const settingsNavDone = document.getElementById('settingsNavDone')
 
 /**
  * Set if the settings save (done) button is disabled.
- * 
+ *
  * @param {boolean} v True to disable, false to enable.
  */
 function settingsSaveDisabled(v){
@@ -344,11 +344,11 @@ const msftLogoutLogger = LoggerUtil.getLogger('Microsoft Logout')
 
 // Bind the add mojang account button.
 // document.getElementById('settingsAddMojangAccount').onclick = (e) => {
-    // switchView(getCurrentView(), VIEWS.login, 500, 500, () => {
-        // loginViewOnCancel = VIEWS.settings
-        // loginViewOnSuccess = VIEWS.settings
-       // loginCancelEnabled(true)
-    // })
+//     switchView(getCurrentView(), VIEWS.login, 500, 500, () => {
+//         loginViewOnCancel = VIEWS.settings
+//         loginViewOnSuccess = VIEWS.settings
+//        loginCancelEnabled(true)
+//     })
 // }
 
 // Bind the add microsoft account button.
@@ -391,7 +391,7 @@ ipcRenderer.on(MSFT_OPCODE.REPLY_LOGIN, (_, ...arguments_) => {
         if (Object.prototype.hasOwnProperty.call(queryMap, 'error')) {
             switchView(getCurrentView(), viewOnClose, 500, 500, () => {
                 // TODO Dont know what these errors are. Just show them I guess.
-                // This is probably if you messed up the app registration with Azure.      
+                // This is probably if you messed up the app registration with Azure.
                 let error = queryMap.error // Error might be 'access_denied' ?
                 let errorDesc = queryMap.error_description
                 console.log('Error getting authCode, is Azure application registered correctly?')
@@ -496,7 +496,7 @@ function bindAuthAccountLogOut(){
             } else {
                 processLogOut(val, isLastAccount)
             }
-            
+
         }
     })
 }
@@ -504,7 +504,7 @@ function bindAuthAccountLogOut(){
 let msAccDomElementCache
 /**
  * Process a log out.
- * 
+ *
  * @param {Element} val The log out button element.
  * @param {boolean} isLastAccount If this logout is on the last added account.
  */
@@ -562,13 +562,13 @@ ipcRenderer.on(MSFT_OPCODE.REPLY_LOGOUT, (_, ...arguments_) => {
             toggleOverlay(true)
         })
     } else if(arguments_[0] === MSFT_REPLY_TYPE.SUCCESS) {
-        
+
         const uuid = arguments_[1]
         const isLastAccount = arguments_[2]
         const prevSelAcc = ConfigManager.getSelectedAccount()
 
         msftLogoutLogger.info('Logout Successful. uuid:', uuid)
-        
+
         AuthManager.removeMicrosoftAccount(uuid)
             .then(() => {
                 if(!isLastAccount && uuid === prevSelAcc.uuid){
@@ -600,7 +600,7 @@ ipcRenderer.on(MSFT_OPCODE.REPLY_LOGOUT, (_, ...arguments_) => {
 /**
  * Refreshes the status of the selected account on the auth account
  * elements.
- * 
+ *
  * @param {string} uuid The UUID of the new selected account.
  */
 function refreshAuthAccountSelected(uuid){
@@ -724,7 +724,7 @@ async function resolveModsForUI(){
 
 /**
  * Recursively build the mod UI elements.
- * 
+ *
  * @param {Object[]} mdls An array of modules to parse.
  * @param {boolean} submodules Whether or not we are parsing submodules.
  * @param {Object} servConf The server configuration object for this module level.
@@ -824,7 +824,7 @@ function saveModConfiguration(){
 
 /**
  * Recursively save mod config with submods.
- * 
+ *
  * @param {Object} modConf Mod config object to save.
  */
 function _saveModConfiguration(modConf){
@@ -1220,8 +1220,8 @@ settingsMaxRAMRange.onchange = (e) => {
 
 /**
  * Calculate common values for a ranged slider.
- * 
- * @param {Element} v The range slider to calculate against. 
+ *
+ * @param {Element} v The range slider to calculate against.
  * @returns {Object} An object with meta values for the provided ranged slider.
  */
 function calculateRangeSliderMeta(v){
@@ -1265,7 +1265,7 @@ function bindRangeSlider(){
 
                 // Distance from the beginning of the bar in pixels.
                 const diff = e.pageX - v.offsetLeft - track.offsetWidth/2
-                
+
                 // Don't move the track off the bar.
                 if(diff >= 0 && diff <= v.offsetWidth-track.offsetWidth/2){
 
@@ -1281,12 +1281,12 @@ function bindRangeSlider(){
                 }
             }
         }
-    }) 
+    })
 }
 
 /**
  * Update a ranged slider's value and position.
- * 
+ *
  * @param {Element} element The ranged slider to update.
  * @param {string | number} value The new value for the ranged slider.
  * @param {number} notch The notch that the slider should now be at.
@@ -1295,7 +1295,7 @@ function updateRangedSlider(element, value, notch){
     const oldVal = element.getAttribute('value')
     const bar = element.getElementsByClassName('rangeSliderBar')[0]
     const track = element.getElementsByClassName('rangeSliderTrack')[0]
-    
+
     element.setAttribute('value', value)
 
     if(notch < 0){
@@ -1332,7 +1332,7 @@ function populateMemoryStatus(){
 /**
  * Validate the provided executable path and display the data on
  * the UI.
- * 
+ *
  * @param {string} execPath The executable path to populate against.
  */
 async function populateJavaExecDetails(execPath){
@@ -1409,7 +1409,7 @@ document.getElementById('settingsAboutDevToolsButton').onclick = (e) => {
 
 /**
  * Return whether or not the provided version is a prerelease.
- * 
+ *
  * @param {string} version The semver version to test.
  * @returns {boolean} True if the version is a prerelease, otherwise false.
  */
@@ -1421,7 +1421,7 @@ function isPrerelease(version){
 /**
  * Utility method to display version information on the
  * About and Update settings tabs.
- * 
+ *
  * @param {string} version The semver version to display.
  * @param {Element} valueElement The value element.
  * @param {Element} titleElement The title element.
@@ -1457,7 +1457,7 @@ function populateReleaseNotes(){
         success: (data) => {
             const version = 'v' + remote.app.getVersion()
             const entries = $(data).find('entry')
-            
+
             for(let i=0; i<entries.length; i++){
                 const entry = $(entries[i])
                 let id = entry.find('id').text()
@@ -1501,7 +1501,7 @@ const settingsUpdateActionButton   = document.getElementById('settingsUpdateActi
 
 /**
  * Update the properties of the update action button.
- * 
+ *
  * @param {string} text The new button text.
  * @param {boolean} disabled Optional. Disable or enable the button
  * @param {function} handler Optional. New button event handler.
@@ -1516,7 +1516,7 @@ function settingsUpdateButtonStatus(text, disabled = false, handler = null){
 
 /**
  * Populate the update tab with relevant information.
- * 
+ *
  * @param {Object} data The update data.
  */
 function populateSettingsUpdateInformation(data){
@@ -1526,7 +1526,7 @@ function populateSettingsUpdateInformation(data){
         settingsUpdateChangelogTitle.innerHTML = data.releaseName
         settingsUpdateChangelogText.innerHTML = data.releaseNotes
         populateVersionInformation(data.version, settingsUpdateVersionValue, settingsUpdateVersionTitle, settingsUpdateVersionCheck)
-        
+
         if(process.platform === 'darwin'){
             settingsUpdateButtonStatus(Lang.queryJS('settings.updates.downloadButton'), false, () => {
                 shell.openExternal(data.darwindownload)
@@ -1539,17 +1539,15 @@ function populateSettingsUpdateInformation(data){
         settingsUpdateChangelogCont.style.display = 'none'
         populateVersionInformation(remote.app.getVersion(), settingsUpdateVersionValue, settingsUpdateVersionTitle, settingsUpdateVersionCheck)
         settingsUpdateButtonStatus(Lang.queryJS('settings.updates.checkForUpdatesButton'), false, () => {
-            if(!isDev){
-                ipcRenderer.send('autoUpdateAction', 'checkForUpdate')
-                settingsUpdateButtonStatus(Lang.queryJS('settings.updates.checkingForUpdatesButton'), true)
-            }
+            ipcRenderer.send('autoUpdateAction', 'checkForUpdate')
+            settingsUpdateButtonStatus(Lang.queryJS('settings.updates.checkingForUpdatesButton'), true)
         })
     }
 }
 
 /**
  * Prepare update tab for display.
- * 
+ *
  * @param {Object} data The update data.
  */
 function prepareUpdateTab(data = null){
@@ -1562,7 +1560,7 @@ function prepareUpdateTab(data = null){
 
 /**
   * Prepare the entire settings UI.
-  * 
+  *
   * @param {boolean} first Whether or not it is the first load.
   */
 async function prepareSettings(first = false) {

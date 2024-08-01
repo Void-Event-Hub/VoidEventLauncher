@@ -18,6 +18,8 @@ LangLoader.setupLanguage()
 
 // Setup auto updater.
 function initAutoUpdater(event, data) {
+    autoUpdater.disableWebInstaller = true
+    autoUpdater.disableDifferentialDownload = true // doesn't work anyway
 
     if(data){
         autoUpdater.allowPrerelease = true
@@ -25,11 +27,13 @@ function initAutoUpdater(event, data) {
         // Defaults to true if application version contains prerelease components (e.g. 0.12.1-alpha.1)
         // autoUpdater.allowPrerelease = true
     }
-    
+
     if(isDev){
         autoUpdater.autoInstallOnAppQuit = false
-        autoUpdater.updateConfigPath = path.join(__dirname, 'dev-app-update.yml')
+        autoUpdater.forceDevUpdateConfig = true
+        console.log('App path is:', app.getAppPath())
     }
+
     if(process.platform === 'darwin'){
         autoUpdater.autoDownload = true
     }
@@ -46,8 +50,9 @@ function initAutoUpdater(event, data) {
         event.sender.send('autoUpdateNotification', 'checking-for-update')
     })
     autoUpdater.on('error', (err) => {
+        console.log('update-error', err)
         event.sender.send('autoUpdateNotification', 'realerror', err)
-    }) 
+    })
 }
 
 // Open channel to listen for update actions.
@@ -59,7 +64,7 @@ ipcMain.on('autoUpdateAction', (event, arg, data) => {
             event.sender.send('autoUpdateNotification', 'ready')
             break
         case 'checkForUpdate':
-            autoUpdater.checkForUpdates()
+            autoUpdater.checkForUpdatesAndNotify()
                 .catch(err => {
                     event.sender.send('autoUpdateNotification', 'realerror', err)
                 })
@@ -198,7 +203,7 @@ ipcMain.on(MSFT_OPCODE.OPEN_LOGOUT, (ipcEvent, uuid, isLastAccount) => {
             ipcEvent.reply(MSFT_OPCODE.REPLY_LOGOUT, MSFT_REPLY_TYPE.SUCCESS, uuid, isLastAccount)
         }
     })
-    
+
     msftLogoutWindow.webContents.on('did-navigate', (_, uri) => {
         if(uri.startsWith('https://login.microsoftonline.com/common/oauth2/v2.0/logoutsession')) {
             msftLogoutSuccess = true
@@ -215,7 +220,7 @@ ipcMain.on(MSFT_OPCODE.OPEN_LOGOUT, (ipcEvent, uuid, isLastAccount) => {
             }, 5000)
         }
     })
-    
+
     msftLogoutWindow.removeMenu()
     msftLogoutWindow.loadURL('https://login.microsoftonline.com/common/oauth2/v2.0/logout')
 })
@@ -240,8 +245,18 @@ function createWindow() {
     })
     remoteMain.enable(win.webContents)
 
+    // sometimes it picks up on `.DS_Store` , `Thumbs.db`, etc. (thanks macOS)
+    const supportedBackgroundTypes = ['.jpg', '.jpeg', '.png', '.gif', '.webp']
+    const availableBackgrounds = fs.readdirSync(path.join(__dirname, 'app', 'assets', 'images', 'backgrounds'), {withFileTypes: true})
+        .filter(file => file.isFile() && supportedBackgroundTypes.includes(path.extname(file.name).toLowerCase()))
+
+    const backgroundPath = availableBackgrounds[
+        availableBackgrounds.length > 1
+            ? Math.floor(Math.random() * availableBackgrounds.length)
+            : 0
+    ]?.name ?? 'empty.png'
     const data = {
-        bkid: 1 + Math.floor((Math.random() * (fs.readdirSync(path.join(__dirname, 'app', 'assets', 'images', 'backgrounds')).length))),
+        backgroundPath,
         lang: (str, placeHolders) => LangLoader.queryEJS(str, placeHolders)
     }
     Object.entries(data).forEach(([key, val]) => ejse.data(key, val))
@@ -262,7 +277,7 @@ function createWindow() {
 }
 
 function createMenu() {
-    
+
     if(process.platform === 'darwin') {
 
         // Extend default included application menu to continue support for quit keyboard shortcut
