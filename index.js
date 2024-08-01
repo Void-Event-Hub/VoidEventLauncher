@@ -38,18 +38,15 @@ function initAutoUpdater(event, data) {
         autoUpdater.autoDownload = true
     }
     autoUpdater.on('update-available', (info) => {
-        console.log('update-available', info)
         event.sender.send('autoUpdateNotification', 'update-available', info)
     })
     autoUpdater.on('update-downloaded', (info) => {
         event.sender.send('autoUpdateNotification', 'update-downloaded', info)
     })
     autoUpdater.on('update-not-available', (info) => {
-        console.log('update-not-available', info)
         event.sender.send('autoUpdateNotification', 'update-not-available', info)
     })
     autoUpdater.on('checking-for-update', () => {
-        console.log('checking-for-update')
         event.sender.send('autoUpdateNotification', 'checking-for-update')
     })
     autoUpdater.on('error', (err) => {
