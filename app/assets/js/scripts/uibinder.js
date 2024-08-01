@@ -28,8 +28,8 @@ let currentView
 
 /**
  * Switch launcher views.
- * 
- * @param {string} current The ID of the current view container. 
+ *
+ * @param {string} current The ID of the current view container.
  * @param {*} next The ID of the next view container.
  * @param {*} currentFadeTime Optional. The fade out time for the current view.
  * @param {*} nextFadeTime Optional. The fade in time for the next view.
@@ -50,7 +50,7 @@ function switchView(current, next, currentFadeTime = 500, nextFadeTime = 500, on
 
 /**
  * Get the currently shown view container.
- * 
+ *
  * @returns {string} The currently shown view container.
  */
 function getCurrentView(){
@@ -59,10 +59,8 @@ function getCurrentView(){
 
 async function showMainUI(data){
 
-    if(!isDev){
-        loggerAutoUpdater.info('Initializing..')
-        ipcRenderer.send('autoUpdateAction', 'initAutoUpdater', ConfigManager.getAllowPrerelease())
-    }
+    loggerAutoUpdater.info('Initializing..')
+    ipcRenderer.send('autoUpdateAction', 'initAutoUpdater', ConfigManager.getAllowPrerelease())
 
     await prepareSettings(true)
     updateSelectedServer(data.getServerById(ConfigManager.getSelectedServer()))
@@ -101,7 +99,7 @@ async function showMainUI(data){
                 $('#loadSpinnerImage').removeClass('rotating')
             })
         }, 250)
-        
+
     }, 750)
 }
 
@@ -125,7 +123,7 @@ function showFatalStartupError(){
 
 /**
  * Common functions to perform after refreshing the distro index.
- * 
+ *
  * @param {Object} data The distro index object.
  */
 function onDistroRefresh(data){
@@ -137,7 +135,7 @@ function onDistroRefresh(data){
 
 /**
  * Sync the mod configurations with the distro index.
- * 
+ *
  * @param {Object} data The distro index object.
  */
 function syncModConfigurations(data){
@@ -221,7 +219,7 @@ function syncModConfigurations(data){
 
 /**
  * Ensure java configurations are present for the available servers.
- * 
+ *
  * @param {Object} data The distro index object.
  */
 function ensureJavaSettings(data) {
@@ -238,7 +236,7 @@ function ensureJavaSettings(data) {
  * Recursively scan for optional sub modules. If none are found,
  * this function returns a boolean. If optional sub modules do exist,
  * a recursive configuration object is returned.
- * 
+ *
  * @returns {boolean | Object} The resolved mod configuration.
  */
 function scanOptionalSubModules(mdls, origin){
@@ -278,11 +276,11 @@ function scanOptionalSubModules(mdls, origin){
 
 /**
  * Recursively merge an old configuration into a new configuration.
- * 
+ *
  * @param {boolean | Object} o The old configuration value.
  * @param {boolean | Object} n The new configuration value.
  * @param {boolean} nReq If the new value is a required mod.
- * 
+ *
  * @returns {boolean | Object} The merged configuration.
  */
 function mergeModConfiguration(o, n, nReq = false){
@@ -346,7 +344,7 @@ async function validateSelectedAccount(){
                     document.getElementById('loginUsername').value = selectedAcc.username
                     validateEmail(selectedAcc.username)
                 }
-                
+
                 loginOptionsViewOnLoginSuccess = getCurrentView()
                 loginOptionsViewOnLoginCancel = VIEWS.loginOptions
 
@@ -403,7 +401,7 @@ async function validateSelectedAccount(){
 /**
  * Temporary function to update the selected account along
  * with the relevent UI elements.
- * 
+ *
  * @param {string} uuid The UUID of the account.
  */
 function setSelectedAccount(uuid){
@@ -425,7 +423,7 @@ document.addEventListener('readystatechange', async () => {
             } else {
                 showFatalStartupError()
             }
-        } 
+        }
     }
 
 }, false)
