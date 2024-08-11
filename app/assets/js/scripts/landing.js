@@ -545,6 +545,11 @@ async function dlAsync(login = true) {
         loggerLaunchSuite.info('No invalid files, skipping download.')
     }
 
+    // trigger extranious mod removal
+    disableExtraniousMods(path.join(ConfigManager.getInstanceDirectory(), ConfigManager.getSelectedServer()))
+
+    //
+
     // Remove download bar.
     remote.getCurrentWindow().setProgressBar(-1)
 
