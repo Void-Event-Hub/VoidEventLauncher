@@ -5,10 +5,20 @@
 // Requirements
 const path          = require('path')
 const { Type }      = require('helios-distribution-types')
+const fs            = require('fs')
+const { globSync }  = require('glob')
 
-const AuthManager   = require('./assets/js/authmanager')
+const AuthManager = require('./assets/js/authmanager')
+/** @type import("../configmanager") */
 const ConfigManager = require('./assets/js/configmanager')
 const { DistroAPI } = require('./assets/js/distromanager')
+
+/**
+ *
+ * @typedef {import("../configmanager").ServerConfiguration} ServerConfiguration
+ *
+ * @typedef {import("helios-distribution-types").HeliosDistribution} HeliosDistribution
+ */
 
 let rscShouldLoad = false
 let fatalStartupError = false
@@ -129,8 +139,22 @@ function showFatalStartupError(){
 function onDistroRefresh(data){
     updateSelectedServer(data.getServerById(ConfigManager.getSelectedServer()))
     refreshServerStatus()
+    syncServerConfiguration(data)
     syncModConfigurations(data)
+    syncServerConfiguration(data)
     ensureJavaSettings(data)
+}
+
+/**
+ * Syncs server-side configuration
+ * @param {Distribution} data The distribution object.
+ */
+function syncServerConfiguration(data) {
+    /** @type ServerConfiguration|undefined */
+    const config = data.rawDistribution.config
+    if (config) {
+        ConfigManager.setServerConfiguration(config)
+    }
 }
 
 /**
@@ -215,6 +239,54 @@ function syncModConfigurations(data){
 
     ConfigManager.setModConfigurations(syncedCfgs)
     ConfigManager.save()
+}
+
+/**
+* Scans for extranious mods within the game's directory and disables them.
+* @param {string} gameDir The game directory to scan for extranious mods.
+*/
+function disableExtraniousMods(gameDir) {
+    logger = LoggerUtil.getLogger('ExtraniousModsCleanup')
+
+    let disableModPaths = ConfigManager.getServerConfiguration().disableExtraMods
+    if (!disableModPaths) {
+        return
+    }
+
+    if (!Array.isArray(disableModPaths)) {
+        logger.warn('Invalid server configuration: disableExtraMods is given but not an array. Disabling extranious mods will be skipped.')
+    }
+
+    logger.verbose('Scanning for extranious mods in game directory: ' + gameDir)
+
+    /** @type string[] */
+    let disabledMods = []
+    for (const modDir of disableModPaths) {
+        try {
+            const modFiles = globSync(modDir, { cwd: gameDir })
+            for (const modFile of modFiles) {
+
+                const modPath = path.join(gameDir, modFile)
+
+                try {
+                    // add some timestamp to the file name to prevent conflicts
+                    fs.renameSync(modPath, `${modPath}.${Date.now().toString(16)}.disabled`)
+                    disabledMods.push(modFile)
+                    logger.verbose(`Disabled extranious mod: ${modFile}`)
+                } catch (err) {
+                    logger.warn(`Error while disabling extranious mod: ${modFile}`, err)
+                }
+            }
+        } catch (err) {
+            logger.warn(`Error while scanning for extranious mods in directory: ${modDir}`, err)
+        }
+    }
+
+    if (disabledMods.length > 0) {
+        logger.info(`Disabled ${disabledMods.length} extranious mod(s).`)
+    } else {
+        logger.info('No extranious mods found. Thanks for playing fair!')
+    }
 }
 
 /**
@@ -433,6 +505,7 @@ ipcRenderer.on('distributionIndexDone', async (event, res) => {
     if(res) {
         const data = await DistroAPI.getDistribution()
         syncModConfigurations(data)
+        syncServerConfiguration(data)
         ensureJavaSettings(data)
         if(document.readyState === 'interactive' || document.readyState === 'complete'){
             await showMainUI(data)
@@ -456,4 +529,5 @@ async function devModeToggle() {
     ensureJavaSettings(data)
     updateSelectedServer(data.servers[0])
     syncModConfigurations(data)
+    syncServerConfiguration(data)
 }
