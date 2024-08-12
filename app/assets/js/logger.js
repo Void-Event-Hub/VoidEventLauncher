@@ -17,7 +17,7 @@ class FileLoggingTransport extends winston.Transport {
     getStream() {
         if (this.stream) return this.stream
 
-        const dirName = path.join(app.getPath('userData'), 'logs')
+        const dirName = app.getPath('logs')
         const fileName = `${this.logFileName}-latest.${this.logFileExt}`
         const fileNameFull = path.join(dirName, fileName)
 
@@ -54,6 +54,7 @@ const fileTransport = new FileLoggingTransport({
     logFileName: 'launcher',
     maxLogFiles: 5
 })
+fileTransport.setMaxListeners(30)
 
 /**
  * Reconfigures the logger
