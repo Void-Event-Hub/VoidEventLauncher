@@ -1,6 +1,6 @@
-appId: 'helioslauncher'
+appId: 'net.createacademy.launcher'
 productName: 'Create-Academy-Launcher'
-artifactName: '${productName}-setup-${version}.${ext}'
+artifactName: '${productName}-setup-${channel}_${version}-${os}_${arch}.${ext}'
 
 copyright: 'Copyright © 2024 Fairy Jeux'
 
@@ -33,7 +33,6 @@ mac:
       arch:
         - 'x64'
         - 'arm64'
-  artifactName: '${productName}-setup-${version}-${arch}.${ext}'
   category: 'public.app-category.games'
 
 # Linux Configuration
@@ -43,7 +42,6 @@ linux:
       arch:
         - 'x64'
         - 'arm64'
-  artifactName: '${productName}-setup-${version}-${arch}.${ext}'
   maintainer: 'Fairy Jeux'
   vendor: 'Fairy Jeux'
   synopsis: 'Modded Minecraft Launcher for Create Academy'
