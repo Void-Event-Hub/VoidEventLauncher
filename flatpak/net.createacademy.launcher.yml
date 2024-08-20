@@ -3,7 +3,7 @@
 # Copied in large part from:
 # - https://github.com/PrismLauncher/PrismLauncher/blob/develop/flatpak/org.prismlauncher.PrismLauncher.yml
 
-app-id: com.github.fairyjeux.create-academy-launcher
+app-id: 'net.createacademy.launcher'
 runtime: org.freedesktop.Platform
 runtime-version: '23.08'
 sdk: org.freedesktop.Sdk
