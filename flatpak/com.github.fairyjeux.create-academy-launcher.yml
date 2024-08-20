@@ -95,6 +95,13 @@ modules:
     cleanup:
       - /jre
 
+  - name: ecm
+    buildsystem: cmake-ninja
+    sources:
+      - type: git
+        url: https://github.com/KDE/extra-cmake-modules.git
+        tag: v6.5.0
+
   - name: glfw
     buildsystem: cmake-ninja
     config-opts:
@@ -103,9 +110,9 @@ modules:
       - -DGLFW_USE_WAYLAND:BOOL=ON
       - -DGLFW_BUILD_DOCS:BOOL=OFF
     sources:
-      - type: git
-        url: https://github.com/glfw/glfw.git
-        commit: 3fa2360720eeba1964df3c0ecf4b5df8648a8e52
+      - type: archive
+        url: https://github.com/glfw/glfw/archive/3.3.8.tar.gz
+        sha512: 70d6d99fb7e7616990516070c9a430915dc68d89ec4fe785570f0b35f5c9606a34121e0cd57c0a7debb50e87e2a8e8d97d81a6d52d65ef454f7fd191bd9f679f
       - type: patch
         path: patches/minecraft-wayland/0003-Don-t-crash-on-calls-to-focus-or-icon.patch
       - type: patch
