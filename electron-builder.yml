@@ -9,6 +9,7 @@ compression: 'maximum'
 
 files:
   - '!{dist,.gitignore,.vscode,docs,dev-app-update.yml,.nvmrc,.eslintrc.json}'
+  - '!flatpack/**'
 
 extraResources:
   - 'libraries'
