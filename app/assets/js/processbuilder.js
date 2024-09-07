@@ -74,15 +74,13 @@ class ProcessBuilder {
         logger.info('Launch Arguments:', args)
 
         if (process.env['_JAVA_OPTIONS']) {
+            process.env['_JAVA_OPTIONS'] = ''
             logger.warn('Detected _JAVA_OPTIONS environment variable. This can cause issues with the launcher, so it has been overridden.')
         }
 
         const child = child_process.spawn(ConfigManager.getJavaExecutable(this.server.rawServer.id), args, {
             cwd: this.gameDir,
-            detached: ConfigManager.getLaunchDetached(),
-            env: {
-                '_JAVA_OPTIONS': ''
-            }
+            detached: ConfigManager.getLaunchDetached()
         })
 
         if(ConfigManager.getLaunchDetached()){
