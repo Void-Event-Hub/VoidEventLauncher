@@ -8,7 +8,11 @@ asar: true
 compression: 'maximum'
 
 files:
-  - '!{dist,.gitignore,.vscode,docs,dev-app-update.yml,.nvmrc,.eslintrc.json}'
+  - '*.{js,json,txt,md}'
+  - '{app,libraries,build}/**/*'
+  - 'node_modules/**/*.{js,json}'
+  # - '!{dist,.gitignore,.vscode,docs,dev-app-update.yml,.nvmrc,.eslintrc.json}'
+  # - '!flatpack/**'
 
 extraResources:
   - 'libraries'
