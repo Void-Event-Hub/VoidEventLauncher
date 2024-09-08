@@ -29,12 +29,13 @@ finish-args:
   - --share=network
   - --socket=pulseaudio
   - --env=ELECTRON_TRASH=gio
+    # launcher and game files
+  - --filesystem=~/.createacademylauncher:create
+  - --filesystem=xdg-config/Create\ Academy\ Launcher:create
     # for Discord RPC mods
   - --filesystem=xdg-run/app/com.discordapp.Discord:create
     # Mod drag&drop
   - --filesystem=xdg-download:ro
-    # FTBApp import
-  - --filesystem=~/.ftba:ro
 
 cleanup:
   - /lib/libGLU*
