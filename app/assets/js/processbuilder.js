@@ -73,7 +73,10 @@ class ProcessBuilder {
 
         logger.info('Launch Arguments:', args)
 
-        if (process.env['_JAVA_OPTIONS']) {
+        if (process.env['_JAVA_OPTIONS'] && os.platform() === 'win32') {
+            // TODO Parse out the offending options (like -Xmx and -Xms) and only remove those.
+            // It is more common that expected for some Windows users to have it set due to some other launcher needing it.
+            // but Linux utilizes this variable for other purposes and can't have it cleared.
             process.env['_JAVA_OPTIONS'] = ''
             logger.warn('Detected _JAVA_OPTIONS environment variable. This can cause issues with the launcher, so it has been overridden.')
         }
