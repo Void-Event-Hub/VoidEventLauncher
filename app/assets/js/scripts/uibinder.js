@@ -154,6 +154,7 @@ function syncServerConfiguration(data) {
     const config = data.rawDistribution.config
     if (config) {
         ConfigManager.setServerConfiguration(config)
+        applyThemeOverrides(config.themeOverrides)
     }
 }
 
@@ -246,7 +247,7 @@ function syncModConfigurations(data){
 * @param {string} gameDir The game directory to scan for extranious mods.
 */
 function disableExtraniousMods(gameDir) {
-    logger = LoggerUtil.getLogger('ExtraniousModsCleanup')
+    const logger = LoggerUtil.getLogger('ExtraniousModsCleanup')
 
     let disableModPaths = ConfigManager.getServerConfiguration().disableExtraMods
     if (!disableModPaths) {
@@ -287,6 +288,99 @@ function disableExtraniousMods(gameDir) {
     } else {
         logger.info('No extranious mods found. Thanks for playing fair!')
     }
+}
+
+/**
+ * Apply theme overrides to the current page.
+ * @param {import('../configmanager').ServerThemeConfiguration|undefined} themeOverrides
+ */
+function applyThemeOverrides(themeOverrides) {
+    const logger = LoggerUtil.getLogger('ThemeOverrides')
+
+    /** @type CSSStyleSheet */
+    let themeOverridesSheet
+    for (const sheet of document.styleSheets) {
+        if (sheet.title === 'ThemeOverrides') {
+            themeOverridesSheet = sheet
+            break
+        }
+    }
+
+    if (!themeOverridesSheet) {
+        logger.warn('Failed to find the theme overrides stylesheet, cannot update overrides')
+        return
+    }
+
+    // cleanup old rules
+    for (let i = 0; i < themeOverridesSheet.cssRules.length; i++) {
+        themeOverridesSheet.deleteRule(i)
+    }
+
+
+    if (!themeOverrides || Object.keys(themeOverrides).length === 0) {
+        logger.info('No theme overrides to apply')
+        return
+    }
+    logger.info('Trying to apply theme overrides: ', themeOverrides)
+
+    if (themeOverrides.primaryColor) {
+        themeOverridesSheet.insertRule(`:root { --color-primary: ${themeOverrides.primaryColor}; }`)
+    }
+    if (themeOverrides.secondaryColor) {
+        themeOverridesSheet.insertRule(`:root { --color-default: ${themeOverrides.secondaryColor}; }`)
+    }
+
+    const backgrounds = themeOverrides.backgrounds?.filter(bg => !!bg)
+    if (backgrounds?.length) {
+        const randIdx = Math.floor(Math.random() * backgrounds.length)
+        const background = backgrounds[randIdx]
+        themeOverridesSheet.insertRule(`body { background-image: url('${background}'); }`)
+    }
+
+    updateBanners(themeOverrides.banners?.filter(o => !!o && !!o.url))
+
+    logger.info('Successfully applied theme overrides')
+}
+
+function updateBanners(banners) {
+    const logger = LoggerUtil.getLogger('Banners')
+
+    const landingBannersContentElement = document.getElementById('landingBannersContent')
+
+    if (!landingBannersContentElement) {
+        logger.warn('Failed to find the landing banners container, cannot update banners')
+        return
+    }
+
+    if (!banners?.length) {
+        logger.info('No banners to display')
+        return
+    }
+
+    landingBannersContentElement.innerHTML = ''
+
+    for (const banner of banners) {
+        let bannerItemElement
+        if (banner.link) {
+            bannerItemElement = document.createElement('a')
+            bannerItemElement.href = banner.link
+            bannerItemElement.target = '_blank'
+        } else {
+            bannerItemElement = document.createElement('div')
+        }
+
+        bannerItemElement.classList.add('landing-banner-item')
+
+        const banenrImgElement = document.createElement('img')
+        banenrImgElement.src = banner.url
+        if (banner.title) {
+            banenrImgElement.title = banenrImgElement.alt = banner.title
+        }
+        bannerItemElement.appendChild(banenrImgElement)
+
+        landingBannersContentElement.appendChild(bannerItemElement)
+    }
+    logger.info('Successfully updated banners')
 }
 
 /**

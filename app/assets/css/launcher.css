@@ -251,7 +251,7 @@ button {
 
 /* Control styles */
 .hidden-when-inactive:not([active], .active) {
-    display: none;
+    display: none !important;
 }
 
 /*******************************************************************************
@@ -2666,8 +2666,14 @@ input:checked + .toggleSwitchSlider:before {
     position: relative;
     transition: background 2s ease;
     overflow-y: hidden;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto 1fr minmax(25vh, 200px) auto;
+    grid-template-areas:
+        'upper      aside'
+        'banners    aside'
+        'banners    aside'
+        'controls   controls';
     align-items: center;
     justify-content: space-between;
 }
@@ -2676,78 +2682,68 @@ input:checked + .toggleSwitchSlider:before {
 }
 
 /* Upper content container. */
-#landingContainer > #upper {
-    position: relative;
-    transition: top 2s ease;
-    top: 0px;
+#landingContainer > #landingUpper {
+    grid-area: upper;
     display: flex;
-}
-#landingContainer > #upper > #left {
-    display: inline-flex;
     flex: 0 1 15%;
     height: 100%;
-    justify-content: flex-end;
+    justify-self: flex-start;
+    justify-content: flex-start;
     align-items: center;
-    padding-left: 20px;
+    padding: 20px;
     gap: 20px;
 }
-#landingContainer > #upper > .content {
-    display: inline-flex;
-    flex: 1 1 auto;
-    height: 100%;
-    width: 100%;
-}
-#landingContainer > #upper > #right {
-    display: inline-flex;
+
+#landingContainer > #landingAside {
+    grid-area: aside;
+    display: flex;
     flex: 1 1 15%;
     height: 100%;
-    padding-right: 20px;
+    margin-right: 20px;
 }
 
-/* Lower content container. */
-#landingContainer > #lower {
-    height: 23%;
+#landingContainer > #landingBanners {
+    grid-area: banners;
+    align-self: center;
+    justify-self: center;
+}
+#landingContainer > #landingBanners > .content {
     display: flex;
-    background: linear-gradient(to top, rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0));
+    flex-direction: column;
+    width: 100%;
+    align-items: flex-start;
+    gap: 6px;
 }
-#landingContainer > #lower > #left {
+
+.landing-banner-item {
+    flex: 1 1 auto;
+    border: 3px solid var(--color-dark);
+    border-left-width: 0;
+    padding-left: 4px;
     position: relative;
-    transition: top 2s ease;
-    top: 0px;
+    transition: padding-left 0.25s ease;
+}
+.landing-banner-item::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
     height: 100%;
-    width: 33%;
-    display: inline-flex;
-    justify-content: center;
+    width: 4px;
+    background: var(--color-primary);
+    transition: width 0.25s ease;
 }
-#landingContainer > #lower > #left .content {
-    position: relative;
-    top: 25px;
-    display: inline-flex;
-    line-height: 24px;
-    left: 50px;
+.landing-banner-item > img {
+    aspect-ratio: auto;
+    max-width: 300px;
 }
-#landingContainer > #lower > #center {
-    position: relative;
-    transition: top 2s ease;
-    top: 0px;
-    height: 100%;
-    width: 34%;
-    display: inline-flex;
-    justify-content: center;
+
+.landing-banner-item:hover {
+    padding-left: 8px;
 }
-#landingContainer > #lower > #center .content {
-    position: relative;
-    z-index: 500;
-    transition: top 2s ease;
-    top: 10px;
-}
-#landingContainer > #lower > #right {
-    position: relative;
-    transition: top 2s ease;
-    top: 0px;
-    height: 100%;
-    width: 33%;
-    display: inline-flex;
+.landing-banner-item:hover::before {
+    width: 8px;
 }
 
 /*******************************************************************************
@@ -3549,54 +3545,63 @@ input:checked + .toggleSwitchSlider:before {
 * New Landing View (Bottom Styles)
 * * */
 
-#landingLower {
+#landingControls {
+    grid-area: controls;
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    width: 100%;
+    padding-bottom: 20px;
+}
+
+#landingControls > .content {
     display: grid;
-    grid-template-rows: 1fr 1fr;
-    max-width: 600px;
-    margin-bottom: 30px;
-}
-
-.landing-lower-left {
-    text-align: left;
-    display: flex;
-    align-items: flex-end;
-}
-
-.landing-lower-right {
-    text-align: right;
-    display: flex;
-    align-items: flex-end;
-    justify-content: flex-end;
-}
-
-/* The Launch button area */
-.landing-lower-center {
-    text-align: center;
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    align-items: center;
-    width: 100%;
-    grid-column-end: span 2;
-}
-.landing-lower-center > .content {
-    width: 100%;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+        "service    progress"
+        "launch     server"
+        "launch     modpack";
+    width: 70vw;
+    gap: 4px;
 }
 
 #launchButton {
     width: 100%;
 }
 
-
-/* * *
-* Landing View (Bottom Styles) | Right Content
-* * */
-
-/* Main launch content container. */
-#launch_content {
-    position: relative;
-    top: 25px;
+#landingServiceStatus {
+    text-align: left;
+    grid-area: service;
+    justify-content: flex-start;
+    display: inline;
+}
+#landingServiceStatus > .content {
     display: inline-flex;
+}
+
+#landingServerStatus {
+    grid-area: server;
+    align-content: flex-end;
+    padding-top: 4px;
+    padding-left: 4px;
+}
+
+#landingLaunchProgress[active] {
+    grid-area: service;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 10px;
+}
+
+#landingModpack {
+    grid-area: modpack;
+    justify-self: flex-start;
+    align-self: flex-end;
+}
+
+#landingLauncher {
+    grid-area: launch;
+    display: flex;
 }
 
 

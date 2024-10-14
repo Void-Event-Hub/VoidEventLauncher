@@ -5,8 +5,20 @@ const path = require('path')
 
 /**
  *
+ * @typedef {Object} ServerThemeBannerConfiguration
+ * @property {string} ServerThemeBannerConfiguration.url The URL of the banner to display on the server selection screen.
+ * @property {string|null|undefined} ServerThemeBannerConfiguration.link The link to open when the banner is clicked.
+ * @property {string|null|undefined} ServerThemeBannerConfiguration.title The title of the banner.
+ *
+ * @typedef {Object} ServerThemeConfiguration
+ * @property {ServerThemeBannerConfiguration[]|null|undefined} ServerThemeConfiguration.banners The URL of the banner to display on the server selection screen. If not speified, no banner will display.
+ * @property {string[]|null|undefined} ServerThemeConfiguration.backgrounds Overrides the default background(s) with the provided list of URLs.
+ * @property {string|null|undefined} ServerThemeConfiguration.primaryColor Overrides the primary color for launcher elements. Can be any valid CSS color.
+ * @property {string|null|undefined} ServerThemeConfiguration.secondaryColor Overrides the secondary color for launcher elements. Can be any valid CSS color.
+ *
  * @typedef {Object} ServerConfiguration
  * @property {string[]|undefined} ServerConfiguration.disableExtraMods List of glob paths (relative to the game's directory) to disable on game start.
+ * @property {ServerThemeConfiguration|undefined} ServerConfiguration.themeOverrides Overrides for the server's theme.
  *
  * @typedef {Object} Configuration
  * @property {ServerConfiguration} Configuration.serverConfiguration Configuration from the server.

@@ -36,9 +36,10 @@ const launchButton = document.getElementById('launchButton')
 const launchProgress         = document.getElementById('launchProgress')
 const launchProgressLabel = document.getElementById('launchProgressLabel')
 const landingLaunchProgress = document.getElementById('landingLaunchProgress')
+const landingServiceStatus = document.getElementById('landingServiceStatus')
 const launchDetails          = document.getElementById('launchDetails')
 const launchDetailsText = document.getElementById('launchDetailsText')
-const landingStatus = document.getElementById('landingStatus')
+const landingStatus = document.getElementById('landingServerStatus')
 const landingModpack = document.getElementById('landingModpack')
 
 
@@ -58,12 +59,14 @@ const loggerLanding = LoggerUtil.getLogger('Landing')
 function toggleLaunchArea(loading) {
     setLaunchEnabled(!loading)
     if (loading) {
-        landingStatus.removeAttribute('active')
-        landingModpack.removeAttribute('active')
+        // landingStatus.removeAttribute('active')
+        // landingModpack.removeAttribute('active')
+        landingServiceStatus.removeAttribute('active')
         landingLaunchProgress.setAttribute('active', '')
     } else {
-        landingStatus.setAttribute('active', '')
-        landingModpack.setAttribute('active', '')
+        // landingStatus.setAttribute('active', '')
+        // landingModpack.setAttribute('active', '')
+        landingServiceStatus.setAttribute('active', '')
         landingLaunchProgress.removeAttribute('active')
     }
 }

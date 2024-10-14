@@ -232,8 +232,8 @@ let win
 function createWindow() {
 
     win = new BrowserWindow({
-        width: 980,
-        height: 552,
+        width: 1400,
+        height: 750,
         icon: getPlatformIcon('favicon'),
         frame: false,
         webPreferences: {
