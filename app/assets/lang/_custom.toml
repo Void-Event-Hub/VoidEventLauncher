@@ -1,20 +1,20 @@
 # Custom Language File for Launcher Customizer
 
 [ejs.app]
-title = "Muspelheim Launcher"
+title = "Void Event Launcher"
 
 [ejs.landing]
-mediaGitHubURL = "https://store.muspelheim.world/"
-mediaTwitterURL = "https://x.com/MuspelheimMC"
+mediaGitHubURL = "https://store.voideventhub.net/"
+mediaTwitterURL = "https://x.com/VoidEventHub"
 mediaInstagramURL = "http://94.23.44.138:8100/"
 mediaYouTubeURL = "https://www.youtube.com/@tyrthurey"
-mediaDiscordURL = "https://discord.gg/h8cRxgYX44"
+mediaDiscordURL = "https://discord.gg/yx3Me8BVyV"
 
 [ejs.settings]
-sourceGithubLink = "https://github.com/Tyrthurey/MuspelheimLauncher"
-supportLink = "https://discord.gg/h8cRxgYX44"
+sourceGithubLink = "https://github.com/Void-Event-Hub/VoidEventLauncher"
+supportLink = "https://discord.gg/yx3Me8BVyV"
 
 [ejs.welcome]
-welcomeHeader = "WELCOME TO MUSPELHEIM"
-welcomeDescription = "You are using the Muspelheim Launcher, this launcher was made by Tyrthurey. A fork of CreateAcademyLauncher, which itself is a fork of HeliosLauncher. Muspelheim is a Minecraft server network that works together with many different modpacks. Team up with your friends, communicate seamlessly via the integrated voice chat, and engage in trade with other teams. So have a nice stay in Muspeleheim!"
-welcomeDescCTA = "Come on! You are just a few clicks away from joining an awesome multi-modpack community!"
+welcomeHeader = "WELCOME TO VOID EVENT HUB LAUNCHER"
+welcomeDescription = "You are using the Void Event Launcher, this launcher was made by Tyrthurey. A fork of CreateAcademyLauncher, which itself is a fork of HeliosLauncher. The Void Event Hub is a Minecraft event host that organizes modded events, with a playercount per-event of 200-300. Team up with your friends, communicate seamlessly via the integrated voice chat, and engage in trade (or war) with other teams! We are excited to see what you will accomplish in the next event! :P"
+welcomeDescCTA = "Come on! You are just a few clicks away from joining the next awesome event!"
