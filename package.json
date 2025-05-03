@@ -1,13 +1,13 @@
 {
-  "name": "create-academy-launcher",
-  "version": "0.10.2",
-  "productName": "Create Academy Launcher",
-  "description": "Modded Minecraft Launcher for Create Academy",
-  "author": "Fairy Jeux (https://github.com/Fairy-jeux/)",
+  "name": "muspelheim-launcher",
+  "version": "0.0.1",
+  "productName": "Muspelheim Launcher",
+  "description": "Modded Minecraft Launcher for the Muspelheim Server Network",
+  "author": "Tyrthurey (https://github.com/Tyrthurey/)",
   "license": "UNLICENSED",
-  "homepage": "https://github.com/Fairy-Jeux/CreateAcademyLauncher",
+  "homepage": "https://github.com/Tyrthurey/MuspelheimLauncher",
   "bugs": {
-    "url": "https://github.com/Fairy-Jeux/CreateAcademyLauncher/issues"
+    "url": "https://github.com/Tyrthurey/MuspelheimLauncher/issues"
   },
   "private": true,
   "main": "index.js",
@@ -47,6 +47,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Fairy-Jeux/CreateAcademyLauncher.git"
+    "url": "git+https://github.com/Tyrthurey/MuspelheimLauncher.git"
   }
 }

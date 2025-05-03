@@ -1,39 +1,38 @@
-<p align="center"><img src="./app/assets/images/minecraft_title.png" width="550px" height="250px" alt="aventium softworks"></p>
+<!-- <p align="center"><img src="./app/assets/images/minecraft_title.png" width="550px" height="250px" alt="aventium softworks"></p> -->
 
 <h1 align="center">Launcher</h1>
 
 <em><h5 align="center">(formerly Electron Launcher and a fork of Helios Launcher)</h5></em>
 
-<p align="center">Join Create Academy 3 without worrying about installing Java, Forge, or other mods. We'll handle that for you.</p>
-
-![Screenshot 1](https://i.imgur.com/GYR4suf.png)
-![Screenshot 2](https://i.imgur.com/UZ3i3HE.png)
+<p align="center">Join the Muspelheim Network without worrying about installing Java, Forge, or other mods. We'll handle that for you.</p>
 
 ## Description
 
-Create Academy is a Minecraft server built upon the Create mod. With over 500 unique players connecting last season, Create Academy offers the ultimate vanilla Create mod experience enhanced with a plethora of custom content, including a custom economy, custom resource packs, custom recipes, and more. Team up with your friends, communicate seamlessly via the integrated voice chat, automate resource gathering, and engage in trade with other teams...
+The Muspelheim Network is a collection of popular Minecraft Modpack servers. Team up with your friends, communicate seamlessly via the integrated voice chat, and engage in trade with other teams...
 
 Download and install the launcher to gauge all it can do!
 
-#### Need Help? [Contact the developers]
+<!-- #### Need Help? [Contact the developers]
 
-[![Status Discord](https://lanyard.cnrad.dev/api/431469113341116426)](https://discord.com/users/431469113341116426)
+[![Status Discord](https://lanyard.cnrad.dev/api/431469113341116426)](https://discord.com/users/431469113341116426) -->
 
 #### Like the project? Leave a ⭐ star on the repository!
 
 ## Downloads
 
-You can download from [GitHub Releases](https://github.com/Fairy-Jeux/CreateAcademyLauncher/releases)
+You can download from [GitHub Releases](https://github.com/Tyrthurey/MuspelheimLauncher/releases)
 **Supported Platforms**
 
-If you download from the [Releases](https://github.com/Fairy-Jeux/CreateAcademyLauncher/releases) tab, select the installer for your system.
+If you download from the [Releases](https://github.com/Tyrthurey/MuspelheimLauncher/releases) tab, select the installer for your system.
 
 | Platform | File |
 | -------- | ---- |
-| Windows x64 | `Helios-Launcher-setup-VERSION.exe` |
-| macOS x64 | `Helios-Launcher-setup-VERSION-x64.dmg` |
-| macOS arm64 | `Helios-Launcher-setup-VERSION-arm64.dmg` |
-| Linux x64 | `Helios-Launcher-setup-VERSION.AppImage` |
+| Windows x64 | `Muspelheim-Launcher-setup-VERSION-win_x64.exe` |
+| macOS x64 | `Muspelheim-Launcher-setup-VERSION-mac_x64.dmg` |
+| macOS arm64 | `Muspelheim-Launcher-setup-VERSION-mac_arm64.dmg` |
+| Linux x86_64 | `Muspelheim-Launcher-setup-VERSION-linux_x86_64x.AppImage` |
+| Linux arm64 | `Muspelheim-Launcher-setup-VERSION-linux_arm64.AppImage` |
+| Linux aarch64 | `Muspelheim-Launcher-setup-VERSION-linux_aarch64.rpm` |
 
 ## Development
 
@@ -50,8 +49,8 @@ This section details the setup of a basic developmentment environment.
 **Clone and Install Dependencies**
 
 ```console
-> git clone https://github.com/dscalzi/HeliosLauncher.git
-> cd HeliosLauncher
+> git clone https://github.com/Tyrthurey/MuspelheimLauncher.git
+> cd MuspelheimLauncher
 > npm install
 ```
 
@@ -140,7 +139,7 @@ Note that you **cannot** open the DevTools window while using this debug configu
 
 * [Helios Launcher](https://github.com/dscalzi/HeliosLauncher)
 
-The best way to contact the developers is on [Discord](https://discord.com/users/431469113341116426).
+<!-- The best way to contact the developers is on [Discord](https://discord.com/users/431469113341116426). -->
 
 ---
 
@@ -159,4 +158,4 @@ The best way to contact the developers is on [Discord](https://discord.com/users
 
 * [@dscalzi](https://github.com/dscalzi) and his [project](https://github.com/dscalzi/HeliosLauncher) for the original launcher.
 
-* [@Ax3dGaming](https://github.com/Ax3dGaming): for help me and create the jsonCreator.
+* [@Fairy-Jeux](https://github.com/Fairy-Jeux) and his [fork of Helios](https://github.com/Fairy-Jeux/CreateAcademyLauncher) which was the base for this fork.

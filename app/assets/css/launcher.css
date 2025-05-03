@@ -4143,3 +4143,17 @@ input:checked + .toggleSwitchSlider:before {
 .rotating {
     animation: rotating 5s linear infinite;
 }
+
+#launchButton {
+}
+
+#launchButton.running {
+    background-color: var(--color-default);
+    color: rgba(255, 255, 255, 0.7);
+}
+
+#launchButton.running:hover {
+    background-color: #c13030; /* Red color for kill action */
+    color: white;
+    filter: brightness(1.1);
+}

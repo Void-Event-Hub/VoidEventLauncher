@@ -3,7 +3,7 @@
 # Copied in large part from:
 # - https://github.com/PrismLauncher/PrismLauncher/blob/develop/flatpak/org.prismlauncher.PrismLauncher.yml
 
-app-id: 'net.createacademy.launcher'
+app-id: 'net.muspelheim.launcher'
 runtime: org.freedesktop.Platform
 runtime-version: '23.08'
 sdk: org.freedesktop.Sdk
@@ -30,7 +30,7 @@ finish-args:
   - --socket=pulseaudio
   - --env=ELECTRON_TRASH=gio
     # launcher and game files
-  - --filesystem=~/.createacademylauncher:create
+  - --filesystem=~/.muspelheimlauncher:create
   - --filesystem=xdg-config/Create\ Academy\ Launcher:create
     # for Discord RPC mods
   - --filesystem=xdg-run/app/com.discordapp.Discord:create

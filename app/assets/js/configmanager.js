@@ -29,7 +29,7 @@ const logger = LoggerUtil.getLogger('ConfigManager')
 
 const sysRoot = process.env.APPDATA || (process.platform == 'darwin' ? process.env.HOME + '/Library/Application Support' : process.env.HOME)
 
-const dataPath = path.join(sysRoot, '.createacademylauncher')
+const dataPath = path.join(sysRoot, '.muspelheimlauncher')
 
 const launcherDir = require('@electron/remote').app.getPath('userData')
 
@@ -550,10 +550,10 @@ function defaultJavaConfig8(ram) {
         maxRAM: resolveSelectedRAM(ram),
         executable: null,
         jvmOptions: [
-            '-XX:+UseConcMarkSweepGC',
-            '-XX:+CMSIncrementalMode',
-            '-XX:-UseAdaptiveSizePolicy',
-            '-Xmn128M'
+            // '-XX:+UseConcMarkSweepGC',
+            // '-XX:+CMSIncrementalMode',
+            // '-XX:-UseAdaptiveSizePolicy',
+            // '-Xmn128M'
         ],
     }
 }

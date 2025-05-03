@@ -2,6 +2,7 @@ const { app } = process.type === 'browser' ? require('electron') : require('@ele
 const winston = require('winston')
 const path = require('path')
 const fs = require('fs')
+const { EventEmitter } = require('events')
 
 // custom logging transport that behaves like the game
 // not native to Winston
@@ -12,6 +13,8 @@ class FileLoggingTransport extends winston.Transport {
         this.logFileName = options.logFileName || 'app'
         this.logFileExt = options.logFileExt || 'log'
         this.maxLogFiles = options.maxLogFiles || 1
+        // Set max listeners for this instance
+        this.setMaxListeners(100) // Increasing from default 10
     }
 
     getStream() {
@@ -47,14 +50,26 @@ class FileLoggingTransport extends winston.Transport {
         const message = info[Symbol.for('message')]
         this.getStream().write(`${message}\n`, callback)
     }
+
+    // Add cleanup method to properly close stream when done
+    close() {
+        if (this.stream) {
+            this.stream.end()
+            this.stream = null
+        }
+    }
 }
+
+// Set global EventEmitter max listeners to 100
+EventEmitter.defaultMaxListeners = 100
 
 const fileTransport = new FileLoggingTransport({
     format: winston.format.uncolorize(),
     logFileName: 'launcher',
     maxLogFiles: 5
 })
-fileTransport.setMaxListeners(30)
+// Setting max listeners for the shared instance as well
+fileTransport.setMaxListeners(100) // Increasing from 30
 
 /**
  * Reconfigures the logger
@@ -71,3 +86,8 @@ exports.reconfigureLogger = function (loggerFactory) {
         return logger
     }
 }
+
+// Clean up when process exits to prevent memory leaks
+process.on('exit', () => {
+    fileTransport.close()
+})

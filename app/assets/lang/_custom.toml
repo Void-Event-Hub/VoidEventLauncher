@@ -1,20 +1,20 @@
 # Custom Language File for Launcher Customizer
 
 [ejs.app]
-title = "Create Academy Launcher"
+title = "Muspelheim Launcher"
 
 [ejs.landing]
-mediaGitHubURL = "http://store.createacademy.net/"
-mediaTwitterURL = "https://x.com/CreateAcademyMC"
+mediaGitHubURL = "https://store.muspelheim.world/"
+mediaTwitterURL = "https://x.com/MuspelheimMC"
 mediaInstagramURL = "http://94.23.44.138:8100/"
-mediaYouTubeURL = "https://www.youtube.com/channel/UCQlkADwPgtfBdl9XFWfrRVw"
-mediaDiscordURL = "https://discord.gg/SaQDPKcGwp"
+mediaYouTubeURL = "https://www.youtube.com/@tyrthurey"
+mediaDiscordURL = "https://discord.gg/h8cRxgYX44"
 
 [ejs.settings]
-sourceGithubLink = "https://github.com/Fairy-Jeux/CreateAcademyLauncher"
-supportLink = "https://discord.gg/SaQDPKcGwp"
+sourceGithubLink = "https://github.com/Tyrthurey/MuspelheimLauncher"
+supportLink = "https://discord.gg/h8cRxgYX44"
 
 [ejs.welcome]
-welcomeHeader = "WELCOME TO CREATE ACADEMY"
-welcomeDescription = "You are using the Create Academy Launcher, this launcher was made by Fairy jeux. A fork of HeliosLauncher. Create Academy is a Minecraft server built upon the Create mod. With over 500 unique players connecting last season, Create Academy offers the ultimate vanilla Create mod experience enhanced with a plethora of custom content, including a custom economy, custom resource packs, custom recipes, and more. Team up with your friends, communicate seamlessly via the integrated voice chat, automate resource gathering, and engage in trade with other teams. So have a nice play in Create Academy!"
-welcomeDescCTA = "Come on! You are just a few clicks away from Create Academy Season 3 !"
+welcomeHeader = "WELCOME TO MUSPELHEIM"
+welcomeDescription = "You are using the Muspelheim Launcher, this launcher was made by Tyrthurey. A fork of CreateAcademyLauncher, which itself is a fork of HeliosLauncher. Muspelheim is a Minecraft server network that works together with many different modpacks. Team up with your friends, communicate seamlessly via the integrated voice chat, and engage in trade with other teams. So have a nice stay in Muspeleheim!"
+welcomeDescCTA = "Come on! You are just a few clicks away from joining an awesome multi-modpack community!"

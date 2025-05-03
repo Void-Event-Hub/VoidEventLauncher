@@ -49,6 +49,91 @@ const user_text               = document.getElementById('user_text')
 
 const loggerLanding = LoggerUtil.getLogger('Landing')
 
+// Track if the game is currently running
+let gameRunning = false
+
+// Store the original launch handler
+const originalLaunchHandler = async function(e) {
+    loggerLanding.info('Launching game..')
+    try {
+        const server = (await DistroAPI.getDistribution()).getServerById(ConfigManager.getSelectedServer())
+        const jExe = ConfigManager.getJavaExecutable(ConfigManager.getSelectedServer())
+        if(jExe == null){
+            await asyncSystemScan(server.effectiveJavaOptions)
+        } else {
+
+            setLaunchDetails(Lang.queryJS('landing.launch.pleaseWait'))
+            toggleLaunchArea(true)
+            setLaunchPercentage(0, 100)
+
+            const details = await validateSelectedJvm(ensureJavaDirIsRoot(jExe), server.effectiveJavaOptions.supported)
+            if(details != null){
+                loggerLanding.info('Jvm Details', details)
+                await dlAsync()
+
+            } else {
+                await asyncSystemScan(server.effectiveJavaOptions)
+            }
+        }
+    } catch(err) {
+        loggerLanding.error('Unhandled error in during launch process.', err)
+        showLaunchFailure(Lang.queryJS('landing.launch.failureTitle'), Lang.queryJS('landing.launch.failureText'))
+    }
+}
+
+// Named event handler functions for button hover/click
+function onLaunchButtonEnter() {
+    if (gameRunning) {
+        launchButton.innerHTML = Lang.queryJS('landing.launch.launchButtonKill')
+        // Remove disabled attribute on hover to allow clicking
+        launchButton.removeAttribute('disabled')
+    }
+}
+
+function onLaunchButtonLeave() {
+    if (gameRunning) {
+        launchButton.innerHTML = Lang.queryJS('landing.launch.launchButtonRunning')
+        // Restore disabled attribute when not hovering
+        launchButton.setAttribute('disabled', '')
+    }
+}
+
+function onLaunchButtonClick(e) {
+    if (gameRunning && proc !== null) {
+        // When running, clicking will kill the process
+        loggerLanding.info('Terminating Minecraft process by user request')
+        try {
+            proc.kill()
+        } catch(err) {
+            loggerLanding.error('Failed to terminate Minecraft process', err)
+        }
+    } else {
+        // When not running, launch the game
+        originalLaunchHandler(e)
+    }
+}
+
+/**
+ * Updates the launch button text based on the game running state
+ */
+function updateLaunchButtonText() {
+    // Remove existing event listeners
+    launchButton.removeEventListener('mouseenter', onLaunchButtonEnter)
+    launchButton.removeEventListener('mouseleave', onLaunchButtonLeave)
+    
+    if (gameRunning) {
+        launchButton.innerHTML = Lang.queryJS('landing.launch.launchButtonRunning')
+        launchButton.classList.add('running')
+        
+        // Setup hover handlers
+        launchButton.addEventListener('mouseenter', onLaunchButtonEnter)
+        launchButton.addEventListener('mouseleave', onLaunchButtonLeave)
+    } else {
+        launchButton.innerHTML = Lang.queryEJS('landing.launchButton')
+        launchButton.classList.remove('running')
+    }
+}
+
 /* Launch Progress Wrapper Functions */
 
 /**
@@ -107,41 +192,18 @@ function setDownloadPercentage(percent){
  * @param {boolean} val True to enable, false to disable.
  */
 function setLaunchEnabled(val) {
-    if (val) {
+    if (val && !gameRunning) {
         launchButton.removeAttribute('disabled')
     } else {
         launchButton.setAttribute('disabled', '')
     }
+    // Update the button text
+    updateLaunchButtonText()
 }
 
-// Bind launch button
-launchButton.addEventListener('click', async e => {
-    loggerLanding.info('Launching game..')
-    try {
-        const server = (await DistroAPI.getDistribution()).getServerById(ConfigManager.getSelectedServer())
-        const jExe = ConfigManager.getJavaExecutable(ConfigManager.getSelectedServer())
-        if(jExe == null){
-            await asyncSystemScan(server.effectiveJavaOptions)
-        } else {
-
-            setLaunchDetails(Lang.queryJS('landing.launch.pleaseWait'))
-            toggleLaunchArea(true)
-            setLaunchPercentage(0, 100)
-
-            const details = await validateSelectedJvm(ensureJavaDirIsRoot(jExe), server.effectiveJavaOptions.supported)
-            if(details != null){
-                loggerLanding.info('Jvm Details', details)
-                await dlAsync()
-
-            } else {
-                await asyncSystemScan(server.effectiveJavaOptions)
-            }
-        }
-    } catch(err) {
-        loggerLanding.error('Unhandled error in during launch process.', err)
-        showLaunchFailure(Lang.queryJS('landing.launch.failureTitle'), Lang.queryJS('landing.launch.failureText'))
-    }
-})
+// Remove old click handler and add our custom one
+launchButton.removeEventListener('click', onLaunchButtonClick)
+launchButton.addEventListener('click', onLaunchButtonClick)
 
 // Bind settings button
 document.getElementById('settingsMediaButton').onclick = async e => {
@@ -628,6 +690,11 @@ async function dlAsync(login = true) {
         try {
             // Build Minecraft process.
             proc = pb.build()
+            
+            // Set game as running to keep launch button disabled
+            gameRunning = true
+            // Update the button text
+            updateLaunchButtonText()
 
             // Bind listeners to stdout.
             proc.stdout.on('data', tempListener)
@@ -644,6 +711,19 @@ async function dlAsync(login = true) {
                     DiscordWrapper.shutdownRPC()
                     hasRPC = false
                     proc = null
+                    
+                    // Re-enable the launch button when the game process ends
+                    gameRunning = false
+                    setLaunchEnabled(true)
+                })
+            } else {
+                // If no Discord RPC, still need to handle the process close event
+                proc.on('close', (code, signal) => {
+                    proc = null
+                    
+                    // Re-enable the launch button when the game process ends
+                    gameRunning = false
+                    setLaunchEnabled(true)
                 })
             }
 
