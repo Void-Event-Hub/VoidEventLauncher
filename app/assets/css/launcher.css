@@ -1297,7 +1297,7 @@ button {
     justify-content: center;
 }
 #settingsNavHeaderText {
-    font-size: 20px;
+    font-size: 28px; /* Increased from 24px */
 }
 
 /* Navigation items outer container. */
@@ -1327,6 +1327,7 @@ button {
     cursor: pointer;
     outline: none;
     transition: 0.25s ease;
+    font-size: 18px; /* Increased from 16px */
 }
 .settingsNavItem:hover,
 .settingsNavItem:focus {
@@ -1370,6 +1371,7 @@ button {
     cursor: pointer;
     outline: none;
     transition: 0.25s ease;
+    font-size: 18px; /* Increased from 16px */
 }
 #settingsNavDone:hover,
 #settingsNavDone:focus {
@@ -1427,11 +1429,11 @@ button {
     margin-bottom: 20px;
 }
 .settingsTabHeaderText {
-    font-size: 20px;
+    font-size: 28px; /* Increased from 24px */
     font-family: var(--font-title);
 }
 .settingsTabHeaderDesc {
-    font-size: 12px;
+    font-size: 16px; /* Increased from 14px */
 }
 
 /* Selected server content container */
@@ -1527,12 +1529,12 @@ button {
     flex-direction: column;
 }
 .settingsFieldTitle {
-    font-size: 14px;
+    font-size: 18px; /* Increased from 16px */
     font-family: var(--font-body);
     color: rgba(255, 255, 255, 0.95);
 }
 .settingsFieldDesc {
-    font-size: 12px;
+    font-size: 16px; /* Increased from 14px */
     color: rgba(255, 255, 255, 0.95);
     margin-top: 5px;
 }
@@ -1630,6 +1632,7 @@ input:checked + .toggleSwitchSlider:before {
 /* File selector title. */
 .settingsFileSelTitle {
     margin-bottom: 10px;
+    font-size: 18px; /* Increased from 16px */
 }
 
 /* Wrapper container for the actionable elements. */
@@ -1658,7 +1661,7 @@ input:checked + .toggleSwitchSlider:before {
     border-radius: 0px !important;
     width: 100%;
     padding: 5px 10px;
-    font-size: 12px;
+    font-size: 16px; /* Increased from 14px */
     height: 30px;
 }
 
@@ -1666,7 +1669,7 @@ input:checked + .toggleSwitchSlider:before {
 .settingsFileSelButton {
     border: 0px;
     border-radius: 0px 3px 3px 0px;
-    font-size: 12px;
+    font-size: 16px; /* Increased from 14px */
     padding: 0px 5px;
     cursor: pointer;
     background: rgba(126, 126, 126, 0.57);
@@ -1685,7 +1688,7 @@ input:checked + .toggleSwitchSlider:before {
 
 /* Description for the file selector. */
 .settingsFileSelDesc {
-    font-size: 10px;
+    font-size: 12px; /* Increased from 10px */
     margin: 20px 0px;
     color: lightgrey;
     width: 89%;
@@ -1798,13 +1801,13 @@ input:checked + .toggleSwitchSlider:before {
     flex-direction: column;
 }
 .settingsAuthAccountDetailTitle {
-    font-size: 12px;
+    font-size: 14px; /* Increased from 12px */
     color: grey;
     font-weight: bold;
     font-family: var(--font-title);
 }
 .settingsAuthAccountDetailValue {
-    font-size: 14px;
+    font-size: 16px; /* Increased from 14px */
     -webkit-user-select: initial;
 }
 
@@ -2272,18 +2275,18 @@ input:checked + .toggleSwitchSlider:before {
     align-items: center;
 }
 .settingsMemoryStatusTitle {
-    font-size: 12px;
+    font-size: 14px; /* Increased from 12px */
     color: grey;
     font-weight: bold;
 }
 .settingsMemoryStatusValue {
     color: lightgrey;
-    font-size: 16px;
+    font-size: 18px; /* Increased from 16px */
 }
 
 /* Description for memory management. */
 #settingsMemoryDesc {
-    font-size: 10px;
+    font-size: 12px; /* Increased from 10px */
     margin: 20px 0px;
     color: lightgrey;
     font-weight: bold;
@@ -2325,7 +2328,7 @@ input:checked + .toggleSwitchSlider:before {
 
 /* Description for the JVM options setting. */
 #settingsJVMOptsDesc {
-    font-size: 10px;
+    font-size: 12px; /* Increased from 10px */
     margin: 20px 0px;
     color: lightgrey;
     font-weight: bold;
