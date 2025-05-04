@@ -1,0 +1,38 @@
+name: Sync Version from Tag
+
+on:
+  push:
+    tags:
+      - '*'  # Run once per tag
+
+jobs:
+  sync-version:
+    name: Sync and Commit Version
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Sync version with Git tag
+        run: |
+          TAG=${GITHUB_REF#refs/tags/}
+          VERSION=${TAG#v}
+          echo "Setting version to $VERSION"
+          node -e "
+            const fs = require('fs');
+            const files = ['package.json', 'package-lock.json'];
+            const version = '$VERSION';
+            for (const file of files) {
+              if (!fs.existsSync(file)) continue;
+              const json = JSON.parse(fs.readFileSync(f
