@@ -43,21 +43,29 @@ jobs:
         run: npm ci
         shell: bash
 
-      - name: Sync version with Git tag
+      - name: Sync version with Git tag (strip 'v', update lockfile)
         shell: bash
         run: |
           TAG=${GITHUB_REF#refs/tags/}
-          echo "Setting version to $TAG"
+          VERSION=${TAG#v}
+          echo "Setting version to $VERSION"
           node -e "
             const fs = require('fs');
             const files = ['package.json', 'package-lock.json'];
-            const version = '$TAG';
+            const version = '$VERSION';
             for (const file of files) {
-              if (fs.existsSync(file)) {
-                const json = JSON.parse(fs.readFileSync(file));
-                json.version = version;
-                fs.writeFileSync(file, JSON.stringify(json, null, 2) + '\n');
+              if (!fs.existsSync(file)) continue;
+              const json = JSON.parse(fs.readFileSync(file, 'utf8'));
+              json.version = version;
+              if (
+                file === 'package-lock.json' &&
+                json.packages &&
+                json.packages[''] &&
+                typeof json.packages[''] === 'object'
+              ) {
+                json.packages[''].version = version;
               }
+              fs.writeFileSync(file, JSON.stringify(json, null, 2) + '\n');
             }
           "
 
