@@ -135,7 +135,7 @@ ipcMain.on(MSFT_OPCODE.OPEN_LOGIN, (ipcEvent, ...arguments_) => {
         width: 520,
         height: 600,
         frame: true,
-        icon: getPlatformIcon('NyanCat')
+        icon: getPlatformIcon('VoidLogo')
     })
 
     msftAuthWindow.on('closed', () => {
@@ -188,7 +188,7 @@ ipcMain.on(MSFT_OPCODE.OPEN_LOGOUT, (ipcEvent, uuid, isLastAccount) => {
         width: 520,
         height: 600,
         frame: true,
-        icon: getPlatformIcon('NyanCat')
+        icon: getPlatformIcon('VoidLogo')
     })
 
     msftLogoutWindow.on('closed', () => {

@@ -1,5 +1,5 @@
-appId: 'net.muspelheim.launcher'
-productName: 'Muspelheim-Launcher'
+appId: 'net.voideventhub.launcher'
+productName: 'Void-Event-Launcher'
 artifactName: '${productName}-setup-${channel}_${version}-${os}_${arch}.${ext}'
 
 copyright: 'Copyright © 2025 Tyrthurey'
@@ -54,9 +54,9 @@ linux:
       arch:
         - 'x64'
         - 'arm64'
-  maintainer: 'Tyrthurey'
-  vendor: 'Tyrthurey'
-  synopsis: 'Modded Minecraft Launcher for the Muspelheim Server Network'
+  maintainer: 'Void-Event-Hub'
+  vendor: 'Void-Event-Hub'
+  synopsis: 'Modded Minecraft Launcher for use in Void Event Hub events.'
   description: 'Custom launcher which allows users to join modded servers. All mods, configurations, and updates are handled automatically.'
   category: 'Game'
 

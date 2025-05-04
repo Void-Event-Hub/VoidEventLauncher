@@ -43,7 +43,7 @@ loginWithMojang = "Login with Mojang"
 cancelButton = "Cancel"
 
 [ejs.overlay]
-serverSelectHeader = "Available Servers"
+serverSelectHeader = "Available Modpacks"
 serverSelectConfirm = "Select"
 serverSelectCancel = "Cancel"
 accountSelectHeader = "Select an Account"
@@ -134,7 +134,7 @@ continueButton = "CONTINUE"
 
 [js.discord]
 waiting = "Waiting for Client.."
-state = "Server: {shortId}"
+state = "Event: {shortId}"
 
 [js.index]
 microsoftLoginTitle = "Microsoft Login"

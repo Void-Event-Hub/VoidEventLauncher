@@ -1,13 +1,13 @@
 {
-  "name": "muspelheim-launcher",
-  "version": "0.0.2",
-  "productName": "Muspelheim Launcher",
-  "description": "Modded Minecraft Launcher for the Muspelheim Server Network",
+  "name": "void-event-launcher",
+  "version": "0.0.5",
+  "productName": "Void Event Launcher",
+  "description": "Modded Minecraft Launcher for the Void Event Hub",
   "author": "Tyrthurey (https://github.com/Tyrthurey/)",
   "license": "UNLICENSED",
-  "homepage": "https://github.com/Tyrthurey/MuspelheimLauncher",
+  "homepage": "https://github.com/Void-Event-Hub/VoidEventLauncher",
   "bugs": {
-    "url": "https://github.com/Tyrthurey/MuspelheimLauncher/issues"
+    "url": "https://github.com/Void-Event-Hub/VoidEventLauncher/issues"
   },
   "private": true,
   "main": "index.js",
@@ -47,6 +47,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Tyrthurey/MuspelheimLauncher.git"
+    "url": "git+https://github.com/Void-Event-Hub/VoidEventLauncher.git"
   }
 }
