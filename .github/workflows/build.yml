@@ -1,9 +1,9 @@
 name: Build
 
 on:
-  push:
-    tags:
-      - '*'  # Trigger on all tags
+    push:
+        tags:
+            - '*'
 
 jobs:
   release:
@@ -11,23 +11,24 @@ jobs:
     runs-on: ${{ matrix.os }}
 
     permissions:
-      contents: write  # Needed for pushing and creating releases
+      contents: write
 
     strategy:
       matrix:
+        # os: [macos-latest, ubuntu-latest, windows-latest]
         include:
-          - os: ubuntu-latest
-            arch: x64
-          - os: windows-latest
-            arch: x64
-          - os: macos-latest
-            arch: x64
+            - os: ubuntu-latest
+              arch: x64
+            - os: windows-latest
+              arch: x64
+            - os: macos-latest
+              arch: x64
+            # - os: macos-latest
+            #   arch: arm64
 
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
-        with:
-          fetch-depth: 0  # Required to access Git tags
 
       - name: Set up Node
         uses: actions/setup-node@v3
@@ -43,51 +44,8 @@ jobs:
         run: npm ci
         shell: bash
 
-      - name: Sync version with Git tag (strip 'v', update lockfile)
-        shell: bash
-        run: |
-          TAG=${GITHUB_REF#refs/tags/}
-          VERSION=${TAG#v}
-          echo "Setting version to $VERSION"
-          node -e "
-            const fs = require('fs');
-            const files = ['package.json', 'package-lock.json'];
-            const version = '$VERSION';
-            for (const file of files) {
-              if (!fs.existsSync(file)) continue;
-              const json = JSON.parse(fs.readFileSync(file, 'utf8'));
-              json.version = version;
-              if (
-                file === 'package-lock.json' &&
-                json.packages &&
-                json.packages[''] &&
-                typeof json.packages[''] === 'object'
-              ) {
-                json.packages[''].version = version;
-              }
-              fs.writeFileSync(file, JSON.stringify(json, null, 2) + '\n');
-            }
-          "
-
-      - name: Commit version changes
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add package.json package-lock.json
-          git commit -m "chore: set version to ${GITHUB_REF#refs/tags/} [skip ci]" || echo "No changes to commit"
-          git push origin HEAD:refs/heads/master
-        shell: bash
-
       - name: Build
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run dist
         shell: bash
-
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: ${{ github.ref_name }}
-          name: Release ${{ github.ref_name }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
