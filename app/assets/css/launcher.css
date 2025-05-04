@@ -3084,9 +3084,8 @@ input:checked + .toggleSwitchSlider:before {
     height: 70px;
     width: auto;
     position: relative;
-    border: 2px solid white;
     box-sizing: border-box;
-    border-radius: 50%;
+    border-radius: 2%;
 }
 
 /* Logo container styles. */
