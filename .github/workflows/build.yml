@@ -1,10 +1,9 @@
 name: Build
 
 on:
-  workflow_run:
-    workflows: ["Sync Version from Tag"]
-    types:
-      - completed
+  push:
+    tags:
+      - '*'  # Run once per tag
 
 jobs:
   release:
