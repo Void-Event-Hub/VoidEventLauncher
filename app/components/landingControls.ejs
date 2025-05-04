@@ -1,0 +1,60 @@
+<div id="landingControls">
+    <div class="content">
+
+        <div id="landingServiceStatus" class="hidden-when-inactive" active>
+            <div id="mojangStatusWrapper" class="content">
+                <span class="bot_label"><%- lang('landing.mojangStatus') %></span>
+                <span id="mojang_status_icon">&#8226;</span>
+                <div id="mojangStatusTooltip">
+                    <div id="mojangStatusTooltipTitle"><%- lang('landing.mojangStatusTooltipTitle') %></div>
+                    <div id="mojangStatusEssentialContainer">
+                        <!-- Essential Mojang services are populated here. -->
+                    </div>
+                    <div id="mojangStatusNEContainer">
+                        <div class="mojangStatusNEBar"></div>
+                        <div id="mojangStatusNETitle"><%- lang('landing.mojangStatusNETitle') %></div>
+                        <div class="mojangStatusNEBar"></div>
+                    </div>
+                    <div id="mojangStatusNonEssentialContainer">
+                        <!-- Non Essential Mojang services are populated here. -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="landingServerStatus">
+            <div id="server_status_wrapper" class="content">
+                <span class="bot_label" id="landingPlayerLabel"><%- lang('landing.serverStatus') %></span>
+                <span id="player_count"><%- lang('landing.serverStatusPlaceholder') %></span>
+            </div>
+        </div>
+
+        <div id="landingModpack">
+            <div class="content">
+                <!-- <p class="bot_label">
+                    <%- lang('landing.serverSelectDetails') %>
+                </p> -->
+                <button id="server_selection_button" class="bot_label button"><%- lang('landing.launchButtonPlaceholder') %></button>
+            </div>
+        </div>
+
+        <div id="landingLaunchProgress" class="hidden-when-inactive">
+            <div id="launch_details_left">
+                <span id="launchProgressLabel">0%</span>
+            </div>
+            <!-- <div class="bot_divider"></div> -->
+            <div id="launch_details_right">
+                <span id="launchDetailsText" class="bot_label">
+                    <%- lang('landing.launchDetails') %>
+                </span>
+            </div>
+            <progress id="launchProgress" value="22" max="100"></progress>
+        </div>
+
+        <div id="landingLauncher">
+            <button id="launchButton" class="button button-primary button-large">
+                <%- lang('landing.launchButton') %>
+            </button>
+        </div>
+    </div>
+</div> 
