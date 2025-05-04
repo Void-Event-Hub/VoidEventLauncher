@@ -1,12 +1,14 @@
 name: Build
 
 on:
-    push:
-        tags:
-            - '*'
+  workflow_run:
+    workflows: ["Sync Version from Tag"]
+    types:
+      - completed
 
 jobs:
   release:
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     name: Release ${{ matrix.os }} ${{ matrix.arch }}
     runs-on: ${{ matrix.os }}
 
@@ -15,20 +17,19 @@ jobs:
 
     strategy:
       matrix:
-        # os: [macos-latest, ubuntu-latest, windows-latest]
         include:
-            - os: ubuntu-latest
-              arch: x64
-            - os: windows-latest
-              arch: x64
-            - os: macos-latest
-              arch: x64
-            # - os: macos-latest
-            #   arch: arm64
+          - os: ubuntu-latest
+            arch: x64
+          - os: windows-latest
+            arch: x64
+          - os: macos-latest
+            arch: x64
 
     steps:
       - name: Check out Git repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Set up Node
         uses: actions/setup-node@v3
@@ -49,3 +50,11 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: npm run dist
         shell: bash
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: Release ${{ github.ref_name }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
