@@ -337,50 +337,9 @@ function applyThemeOverrides(themeOverrides) {
         themeOverridesSheet.insertRule(`body { background-image: url('${background}'); }`)
     }
 
-    updateBanners(themeOverrides.banners?.filter(o => !!o && !!o.url))
-
+    // Dynamic banners disabled, using static banners from landingBanners.ejs instead
+    
     logger.info('Successfully applied theme overrides')
-}
-
-function updateBanners(banners) {
-    const logger = LoggerUtil.getLogger('Banners')
-
-    const landingBannersContentElement = document.getElementById('landingBannersContent')
-
-    if (!landingBannersContentElement) {
-        logger.warn('Failed to find the landing banners container, cannot update banners')
-        return
-    }
-
-    if (!banners?.length) {
-        logger.info('No banners to display')
-        return
-    }
-
-    landingBannersContentElement.innerHTML = ''
-
-    for (const banner of banners) {
-        let bannerItemElement
-        if (banner.link) {
-            bannerItemElement = document.createElement('a')
-            bannerItemElement.href = banner.link
-            bannerItemElement.target = '_blank'
-        } else {
-            bannerItemElement = document.createElement('div')
-        }
-
-        bannerItemElement.classList.add('landing-banner-item')
-
-        const banenrImgElement = document.createElement('img')
-        banenrImgElement.src = banner.url
-        if (banner.title) {
-            banenrImgElement.title = banenrImgElement.alt = banner.title
-        }
-        bannerItemElement.appendChild(banenrImgElement)
-
-        landingBannersContentElement.appendChild(bannerItemElement)
-    }
-    logger.info('Successfully updated banners')
 }
 
 /**
