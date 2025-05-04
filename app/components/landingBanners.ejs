@@ -3,37 +3,42 @@
         <div class="landing-banner-container">
             <div class="landing-banner-slides">
                 <div class="landing-banner-slide active" data-index="0">
+                    <div class="landing-banner-right">
+                        <img src="./assets/images/banners/create_civilization_s3.jpg" alt="Create Civilization Season 3">
+                    </div>
                     <div class="landing-banner-left">
                         <h3>Create Civilization Season 3</h3>
                         <p>Industrialize and dominate your continent with factories, guns, tanks, and trains using advanced Create mod technology.</p>
                         <button class="button button-primary">Learn More</button>
                     </div>
-                    <div class="landing-banner-right">
-                        <img src="./assets/images/banners/create_civilization_s3.jpg" alt="Create Civilization Season 3">
-                    </div>
                 </div>
                 
                 <div class="landing-banner-slide" data-index="1">
+                    <div class="landing-banner-right">
+                        <img src="./assets/images/banners/create_deserted.jpg" alt="Create Deserted">
+                    </div>
                     <div class="landing-banner-left">
                         <h3>Create Deserted</h3>
                         <p>Survive in a harsh desert environment where water is scarce. Engineer unique machines to collect and manage resources.</p>
                         <button class="button button-primary">Learn More</button>
                     </div>
-                    <div class="landing-banner-right">
-                        <img src="./assets/images/banners/create_deserted.jpg" alt="Create Deserted">
-                    </div>
                 </div>
                 
                 <div class="landing-banner-slide" data-index="2">
+                    <div class="landing-banner-right">
+                        <img src="./assets/images/banners/operation_witherstorm.jpg" alt="Operation Witherstorm">
+                    </div>
                     <div class="landing-banner-left">
                         <h3>Operation Witherstorm</h3>
                         <p>Choose your path: villager survival, military defense, or cultist destruction in this apocalyptic struggle against the Witherstorm.</p>
                         <button class="button button-primary">Learn More</button>
                     </div>
-                    <div class="landing-banner-right">
-                        <img src="./assets/images/banners/operation_witherstorm.jpg" alt="Operation Witherstorm">
-                    </div>
                 </div>
+            </div>
+            
+            <div class="landing-banner-navigation">
+                <button class="landing-banner-nav-btn prev">&lt;</button>
+                <button class="landing-banner-nav-btn next">&gt;</button>
             </div>
             
             <div class="landing-banner-controls">
@@ -41,10 +46,35 @@
                     <span class="landing-banner-indicator active" data-index="0"></span>
                     <span class="landing-banner-indicator" data-index="1"></span>
                     <span class="landing-banner-indicator" data-index="2"></span>
-                    <button class="landing-banner-nav-btn prev">&lt;</button>
-                    <button class="landing-banner-nav-btn next">&gt;</button>
                 </div>
             </div>
         </div>
     </div>
-</div> 
+</div>
+
+<!-- Add these styles to your CSS file -->
+<style>
+.landing-banner-slide {
+    position: relative;
+    overflow: hidden;
+}
+.landing-banner-right {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+}
+.landing-banner-left {
+    position: relative;
+    z-index: 2;
+    background-color: rgba(0,0,0,0.6);
+    padding: 20px;
+    max-width: 50%;
+    color: white;
+}
+.landing-banner-right img {
+    width: 100%;
+    height: auto;
+}
+</style> 

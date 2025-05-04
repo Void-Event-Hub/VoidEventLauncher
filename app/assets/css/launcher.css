@@ -3273,6 +3273,8 @@ input:checked + .toggleSwitchSlider:before {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;    
+    height: 100%;
 }
 
 /* Divider bar between the external and internal icons. */
@@ -3309,6 +3311,7 @@ input:checked + .toggleSwitchSlider:before {
 
 #settingsMediaContainer {
     position: relative;
+    z-index: 1000;
 }
 
 /* Settings icon colors. */
@@ -3332,10 +3335,13 @@ input:checked + .toggleSwitchSlider:before {
     text-align: center;
     border-radius: 4px;
     position: absolute;
-    z-index: 1;
+    z-index: 1000;
     right: 130%;
+    top: 50%;
+    transform: translateY(-50%);
     font-size: 12px;
     line-height: 20px;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.5);
     transition: visibility 0s linear 0.25s, opacity 0.25s ease;
 }
 #settingsTooltip::after {
@@ -3462,7 +3468,7 @@ input:checked + .toggleSwitchSlider:before {
     color: #fff;
     border-radius: 4px;
     padding: 5px 10px;
-    z-index: 1;
+    z-index: 100;
     font-family: var(--font-body);
     font-size: 12px;
     transition: visibility 0s linear 0.25s, opacity 0.25s ease;
@@ -4221,7 +4227,7 @@ input:checked + .toggleSwitchSlider:before {
     width: 100%;
     max-width: 1200px;
     height: 100%;
-    margin: auto auto auto;
+    margin: auto;
     border: 3px solid var(--color-primary);
     background-color: transparent;
     overflow: hidden;
@@ -4240,69 +4246,20 @@ input:checked + .toggleSwitchSlider:before {
     left: 0;
     width: 100%;
     height: 100%;
-    display: flex;
-    flex-direction: column;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    visibility: hidden;
+    display: none;
 }
 
 .landing-banner-slide.active {
-    opacity: 1;
-    visibility: visible;
-}
-
-.landing-banner-left {
-    width: 40%;
-    height: 100%;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    background-color: rgba(0, 0, 0, 0.9);
-    position: relative;
-    z-index: 5;
-}
-
-.landing-banner-left h3 {
-    color: var(--color-primary);
-    font-family: var(--font-title);
-    font-size: 28px;
-    margin: 0 0 20px 0;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    line-height: 1.2;
-}
-
-.landing-banner-left p {
-    color: white;
-    font-size: 16px;
-    line-height: 1.6;
-    margin: 0 0 30px 0;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
-}
-
-.landing-banner-left .button {
-    align-self: flex-start;
-    background-color: var(--color-primary);
-    width: 200px;
-    height: 40px;
-    text-align: center;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
-    border: none;
-    box-shadow: none;
+    display: block;
 }
 
 .landing-banner-right {
+    width: 100%;
+    height: 100%;
     position: absolute;
     top: 0;
-    right: 0;
-    width: 75%;
-    height: 100%;
-    overflow: hidden;
+    left: 0;
+    z-index: 1;
 }
 
 .landing-banner-right img {
@@ -4311,73 +4268,99 @@ input:checked + .toggleSwitchSlider:before {
     object-fit: cover;
 }
 
+.landing-banner-left {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    padding: 30px;
+    width: 70%;
+    max-width: 700px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    text-align: center;
+}
+
+.landing-banner-left h3 {
+    font-family: var(--font-title);
+    font-size: 1.8em;
+    margin-bottom: 10px;
+    color: var(--color-primary);
+}
+
+.landing-banner-left p {
+    margin-bottom: 15px;
+}
+
+.landing-banner-left .button {
+    margin-top: 10px;
+}
+
 .landing-banner-controls {
     position: absolute;
     bottom: 20px;
-    left: 40px;
+    left: 0;
+    width: 100%;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    z-index: 20;
+    z-index: 3;
 }
 
 .landing-banner-indicators {
     display: flex;
-    gap: 8px;
     align-items: center;
+    margin-bottom: 10px;
 }
 
 .landing-banner-indicator {
-    width: 20px;
-    height: 20px;
-    background-color: #444;
-    border: none;
+    width: 12px;
+    height: 12px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    margin: 0 5px;
     cursor: pointer;
-    transition: background-color 0.3s;
 }
 
 .landing-banner-indicator.active {
     background-color: var(--color-primary);
 }
 
-.landing-banner-nav-btn {
-    width: 20px;
-    height: 20px;
-    background-color: var(--color-primary);
-    color: white;
-    border: none;
-    font-weight: bold;
-    font-size: 12px;
-    cursor: pointer;
+.landing-banner-navigation {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-    margin-left: 8px;
+    justify-content: space-between;
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    z-index: 5;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+.landing-banner-nav-btn {
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 2px solid var(--color-primary);
+    color: var(--color-primary);
+    font-size: 2em;
+    cursor: pointer;
+    padding: 10px 15px;
+    margin: 0;
+    border-radius: 4px;
+    transition: all 0.3s ease;
 }
 
 .landing-banner-nav-btn:hover {
-    background-color: #a77b36;
-}
-
-.landing-banner-nav-btn.prev:hover,
-.landing-banner-nav-btn.next:hover {
-    background-color: #8a6829;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    border-color: white;
 }
 
 @media (max-width: 768px) {
-    .landing-banner-slide {
-        flex-direction: column;
-    }
-    
-    .landing-banner-info, .landing-banner-image {
+    .landing-banner-left {
         width: 100%;
-    }
-    
-    .landing-banner-image {
-        height: 40%;
-    }
-    
-    .landing-banner-container {
-        height: 400px;
+        padding: 10px;
     }
 }
