@@ -3219,20 +3219,17 @@ input:checked + .toggleSwitchSlider:before {
     transition: 0.25s ease;
     font-weight: bold;
     letter-spacing: 2px;
-    background-color: rgba(0, 0, 0, 0.35);
+    background-color: rgba(255, 194, 115, 0.35);
     -webkit-user-select: none;
     border: none;
     cursor: pointer;
     width: 100%;
     height: 100%;
-    border-radius: 50%;
+    border-radius: 8xp;
 }
 #avatarOverlay:hover,
 #avatarOverlay:focus {
     opacity: 1;
-}
-#avatarOverlay:active {
-    background-color: rgba(0, 0, 0, 0.45);
 }
 
 /* User profile name text. */
