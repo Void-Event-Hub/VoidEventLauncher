@@ -1,0 +1,130 @@
+/* Github Code Highlighting. */
+@import '../../../node_modules/github-syntax-dark/lib/github-dark.css';
+
+/*******************************************************************************
+ *                                                                             *
+ * Fonts and Variables                                                         *
+ *                                                                             *
+ ******************************************************************************/
+
+@font-face {
+    font-family: 'Avenir Book';
+    src: url('../fonts/Avenir-Book.ttf');
+}
+
+@font-face {
+    font-family: 'Avenir Medium';
+    src: url('../fonts/Avenir-Medium.ttf');
+}
+
+@font-face {
+    font-family: 'Ringbearer';
+    src: url('../fonts/Ringbearer.ttf');
+}
+
+/* Minecraft (i.e. the text font) */
+@font-face {
+    font-family: 'Minecraft';
+    src: url('../fonts/Minecraft/MinecraftRegular-Bmg3.otf');
+}
+@font-face {
+    font-family: 'Minecraft';
+    src: url('../fonts/Minecraft/MinecraftItalic-R8Mo.otf');
+    font-style: italic;
+}
+@font-face {
+    font-family: 'Minecraft';
+    src: url('../fonts/Minecraft/MinecraftBold-nMK1.otf');
+    font-weight: bold;
+}
+@font-face {
+    font-family: 'Minecraft';
+    src: url('../fonts/Minecraft/MinecraftBoldItalic-1y1e.otf');
+    font-weight: bold;
+    font-style: italic;
+}
+
+/* Minecraft Ten (i.e. the title font) */
+@font-face {
+    font-family: 'Minecraft Ten';
+    src: url('../fonts/MinecraftTen/MinecraftTen-VGORe.ttf');
+    line-height: 1.2em;
+    ascent-override: 1em;
+}
+
+/* color palette */
+:root {
+    --color-white: #fff;
+    --color-black: #000;
+
+    --color-light: #eee;
+    --color-dark: #333;
+
+    --color-default: rgb(77, 82, 85);
+    /* --color-default: rgb(136, 145, 151); */
+    /* --color-primary: #9f844d; */
+    --color-primary: rgb(185, 140, 65);
+    --color-shine: rgb(182, 50, 187);
+}
+
+/* semantic variables */
+:root {
+    --color-text: var(--color-light);
+    --color-fg: var(--color-light);
+    --color-fg-dark: var(--color-dark);
+    --color-bg: var(--color-black);
+    --color-bg-transparent: rgba(0, 0, 0, 0.6);
+
+    --color-footer-bg: var(--color-bg);
+    --color-footer-fg: #555;
+
+    --flex-spacing: 0.5em;
+
+    --font-body: 'Minecraft', monospace;
+    --font-title: 'Minecraft Ten', 'Impact', sans-serif;
+
+    --button-depth: 8px;
+    --button-depth-active: 2px;
+    --button-depth-delta: calc(
+        var(--button-depth) - var(--button-depth-active)
+    );
+    --button-border: 3px;
+    --button-height: 3rem;
+    --button-height-large: 5rem;
+    --button-height-small: 2.5rem;
+    --button-tint: rgba(0, 0, 0, 0.1);
+    --button-tint-start: 40%;
+    --button-active-filter: saturate(0.9) brightness(1.15);
+}
+
+/*******************************************************************************
+ *                                                                             *
+ * Element Styles                                                              *
+ *                                                                             *
+ ******************************************************************************/
+
+/* Reset body, html, and div presets. */
+body,
+html,
+div {
+    margin: 0px;
+    padding: 0px;
+}
+
+/* Reset p presets. */
+p {
+    -webkit-margin-before: 0em;
+    -webkit-margin-after: 0em;
+}
+
+/* Set default font and color. */
+body,
+button {
+    font-family: var(--font-body);
+    color: white;
+}
+
+/* Control styles */
+.hidden-when-inactive:not([active], .active) {
+    display: none !important;
+} 

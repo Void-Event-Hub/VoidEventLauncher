@@ -1,0 +1,65 @@
+/*******************************************************************************
+ *                                                                             *
+ * Welcome View (welcome.ejs)                                                  *
+ *                                                                             *
+ ******************************************************************************/
+
+#welcomeContainer {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+#welcomeContent {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    top: -10%;
+    position: relative;
+}
+
+#welcomeImageSeal {
+    border-radius: 50%;
+    border: 2px solid #cad7e1;
+    background: rgba(1, 2, 1, 0.5);
+    height: 125px;
+    width: 125px;
+    box-shadow: 0px 0px 10px 0px rgb(0, 0, 0);
+    margin-bottom: 5%;
+    margin-top: 10%;
+}
+
+#welcomeHeader {
+    font-family: var(--font-title);
+    text-align: center;
+    color: white;
+    margin-bottom: 25px;
+    letter-spacing: 1px;
+    font-size: 20px;
+    text-shadow: white 0px 0px 0px;
+}
+
+#welcomeDescription {
+    text-align: justify;
+    font-size: 13px;
+    font-weight: 100;
+    text-shadow: rgba(255, 255, 255, 0.75) 0px 0px 20px;
+}
+
+#welcomeDescCTA {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 100;
+    text-shadow: rgba(255, 255, 255, 0.75) 0px 0px 20px;
+}
+
+#welcomeButtonContent {
+    display: flex;
+    align-items: center;
+} 

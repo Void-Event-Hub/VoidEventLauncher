@@ -1,0 +1,837 @@
+/*******************************************************************************
+ *                                                                             *
+ * Settings View (settings.ejs)                                                *
+ *                                                                             *
+ ******************************************************************************/
+
+/* Main settings container. */
+#settingsContainer {
+    position: relative;
+    height: 100%;
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: background-color 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+}
+
+/* Drop shadow displayed when content is scrolled out of view. */
+#settingsContainer:before {
+    content: '';
+    background: linear-gradient(rgba(0, 0, 0, 0.25), transparent);
+    width: 100%;
+    height: 5px;
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+#settingsContainer[scrolled]:before {
+    opacity: 1;
+}
+
+/* Left hand side of the settings UI, for navigation. */
+#settingsContainerLeft {
+    padding-top: 4%;
+    height: 100%;
+    width: 25%;
+    box-sizing: border-box;
+}
+
+/* Settings navigation container. */
+#settingsNavContainer {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Navigation header styles. */
+#settingsNavHeader {
+    height: 15%;
+    display: flex;
+    justify-content: center;
+}
+#settingsNavHeaderText {
+    font-size: 28px; /* Increased from 24px */
+}
+
+/* Navigation items outer container. */
+#settingsNavItemsContainer {
+    height: 85%;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+/* Navigation items content container. */
+#settingsNavItemsContent {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* Navigation item shared styles. */
+.settingsNavItem {
+    background: none;
+    border: none;
+    text-align: left;
+    margin: 5px 0px;
+    padding: 0px 20px;
+    color: grey;
+    cursor: pointer;
+    outline: none;
+    transition: 0.25s ease;
+    font-size: 18px; /* Increased from 16px */
+}
+.settingsNavItem:hover,
+.settingsNavItem:focus {
+    color: #c1c1c1;
+    text-shadow: 0px 0px 20px #c1c1c1;
+}
+.settingsNavItem[selected] {
+    cursor: default;
+    color: white;
+    text-shadow: none;
+}
+
+/* Div to add some space between nav items. */
+.settingsNavSpacer {
+    height: 25px;
+}
+
+/* Content container for the done button. */
+#settingsNavContentBottom {
+    position: absolute;
+    top: 65%;
+}
+
+/* Settings navigational divider. */
+.settingsNavDivider {
+    width: 75%;
+    height: 1px;
+    background: rgba(126, 126, 126, 0.57);
+    margin-left: auto;
+    margin-bottom: 25px;
+}
+
+/* Settings done button styles. */
+#settingsNavDone {
+    background: none;
+    border: none;
+    text-align: left;
+    margin: 5px 0px;
+    padding: 0px 20px;
+    color: white;
+    cursor: pointer;
+    outline: none;
+    transition: 0.25s ease;
+    font-size: 18px; /* Increased from 16px */
+}
+#settingsNavDone:hover,
+#settingsNavDone:focus {
+    text-shadow: 0px 0px 20px white, 0px 0px 20px white, 0px 0px 20px white;
+}
+#settingsNavDone:active {
+    text-shadow: 0px 0px 20px rgba(255, 255, 255, 0.75),
+        0px 0px 20px rgba(255, 255, 255, 0.75),
+        0px 0px 20px rgba(255, 255, 255, 0.75);
+    color: rgba(255, 255, 255, 0.75);
+}
+#settingsNavDone:disabled {
+    color: rgba(255, 255, 255, 0.75);
+    pointer-events: none;
+}
+
+/* Right hand side of the settings container, for tabs. */
+#settingsContainerRight {
+    height: 100%;
+    width: 75%;
+    box-sizing: border-box;
+}
+
+/* Settings tab shared styles. */
+.settingsTab {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+}
+.settingsTab::-webkit-scrollbar {
+    width: 2px;
+}
+.settingsTab::-webkit-scrollbar-track {
+    display: none;
+}
+.settingsTab::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Add spacing to the top of each settings tab. */
+.settingsTab > *:first-child {
+    margin-top: 5%;
+}
+
+/* Add spacing to the bottom of each settings tab. */
+.settingsTab > *:last-child {
+    margin-bottom: 20%;
+}
+
+/* Tab header shared styles. */
+.settingsTabHeader {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+.settingsTabHeaderText {
+    font-size: 28px; /* Increased from 24px */
+    font-family: var(--font-title);
+}
+.settingsTabHeaderDesc {
+    font-size: 16px; /* Increased from 14px */
+}
+
+/* Selected server content container */
+.settingsSelServContainer {
+    background: rgba(0, 0, 0, 0.25);
+    width: 75%;
+    border-radius: 3px;
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 0px;
+}
+
+/* Div which will be populated with the selected server's information. */
+.settingsSelServContent {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 5px 0px;
+}
+
+/* Wrapper container for the switch server button. */
+.settingsSwitchServerContainer {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+}
+
+/* Button to switch server configurations on the mods tab. */
+.settingsSwitchServerButton {
+    opacity: 0;
+    border: 1px solid rgb(255, 255, 255);
+    color: rgb(255, 255, 255);
+    background: none;
+    font-size: 12px;
+    border-radius: 3px;
+    font-family: var(--font-body);
+    transition: 0.25s ease;
+    cursor: pointer;
+    outline: none;
+}
+.settingsSwitchServerButton:hover,
+.settingsSwitchServerButton:focus {
+    box-shadow: 0px 0px 20px rgb(255, 255, 255);
+    background: rgba(255, 255, 255, 0.25);
+}
+.settingsSwitchServerButton:active {
+    box-shadow: 0px 0px 20px rgb(187, 187, 187);
+    background: rgba(187, 187, 187, 0.25);
+    border: 1px solid rgb(187, 187, 187);
+    color: rgb(187, 187, 187);
+}
+.settingsSelServContainer:hover .settingsSwitchServerButton {
+    opacity: 1;
+}
+
+/* Remove spin button from number inputs. */
+#settingsContainer input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+/* Default styles for text/number inputs. */
+#settingsContainer input[type='number'],
+#settingsContainer input[type='text'] {
+    color: white;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 3px;
+    border: 1px solid rgba(126, 126, 126, 0.57);
+    font-family: var(--font-body);
+    transition: 0.25s ease;
+}
+#settingsContainer input[type='number']:focus,
+#settingsContainer input[type='text']:focus {
+    outline: none;
+    border-color: rgba(126, 126, 126, 0.87);
+}
+#settingsContainer input[type='number'][error] {
+    border-color: rgb(255, 27, 12);
+    background: rgba(236, 0, 0, 0.25);
+    color: rgb(255, 27, 12);
+}
+
+/* Styles for a generic settings entry. */
+.settingsFieldContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0px;
+    width: 75%;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+.settingsFieldLeft {
+    display: flex;
+    flex-direction: column;
+}
+.settingsFieldTitle {
+    font-size: 18px; /* Increased from 16px */
+    font-family: var(--font-body);
+    color: rgba(255, 255, 255, 0.95);
+}
+.settingsFieldDesc {
+    font-size: 16px; /* Increased from 14px */
+    color: rgba(255, 255, 255, 0.95);
+    margin-top: 5px;
+}
+.settingsDivider {
+    height: 1px;
+    width: 75%;
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* Toggle Switch */
+.toggleSwitch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+    border-radius: 50px;
+    box-sizing: border-box;
+}
+.toggleSwitch input {
+    display: none;
+}
+.toggleSwitchSlider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.35);
+    transition: 0.4s;
+    border-radius: 50px;
+    border: 1px solid rgba(126, 126, 126, 0.57);
+}
+.toggleSwitchSlider:before {
+    position: absolute;
+    content: '';
+    height: 13px;
+    width: 16px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.75);
+    border-radius: 50px;
+    transition: 0.4s;
+}
+input:checked + .toggleSwitchSlider {
+    background-color: rgb(31, 140, 11);
+    /* box-shadow: inset 2px 1px 20px black; */
+    border: 1px solid rgb(31, 140, 11);
+}
+input:checked + .toggleSwitchSlider:before {
+    transform: translateX(15px);
+}
+
+/* Range Slider styles. */
+.rangeSlider {
+    width: 35%;
+    height: 5px;
+    margin: 15px 0px;
+    background: grey;
+    border-radius: 3px;
+    position: relative;
+}
+.rangeSliderBar {
+    position: absolute;
+    background: #8be88b;
+    width: 50%;
+    height: 5px;
+    border-radius: 3px 0px 0px 3px;
+    transition: background 0.25s ease;
+}
+.rangeSliderTrack {
+    position: absolute;
+    top: -7.5px;
+    width: 7px;
+    height: 20px;
+    background: white;
+    border-radius: 3px;
+    left: 50%;
+    cursor: ew-resize;
+}
+
+/* File selectors */
+
+/* Main container for File selectors. */
+.settingsFileSelContainer {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    margin-bottom: 20px;
+    margin-top: 20px;
+    width: 75%;
+}
+
+/* File selector title. */
+.settingsFileSelTitle {
+    margin-bottom: 10px;
+    font-size: 18px; /* Increased from 16px */
+}
+
+/* Wrapper container for the actionable elements. */
+.settingsFileSelActions {
+    display: flex;
+    width: 90%;
+}
+
+/* File selector icon settings. */
+.settingsFileSelIcon {
+    display: flex;
+    align-items: center;
+    background: rgba(126, 126, 126, 0.57);
+    border-radius: 3px 0px 0px 3px;
+    padding: 5px;
+    transition: 0.25s ease;
+}
+.settingsFileSelSVG {
+    width: 20px;
+    height: 20px;
+    fill: white;
+}
+
+/* Disabled text field which stores the selected file path. */
+.settingsFileSelVal {
+    border-radius: 0px !important;
+    width: 100%;
+    padding: 5px 10px;
+    font-size: 16px; /* Increased from 14px */
+    height: 30px;
+}
+
+/* File selection button. */
+.settingsFileSelButton {
+    border: 0px;
+    border-radius: 0px 3px 3px 0px;
+    font-size: 16px; /* Increased from 14px */
+    padding: 0px 5px;
+    cursor: pointer;
+    background: rgba(126, 126, 126, 0.57);
+    transition: 0.25s ease;
+    white-space: nowrap;
+    outline: none;
+}
+.settingsFileSelButton:hover,
+.settingsFileSelButton:focus {
+    text-shadow: 0px 0px 20px white;
+}
+.settingsFileSelButton:active {
+    text-shadow: 0px 0px 20px rgba(255, 255, 255, 0.75);
+    color: rgba(255, 255, 255, 0.75);
+}
+
+/* Description for the file selector. */
+.settingsFileSelDesc {
+    font-size: 12px; /* Increased from 10px */
+    margin: 20px 0px;
+    color: lightgrey;
+    width: 89%;
+}
+.settingsFileSelDesc strong {
+    font-family: var(--font-body);
+}
+
+/* * *
+* Settings View (Account Tab)
+* * */
+
+.settingsAuthAccountTypeContainer {
+    display: flex;
+    width: 75%;
+    flex-direction: column;
+}
+
+.settingsAuthAccountTypeHeader {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    padding: 10px 0px;
+    border-bottom: 1px solid #ffffff85;
+    margin-bottom: 30px;
+}
+
+.settingsAuthAccountTypeHeaderLeft {
+    display: flex;
+    column-gap: 5px;
+}
+
+/* Settings add account button styles. */
+.settingsAddAuthAccount {
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 2px 0px;
+    color: white;
+    cursor: pointer;
+    outline: none;
+    transition: 0.25s ease;
+}
+.settingsAddAuthAccount:hover,
+.settingsAddAuthAccount:focus {
+    text-shadow: 0px 0px 20px white, 0px 0px 20px white, 0px 0px 20px white;
+}
+.settingsAddAuthAccount:active {
+    text-shadow: 0px 0px 20px rgba(255, 255, 255, 0.75),
+        0px 0px 20px rgba(255, 255, 255, 0.75),
+        0px 0px 20px rgba(255, 255, 255, 0.75);
+    color: rgba(255, 255, 255, 0.75);
+}
+.settingsAddAuthAccount:disabled {
+    color: rgba(255, 255, 255, 0.75);
+    pointer-events: none;
+}
+
+/* Auth account list container styles. */
+.settingsCurrentAccounts {
+    margin-bottom: 5%;
+}
+.settingsCurrentAccounts > .settingsAuthAccount:not(:last-child) {
+    margin-bottom: 10px;
+}
+.settingsCurrentAccounts > .settingsAuthAccount:not(:first-child) {
+    margin-top: 10px;
+}
+
+/* Auth account shared styles. */
+.settingsAuthAccount {
+    display: flex;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 3px;
+    border: 1px solid rgba(126, 126, 126, 0.57);
+}
+
+/* Left hand side of an auth account element, for the skin image. */
+.settingsAuthAccountLeft {
+    padding: 5px 5px 5px 20px;
+}
+
+/* Image of the auth account's skin. */
+.settingsAuthAccountImage {
+    height: 115px;
+}
+
+/* Right hand side of the auth account, for info + actions. */
+.settingsAuthAccountRight {
+    display: flex;
+    width: 100%;
+}
+
+/* Account details container. */
+.settingsAuthAccountDetails {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 20px;
+    width: 100%;
+}
+.settingsAuthAccountDetails > *:not(:last-child) {
+    margin-bottom: 20px;
+}
+
+/* Account detail element styles. */
+.settingsAuthAccountDetailPane {
+    display: flex;
+    flex-direction: column;
+}
+.settingsAuthAccountDetailTitle {
+    font-size: 14px; /* Increased from 12px */
+    color: grey;
+    font-weight: bold;
+    font-family: var(--font-title);
+}
+.settingsAuthAccountDetailValue {
+    font-size: 16px; /* Increased from 14px */
+    -webkit-user-select: initial;
+}
+
+/* Account actions container. */
+.settingsAuthAccountActions {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 10px;
+}
+
+/* Account select button shared styles. */
+.settingsAuthAccountSelect {
+    opacity: 0;
+    border: none;
+    white-space: nowrap;
+    background: none;
+    font-family: var(--font-body);
+    outline: none;
+    transition: 0.25s ease;
+}
+.settingsAuthAccountSelect:hover:not([selected]),
+.settingsAuthAccountSelect:focus:not([selected]) {
+    text-shadow: 0px 0px 20px white, 0px 0px 20px white;
+    cursor: pointer;
+}
+.settingsAuthAccount:hover .settingsAuthAccountSelect:not([selected]),
+.settingsAuthAccountSelect[selected] {
+    opacity: 1;
+}
+.settingsAuthAccountSelect[selected] {
+    pointer-events: none;
+}
+
+/* Account logout button shared styles. */
+.settingsAuthAccountLogOut {
+    opacity: 0;
+    border: 1px solid rgb(241, 55, 55);
+    color: rgb(241, 55, 55);
+    background: none;
+    font-size: 12px;
+    border-radius: 3px;
+    font-family: var(--font-body);
+    transition: 0.25s ease;
+    cursor: pointer;
+    outline: none;
+}
+.settingsAuthAccountLogOut:hover,
+.settingsAuthAccountLogOut:focus {
+    box-shadow: 0px 0px 20px rgb(241, 55, 55);
+    background: rgba(241, 55, 55, 0.25);
+}
+.settingsAuthAccountLogOut:active {
+    box-shadow: 0px 0px 20px rgb(185, 47, 47);
+    background: rgba(185, 47, 47, 0.25);
+    border: 1px solid rgb(185, 47, 47);
+    color: rgb(185, 47, 47);
+}
+.settingsAuthAccount:hover .settingsAuthAccountLogOut {
+    opacity: 1;
+}
+
+/* * *
+* Settings View (Minecraft Tab)
+* * */
+
+/* Tailored style for the data directory header. */
+#settingsDataDirTitle {
+    margin-bottom: 10px;
+}
+
+/* Game resolution UI elements. */
+#settingsGameResolutionContainer {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    width: 75%;
+}
+#settingsGameResolutionContent {
+    display: flex;
+    align-items: center;
+    padding-top: 10px;
+}
+#settingsGameResolutionCross {
+    color: grey;
+    padding: 0px 15px;
+}
+#settingsGameWidth,
+#settingsGameHeight {
+    padding: 7.5px 5px;
+    width: 75px;
+}
+
+/* * *
+* Settings View (Mods Tab)
+* * */
+
+/* Main content container for the mod elements. */
+#settingsModsContainer {
+    width: 75%;
+}
+
+/* Mod sub-container header text. */
+.settingsModsHeader {
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    margin-bottom: 10px;
+}
+
+/* Mod elements sub-containers. */
+#settingsReqModsContainer,
+#settingsOptModsContainer,
+#settingsDropinModsContainer {
+    padding-bottom: 25px;
+}
+
+/* Main content containers for mod elements. */
+#settingsReqModsContent,
+#settingsOptModsContent,
+#settingsDropinModsContent {
+    font-size: 12px;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 3px;
+    color: white;
+}
+
+/* Mod elements. */
+.settingsMod,
+.settingsDropinMod {
+    padding: 10px;
+}
+.settingsSubMod {
+    padding: 10px 0px 10px 15px;
+    margin-left: 20px;
+    border-left: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* Main content container for mod element information. */
+.settingsModContent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: opacity 0.25s ease;
+}
+
+/* Wrapper container for the left side of a mod element. */
+.settingsModMainWrapper {
+    display: flex;
+    align-items: center;
+}
+
+/* Mod enabled/disabled status. */
+.settingsModStatus {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: #c32625;
+    margin-right: 15px;
+    transition: 0.25s ease;
+}
+
+/* Mod details container. */
+.settingsModDetails {
+    display: flex;
+    flex-direction: column;
+}
+
+/* The version of the mod. */
+.settingsModVersion {
+    color: grey;
+    font-size: 10px;
+}
+
+/* Disabled toggleswitch for required mods. */
+.toggleSwitch[reqmod] {
+    filter: grayscale(49%) brightness(60%);
+    pointer-events: none;
+}
+
+/* Set the status color of an enabled mod. */
+.settingsBaseMod[enabled]
+    > .settingsModContent
+    > .settingsModMainWrapper
+    > .settingsModStatus {
+    background-color: rgb(165, 195, 37);
+}
+
+/* Add opacity to submods of a disabled mod. */
+.settingsBaseMod:not([enabled]) > .settingsSubModContainer .settingsModContent {
+    opacity: 0.5;
+}
+
+/* Curve the left border for submods. */
+.settingsSubModContainer > .settingsSubMod:first-child {
+    border-top-left-radius: 10px;
+}
+.settingsSubModContainer > .settingsSubMod:last-child {
+    border-bottom-left-radius: 10px;
+}
+.settingsSubModContainer > .settingsSubMod:only-child {
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+/* Wrapper container for all submods. */
+.settingsSubModContainer {
+    margin-top: 10px;
+}
+
+/* Button to open the mods folder for drop-in mods. */
+#settingsDropinFileSystemButton {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(126, 126, 126, 0.57);
+    border-radius: 3px;
+    height: 50px;
+    width: 100%;
+    text-align: left;
+    padding: 0px 50px;
+    cursor: pointer;
+    outline: none;
+    transition: 0.25s ease;
+    margin-bottom: 10px;
+}
+#settingsDropinFileSystemButton:hover,
+#settingsDropinFileSystemButton:focus,
+#settingsDropinFileSystemButton[drag] {
+    background: rgba(54, 54, 54, 0.25);
+    text-shadow: 0px 0px 20px white;
+}
+/* Refresh instructions on the file system button. */
+#settingsDropinRefreshNote {
+    font-size: 10px;
+    pointer-events: none;
+}
+
+/* Button to remove drop-in mods. */
+.settingsDropinRemoveButton {
+    background: none;
+    border: none;
+    font-size: 10px;
+    text-align: left;
+    padding: 0px;
+    margin-top: 5px;
+    color: rgb(241, 55, 55);
+    cursor: pointer;
+    outline: none;
+    transition: 0.25s ease;
+}
+.settingsDropinRemoveButton:hover,
+.settingsDropinRemoveButton:focus {
+    text-shadow: 0px 0px 20px rgb(241, 55, 55);
+}
+.settingsDropinRemoveButton:active {
+    text-shadow: 0px 0px 20px rgb(185, 47, 47);
+    color: rgb(185, 47, 47);
+}
+
+/* * *
+* Settings View (Java Tab)
+* * */
+
+/* Container for additional arguments. */
+#settingsJavaAdditionalArgs {
+    width: 75%;
+    height: 165px;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 3px;
+    border: 1px solid rgba(126, 126, 126, 0.57);
+    color: white;
+    font-family: var(--font-body);
+    margin-bottom: 40px;
+    padding: 10px;
+} 

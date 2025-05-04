@@ -1,0 +1,23 @@
+/*******************************************************************************
+ *                                                                             *
+ * Settings View Tab Styles - General                                          *
+ *                                                                             *
+ ******************************************************************************/
+
+/* Style links on the Java tab. */
+#settingsTabJava a,
+.settingsChangelogText a {
+    color: rgba(202, 202, 202, 0.75);
+    transition: 0.25s ease;
+    outline: none;
+}
+#settingsTabJava a:hover,
+#settingsTabJava a:focus,
+.settingsChangelogText a:hover,
+.settingsChangelogText a:focus {
+    color: rgba(255, 255, 255, 0.75);
+}
+#settingsTabJava a:active,
+.settingsChangelogText a:active {
+    color: rgba(165, 165, 165, 0.75);
+} 
