@@ -136,14 +136,22 @@ Note that you **cannot** open the DevTools window while using this debug configu
 ### To Make a New Release:
 
 You push your latest commit and sync it to github. Then you get the commit hash.
+
 `git log --oneline`
+
 The tag should follow the v0.x.y convention, i.e. v0.0.4
+
 `git tag TAG LATEST_COMMIT_ID`
+
 When you're done, push the tag and wait for the release to build (approx 10 minutes)
+
 `git push origin TAG`
 
+
 Then go to Releases, to the Draft that has been created.
+
 Edit it, and touch nothing except "Generate Release Notes", and scroll to the very bottom.
+
 Make sure Latest Release is checked (it should be), and click on Publish.
 
 ---
