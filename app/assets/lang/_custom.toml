@@ -4,7 +4,7 @@
 title = "Void Event Launcher"
 
 [ejs.landing]
-mediaGitHubURL = "https://store.voideventhub.net/"
+mediaWebsiteURL = "https://voideventhub.net/"
 mediaTwitterURL = "https://x.com/VoidEventHub"
 mediaInstagramURL = "http://94.23.44.138:8100/"
 mediaYouTubeURL = "https://www.youtube.com/@tyrthurey"
