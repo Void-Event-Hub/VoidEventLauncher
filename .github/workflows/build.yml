@@ -46,22 +46,15 @@ jobs:
         run: npm ci
         shell: bash
 
-      - name: Get latest tag
-        id: get_tag
-        run: |
-          LATEST_TAG=$(git describe --tags --abbrev=0)
-          echo "LATEST_TAG=$LATEST_TAG" >> $GITHUB_ENV
-          VERSION=${LATEST_TAG#v}
-          echo "VERSION=$VERSION" >> $GITHUB_ENV
-        shell: bash
-
       - name: Sync version with Git tag
         run: |
-          echo "Setting version to ${{ env.VERSION }} from tag ${{ env.LATEST_TAG }}"
+          TAG=${GITHUB_REF#refs/tags/}
+          VERSION=${TAG#v}
+          echo "Setting version to $VERSION"
           node -e "
             const fs = require('fs');
             const files = ['package.json', 'package-lock.json'];
-            const version = '${{ env.VERSION }}';
+            const version = '$VERSION';
             for (const file of files) {
               if (!fs.existsSync(file)) continue;
               const json = JSON.parse(fs.readFileSync(file, 'utf8'));
