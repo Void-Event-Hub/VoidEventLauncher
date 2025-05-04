@@ -59,12 +59,16 @@ jobs:
           git commit -m "chore: set version to ${GITHUB_REF#refs/tags/} [skip ci]" || echo "No changes to commit"
           git push origin HEAD:refs/heads/master
           
-      - name: Reassign tag to new commit
+      - name: Create and push new tag for version commit and delete original tag
         run: |
-          TAG=${GITHUB_REF#refs/tags/}
-          # Delete the tag on the remote
-          git push origin :refs/tags/$TAG
-          # Create a new tag pointing to the latest commit
-          git tag -fa $TAG -m "Update tag to point to version sync commit"
-          # Push the new tag
-          git push origin $TAG --force
+          VERSION=${GITHUB_REF#refs/tags/}
+          VERSION=${VERSION#v}
+          # Get the SHA of the version commit we just made
+          COMMIT_SHA=$(git rev-parse HEAD)
+          # Create a new tag with a suffix to distinguish it from the original tag
+          NEW_TAG="v${VERSION}"
+          git tag -a "${NEW_TAG}" ${COMMIT_SHA} -m "Release build v${VERSION}"
+          git push origin "${NEW_TAG}"
+          # Delete the original tag that triggered this workflow
+          ORIGINAL_TAG=${GITHUB_REF#refs/tags/}
+          git push --delete origin "${ORIGINAL_TAG}"
