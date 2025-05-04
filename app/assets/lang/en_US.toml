@@ -134,7 +134,7 @@ continueButton = "CONTINUE"
 
 [js.discord]
 waiting = "Waiting for Client.."
-state = "Server: {shortId}"
+state = "Event: {shortId}"
 
 [js.index]
 microsoftLoginTitle = "Microsoft Login"
