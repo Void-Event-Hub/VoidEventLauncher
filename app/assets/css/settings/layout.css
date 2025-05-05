@@ -1,0 +1,175 @@
+/*******************************************************************************
+ *                                                                             *
+ * Settings View - Layout                                                      *
+ *                                                                             *
+ ******************************************************************************/
+
+/* Main settings container. */
+#settingsContainer {
+    position: relative;
+    height: 100%;
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: background-color 0.25s cubic-bezier(0.02, 0.01, 0.47, 1);
+}
+
+/* Drop shadow displayed when content is scrolled out of view. */
+#settingsContainer:before {
+    content: '';
+    background: linear-gradient(rgba(0, 0, 0, 0.25), transparent);
+    width: 100%;
+    height: 5px;
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+#settingsContainer[scrolled]:before {
+    opacity: 1;
+}
+
+/* Left hand side of the settings UI, for navigation. */
+#settingsContainerLeft {
+    padding-top: 4%;
+    height: 100%;
+    width: 25%;
+    box-sizing: border-box;
+}
+
+/* Settings navigation container. */
+#settingsNavContainer {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Navigation header styles. */
+#settingsNavHeader {
+    height: 15%;
+    display: flex;
+    justify-content: center;
+}
+#settingsNavHeaderText {
+    font-size: 28px;
+}
+
+/* Navigation items outer container. */
+#settingsNavItemsContainer {
+    height: 85%;
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+/* Navigation items content container. */
+#settingsNavItemsContent {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+/* Navigation item shared styles. */
+.settingsNavItem {
+    background: none;
+    border: none;
+    text-align: left;
+    margin: 5px 0px;
+    padding: 0px 20px;
+    color: grey;
+    cursor: pointer;
+    outline: none;
+    transition: 0.25s ease;
+    font-size: 18px;
+}
+.settingsNavItem:hover,
+.settingsNavItem:focus {
+    color: #c1c1c1;
+    text-shadow: 0px 0px 20px #c1c1c1;
+}
+.settingsNavItem[selected] {
+    cursor: default;
+    color: white;
+    text-shadow: none;
+}
+
+/* Div to add some space between nav items. */
+.settingsNavSpacer {
+    height: 25px;
+}
+
+/* Content container for the done button. */
+#settingsNavContentBottom {
+    position: absolute;
+    top: 65%;
+}
+
+/* Settings navigational divider. */
+.settingsNavDivider {
+    width: 75%;
+    height: 1px;
+    background: rgba(126, 126, 126, 0.57);
+    margin-left: auto;
+    margin-bottom: 25px;
+}
+
+/* Settings done button styles. */
+#settingsNavDone {
+    background: none;
+    border: none;
+    text-align: left;
+    margin: 5px 0px;
+    padding: 0px 20px;
+    color: white;
+    cursor: pointer;
+    outline: none;
+    transition: 0.25s ease;
+    font-size: 18px;
+}
+#settingsNavDone:hover,
+#settingsNavDone:focus {
+    text-shadow: 0px 0px 20px white, 0px 0px 20px white, 0px 0px 20px white;
+}
+#settingsNavDone:active {
+    text-shadow: 0px 0px 20px rgba(255, 255, 255, 0.75),
+        0px 0px 20px rgba(255, 255, 255, 0.75),
+        0px 0px 20px rgba(255, 255, 255, 0.75);
+    color: rgba(255, 255, 255, 0.75);
+}
+#settingsNavDone:disabled {
+    color: rgba(255, 255, 255, 0.75);
+    pointer-events: none;
+}
+
+/* Right hand side of the settings container, for tabs. */
+#settingsContainerRight {
+    height: 100%;
+    width: 75%;
+    box-sizing: border-box;
+}
+
+/* Settings tab shared styles. */
+.settingsTab {
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+}
+.settingsTab::-webkit-scrollbar {
+    width: 2px;
+}
+.settingsTab::-webkit-scrollbar-track {
+    display: none;
+}
+.settingsTab::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Add spacing to the top of each settings tab. */
+.settingsTab > *:first-child {
+    margin-top: 5%;
+}
+
+/* Add spacing to the bottom of each settings tab. */
+.settingsTab > *:last-child {
+    margin-bottom: 20%;
+} 

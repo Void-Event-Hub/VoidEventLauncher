@@ -1,5 +1,5 @@
 /* Github Code Highlighting. */
-@import '../../../node_modules/github-syntax-dark/lib/github-dark.css';
+@import '../../../../node_modules/github-syntax-dark/lib/github-dark.css';
 
 /*******************************************************************************
  *                                                                             *
@@ -9,37 +9,37 @@
 
 @font-face {
     font-family: 'Avenir Book';
-    src: url('../fonts/Avenir-Book.ttf');
+    src: url('../../fonts/Avenir-Book.ttf');
 }
 
 @font-face {
     font-family: 'Avenir Medium';
-    src: url('../fonts/Avenir-Medium.ttf');
+    src: url('../../fonts/Avenir-Medium.ttf');
 }
 
 @font-face {
     font-family: 'Ringbearer';
-    src: url('../fonts/Ringbearer.ttf');
+    src: url('../../fonts/Ringbearer.ttf');
 }
 
 /* Minecraft (i.e. the text font) */
 @font-face {
     font-family: 'Minecraft';
-    src: url('../fonts/Minecraft/MinecraftRegular-Bmg3.otf');
+    src: url('../../fonts/Minecraft/MinecraftRegular-Bmg3.otf');
 }
 @font-face {
     font-family: 'Minecraft';
-    src: url('../fonts/Minecraft/MinecraftItalic-R8Mo.otf');
+    src: url('../../fonts/Minecraft/MinecraftItalic-R8Mo.otf');
     font-style: italic;
 }
 @font-face {
     font-family: 'Minecraft';
-    src: url('../fonts/Minecraft/MinecraftBold-nMK1.otf');
+    src: url('../../fonts/Minecraft/MinecraftBold-nMK1.otf');
     font-weight: bold;
 }
 @font-face {
     font-family: 'Minecraft';
-    src: url('../fonts/Minecraft/MinecraftBoldItalic-1y1e.otf');
+    src: url('../../fonts/Minecraft/MinecraftBoldItalic-1y1e.otf');
     font-weight: bold;
     font-style: italic;
 }
@@ -47,7 +47,7 @@
 /* Minecraft Ten (i.e. the title font) */
 @font-face {
     font-family: 'Minecraft Ten';
-    src: url('../fonts/MinecraftTen/MinecraftTen-VGORe.ttf');
+    src: url('../../fonts/MinecraftTen/MinecraftTen-VGORe.ttf');
     line-height: 1.2em;
     ascent-override: 1em;
 }
@@ -127,4 +127,4 @@ button {
 /* Control styles */
 .hidden-when-inactive:not([active], .active) {
     display: none !important;
-} 
+}

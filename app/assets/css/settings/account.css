@@ -1,0 +1,175 @@
+/*******************************************************************************
+ *                                                                             *
+ * Settings View - Account Tab                                                 *
+ *                                                                             *
+ ******************************************************************************/
+
+.settingsAuthAccountTypeContainer {
+    display: flex;
+    width: 75%;
+    flex-direction: column;
+}
+
+.settingsAuthAccountTypeHeader {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    padding: 10px 0px;
+    border-bottom: 1px solid #ffffff85;
+    margin-bottom: 30px;
+}
+
+.settingsAuthAccountTypeHeaderLeft {
+    display: flex;
+    column-gap: 5px;
+}
+
+/* Settings add account button styles. */
+.settingsAddAuthAccount {
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 2px 0px;
+    color: white;
+    cursor: pointer;
+    outline: none;
+    transition: 0.25s ease;
+}
+.settingsAddAuthAccount:hover,
+.settingsAddAuthAccount:focus {
+    text-shadow: 0px 0px 20px white, 0px 0px 20px white, 0px 0px 20px white;
+}
+.settingsAddAuthAccount:active {
+    text-shadow: 0px 0px 20px rgba(255, 255, 255, 0.75),
+        0px 0px 20px rgba(255, 255, 255, 0.75),
+        0px 0px 20px rgba(255, 255, 255, 0.75);
+    color: rgba(255, 255, 255, 0.75);
+}
+.settingsAddAuthAccount:disabled {
+    color: rgba(255, 255, 255, 0.75);
+    pointer-events: none;
+}
+
+/* Auth account list container styles. */
+.settingsCurrentAccounts {
+    margin-bottom: 5%;
+}
+.settingsCurrentAccounts > .settingsAuthAccount:not(:last-child) {
+    margin-bottom: 10px;
+}
+.settingsCurrentAccounts > .settingsAuthAccount:not(:first-child) {
+    margin-top: 10px;
+}
+
+/* Auth account shared styles. */
+.settingsAuthAccount {
+    display: flex;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 3px;
+    border: 1px solid rgba(126, 126, 126, 0.57);
+}
+
+/* Left hand side of an auth account element, for the skin image. */
+.settingsAuthAccountLeft {
+    padding: 5px 5px 5px 20px;
+}
+
+/* Image of the auth account's skin. */
+.settingsAuthAccountImage {
+    height: 115px;
+}
+
+/* Right hand side of the auth account, for info + actions. */
+.settingsAuthAccountRight {
+    display: flex;
+    width: 100%;
+}
+
+/* Account details container. */
+.settingsAuthAccountDetails {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 20px;
+    width: 100%;
+}
+.settingsAuthAccountDetails > *:not(:last-child) {
+    margin-bottom: 20px;
+}
+
+/* Account detail element styles. */
+.settingsAuthAccountDetailPane {
+    display: flex;
+    flex-direction: column;
+}
+.settingsAuthAccountDetailTitle {
+    font-size: 14px;
+    color: grey;
+    font-weight: bold;
+    font-family: var(--font-title);
+}
+.settingsAuthAccountDetailValue {
+    font-size: 16px;
+    -webkit-user-select: initial;
+}
+
+/* Account actions container. */
+.settingsAuthAccountActions {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 10px;
+}
+
+/* Account select button shared styles. */
+.settingsAuthAccountSelect {
+    opacity: 0;
+    border: none;
+    white-space: nowrap;
+    background: none;
+    font-family: var(--font-body);
+    outline: none;
+    transition: 0.25s ease;
+}
+.settingsAuthAccountSelect:hover:not([selected]),
+.settingsAuthAccountSelect:focus:not([selected]) {
+    text-shadow: 0px 0px 20px white, 0px 0px 20px white;
+    cursor: pointer;
+}
+.settingsAuthAccount:hover .settingsAuthAccountSelect:not([selected]),
+.settingsAuthAccountSelect[selected] {
+    opacity: 1;
+}
+.settingsAuthAccountSelect[selected] {
+    pointer-events: none;
+}
+
+/* Account logout button shared styles. */
+.settingsAuthAccountLogOut {
+    opacity: 0;
+    border: 1px solid rgb(241, 55, 55);
+    color: rgb(241, 55, 55);
+    background: none;
+    font-size: 12px;
+    border-radius: 3px;
+    font-family: var(--font-body);
+    transition: 0.25s ease;
+    cursor: pointer;
+    outline: none;
+}
+.settingsAuthAccountLogOut:hover,
+.settingsAuthAccountLogOut:focus {
+    box-shadow: 0px 0px 20px rgb(241, 55, 55);
+    background: rgba(241, 55, 55, 0.25);
+}
+.settingsAuthAccountLogOut:active {
+    box-shadow: 0px 0px 20px rgb(185, 47, 47);
+    background: rgba(185, 47, 47, 0.25);
+    border: 1px solid rgb(185, 47, 47);
+    color: rgb(185, 47, 47);
+}
+.settingsAuthAccount:hover .settingsAuthAccountLogOut {
+    opacity: 1;
+} 

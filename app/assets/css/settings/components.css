@@ -1,0 +1,226 @@
+/*******************************************************************************
+ *                                                                             *
+ * Settings View - Common Components                                           *
+ *                                                                             *
+ ******************************************************************************/
+
+/* Tab header shared styles. */
+.settingsTabHeader {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+.settingsTabHeaderText {
+    font-size: 28px;
+    font-family: var(--font-title);
+}
+.settingsTabHeaderDesc {
+    font-size: 16px;
+}
+
+/* Remove spin button from number inputs. */
+#settingsContainer input[type='number']::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+}
+
+/* Default styles for text/number inputs. */
+#settingsContainer input[type='number'],
+#settingsContainer input[type='text'] {
+    color: white;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 3px;
+    border: 1px solid rgba(126, 126, 126, 0.57);
+    font-family: var(--font-body);
+    transition: 0.25s ease;
+}
+#settingsContainer input[type='number']:focus,
+#settingsContainer input[type='text']:focus {
+    outline: none;
+    border-color: rgba(126, 126, 126, 0.87);
+}
+#settingsContainer input[type='number'][error] {
+    border-color: rgb(255, 27, 12);
+    background: rgba(236, 0, 0, 0.25);
+    color: rgb(255, 27, 12);
+}
+
+/* Styles for a generic settings entry. */
+.settingsFieldContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0px;
+    width: 75%;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+}
+.settingsFieldLeft {
+    display: flex;
+    flex-direction: column;
+}
+.settingsFieldTitle {
+    font-size: 18px;
+    font-family: var(--font-body);
+    color: rgba(255, 255, 255, 0.95);
+}
+.settingsFieldDesc {
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.95);
+    margin-top: 5px;
+}
+.settingsDivider {
+    height: 1px;
+    width: 75%;
+    background: rgba(255, 255, 255, 0.25);
+}
+
+/* Toggle Switch */
+.toggleSwitch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+    border-radius: 50px;
+    box-sizing: border-box;
+}
+.toggleSwitch input {
+    display: none;
+}
+.toggleSwitchSlider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(255, 255, 255, 0.35);
+    transition: 0.4s;
+    border-radius: 50px;
+    border: 1px solid rgba(126, 126, 126, 0.57);
+}
+.toggleSwitchSlider:before {
+    position: absolute;
+    content: '';
+    height: 13px;
+    width: 16px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    box-shadow: 0px 1px 2px 0px rgba(0, 0, 0, 0.75);
+    border-radius: 50px;
+    transition: 0.4s;
+}
+input:checked + .toggleSwitchSlider {
+    background-color: rgb(31, 140, 11);
+    border: 1px solid rgb(31, 140, 11);
+}
+input:checked + .toggleSwitchSlider:before {
+    transform: translateX(15px);
+}
+
+/* Range Slider styles. */
+.rangeSlider {
+    width: 35%;
+    height: 5px;
+    margin: 15px 0px;
+    background: grey;
+    border-radius: 3px;
+    position: relative;
+}
+.rangeSliderBar {
+    position: absolute;
+    background: #8be88b;
+    width: 50%;
+    height: 5px;
+    border-radius: 3px 0px 0px 3px;
+    transition: background 0.25s ease;
+}
+.rangeSliderTrack {
+    position: absolute;
+    top: -7.5px;
+    width: 7px;
+    height: 20px;
+    background: white;
+    border-radius: 3px;
+    left: 50%;
+    cursor: ew-resize;
+}
+
+/* File selectors */
+
+/* Main container for File selectors. */
+.settingsFileSelContainer {
+    display: flex;
+    flex-direction: column;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    margin-bottom: 20px;
+    margin-top: 20px;
+    width: 75%;
+}
+
+/* File selector title. */
+.settingsFileSelTitle {
+    margin-bottom: 10px;
+    font-size: 18px;
+}
+
+/* Wrapper container for the actionable elements. */
+.settingsFileSelActions {
+    display: flex;
+    width: 90%;
+}
+
+/* File selector icon settings. */
+.settingsFileSelIcon {
+    display: flex;
+    align-items: center;
+    background: rgba(126, 126, 126, 0.57);
+    border-radius: 3px 0px 0px 3px;
+    padding: 5px;
+    transition: 0.25s ease;
+}
+.settingsFileSelSVG {
+    width: 20px;
+    height: 20px;
+    fill: white;
+}
+
+/* Disabled text field which stores the selected file path. */
+.settingsFileSelVal {
+    border-radius: 0px !important;
+    width: 100%;
+    padding: 5px 10px;
+    font-size: 16px;
+    height: 30px;
+}
+
+/* File selection button. */
+.settingsFileSelButton {
+    border: 0px;
+    border-radius: 0px 3px 3px 0px;
+    font-size: 16px;
+    padding: 0px 5px;
+    cursor: pointer;
+    background: rgba(126, 126, 126, 0.57);
+    transition: 0.25s ease;
+    white-space: nowrap;
+    outline: none;
+}
+.settingsFileSelButton:hover,
+.settingsFileSelButton:focus {
+    text-shadow: 0px 0px 20px white;
+}
+.settingsFileSelButton:active {
+    text-shadow: 0px 0px 20px rgba(255, 255, 255, 0.75);
+    color: rgba(255, 255, 255, 0.75);
+}
+
+/* Description for the file selector. */
+.settingsFileSelDesc {
+    font-size: 12px;
+    margin: 20px 0px;
+    color: lightgrey;
+    width: 89%;
+}
+.settingsFileSelDesc strong {
+    font-family: var(--font-body);
+} 
