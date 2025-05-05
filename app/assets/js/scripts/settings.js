@@ -68,7 +68,7 @@ function bindFileSelectors(){
             if(!res.canceled) {
                 ele.previousElementSibling.value = res.filePaths[0]
                 if(isJavaExecSel) {
-                    await populateJavaExecDetails(ele.previousElementSibling.value)
+                    await populateJavaExecDetails(res.filePaths[0])
                 }
             }
         }
@@ -117,6 +117,45 @@ function initSettingsValidators(){
         }
 
     })
+}
+
+/**
+ * Validate the provided executable path and display the data on
+ * the UI.
+ *
+ * @param {string} execPath The executable path to populate against.
+ */
+async function populateJavaExecDetails(execPath){
+    const server = (await DistroAPI.getDistribution()).getServerById(ConfigManager.getSelectedServer())
+
+    const details = await validateSelectedJvm(ensureJavaDirIsRoot(execPath), server.effectiveJavaOptions.supported)
+
+    if(details != null) {
+        settingsJavaExecDetails.innerHTML = Lang.queryJS('settings.java.selectedJava', { version: details.semverStr, vendor: details.vendor })
+    } else {
+        settingsJavaExecDetails.innerHTML = Lang.queryJS('settings.java.invalidSelection')
+    }
+}
+
+function populateJavaReqDesc(server) {
+    settingsJavaReqDesc.innerHTML = Lang.queryJS('settings.java.requiresJava', { major: server.effectiveJavaOptions.suggestedMajor })
+}
+
+function populateJvmOptsLink(server) {
+    const major = server.effectiveJavaOptions.suggestedMajor
+    settingsJvmOptsLink.innerHTML = Lang.queryJS('settings.java.availableOptions', { major: major })
+    if(major >= 12) {
+        settingsJvmOptsLink.href = `https://docs.oracle.com/en/java/javase/${major}/docs/specs/man/java.html#extra-options-for-java`
+    }
+    else if(major >= 11) {
+        settingsJvmOptsLink.href = 'https://docs.oracle.com/en/java/javase/11/tools/java.html#GUID-3B1CE181-CD30-4178-9602-230B800D4FAE'
+    }
+    else if(major >= 9) {
+        settingsJvmOptsLink.href = `https://docs.oracle.com/javase/${major}/tools/java.htm`
+    }
+    else {
+        settingsJvmOptsLink.href = `https://docs.oracle.com/javase/${major}/docs/technotes/tools/${process.platform === 'win32' ? 'windows' : 'unix'}/java.html`
+    }
 }
 
 /**
@@ -1151,9 +1190,242 @@ const settingsMaxRAMLabel     = document.getElementById('settingsMaxRAMLabel')
 const settingsMinRAMLabel     = document.getElementById('settingsMinRAMLabel')
 const settingsMemoryTotal     = document.getElementById('settingsMemoryTotal')
 const settingsMemoryAvail     = document.getElementById('settingsMemoryAvail')
+const settingsMemoryUsed      = document.getElementById('settingsMemoryUsed')
 const settingsJavaExecDetails = document.getElementById('settingsJavaExecDetails')
 const settingsJavaReqDesc     = document.getElementById('settingsJavaReqDesc')
 const settingsJvmOptsLink     = document.getElementById('settingsJvmOptsLink')
+
+// Create input fields for RAM values
+function createRAMInputFields() {
+    // Check if the input fields already exist to prevent duplicates
+    if(document.getElementById('settingsMaxRAMInput') || document.getElementById('settingsMinRAMInput')) {
+        return; // Fields already exist, no need to create them again
+    }
+    
+    // Get available memory
+    const availableRAM = Number(os.freemem()/1073741824).toFixed(1)
+    
+    // Replace settingsMaxRAMLabel with input field
+    const maxRAMLabel = settingsMaxRAMLabel
+    const maxRAMText = maxRAMLabel.textContent
+    
+    // Create max RAM input field
+    const maxRAMInput = document.createElement('input')
+    maxRAMInput.id = 'settingsMaxRAMInput'
+    maxRAMInput.type = 'number'
+    maxRAMInput.min = settingsMaxRAMRange.getAttribute('min')
+    maxRAMInput.max = Math.min(settingsMaxRAMRange.getAttribute('max'), availableRAM)
+    maxRAMInput.step = '0.1'
+    maxRAMInput.value = parseFloat(maxRAMText)
+    maxRAMInput.style.width = '60px'
+    maxRAMInput.className = 'settingsMemoryLabel'
+    
+    // Replace label with input
+    maxRAMLabel.innerHTML = ''
+    maxRAMLabel.appendChild(maxRAMInput)
+    
+    // Replace settingsMinRAMLabel with input field
+    const minRAMLabel = settingsMinRAMLabel
+    const minRAMText = minRAMLabel.textContent
+    
+    // Create min RAM input field
+    const minRAMInput = document.createElement('input')
+    minRAMInput.id = 'settingsMinRAMInput'
+    minRAMInput.type = 'number'
+    minRAMInput.min = settingsMinRAMRange.getAttribute('min')
+    minRAMInput.max = Math.min(settingsMinRAMRange.getAttribute('max'), availableRAM)
+    minRAMInput.step = '0.1'
+    minRAMInput.value = parseFloat(minRAMText)
+    minRAMInput.style.width = '60px'
+    minRAMInput.className = 'settingsMemoryLabel'
+    
+    // Replace label with input
+    minRAMLabel.innerHTML = ''
+    minRAMLabel.appendChild(minRAMInput)
+
+    // Bind input events
+    maxRAMInput.addEventListener('change', (e) => {
+        const value = parseFloat(e.target.value)
+        if(isNaN(value)) return
+        
+        // Ensure value doesn't exceed available RAM
+        const availableRAM = Number(os.freemem()/1073741824)
+        const cappedValue = Math.min(value, availableRAM)
+        e.target.value = cappedValue.toFixed(1)
+        
+        const sliderMeta = calculateRangeSliderMeta(settingsMaxRAMRange)
+        const notch = ((cappedValue-sliderMeta.min)/sliderMeta.step)*sliderMeta.inc
+        updateRangedSlider(settingsMaxRAMRange, cappedValue, notch)
+    })
+
+    minRAMInput.addEventListener('change', (e) => {
+        const value = parseFloat(e.target.value)
+        if(isNaN(value)) return
+        
+        // Ensure value doesn't exceed available RAM
+        const availableRAM = Number(os.freemem()/1073741824)
+        const cappedValue = Math.min(value, availableRAM)
+        e.target.value = cappedValue.toFixed(1)
+        
+        const sliderMeta = calculateRangeSliderMeta(settingsMinRAMRange)
+        const notch = ((cappedValue-sliderMeta.min)/sliderMeta.step)*sliderMeta.inc
+        updateRangedSlider(settingsMinRAMRange, cappedValue, notch)
+    })
+}
+
+/**
+ * Calculate common values for a ranged slider.
+ *
+ * @param {Element} v The range slider to calculate against.
+ * @returns {Object} An object with meta values for the provided ranged slider.
+ */
+function calculateRangeSliderMeta(v){
+    const val = {
+        max: Number(v.getAttribute('max')),
+        min: Number(v.getAttribute('min')),
+        step: Number(v.getAttribute('step')),
+    }
+    val.ticks = (val.max-val.min)/val.step
+    val.inc = 100/val.ticks
+    return val
+}
+
+
+/**
+ * Binds functionality to the ranged sliders. They're more than
+ * just divs now :').
+ */
+function bindRangeSlider(){
+    Array.from(document.getElementsByClassName('rangeSlider')).map((v) => {
+
+        // Reference the track (thumb).
+        const track = v.getElementsByClassName('rangeSliderTrack')[0]
+        const bar = v.getElementsByClassName('rangeSliderBar')[0]
+
+        // Set the initial slider value.
+        const value = v.getAttribute('value')
+        const sliderMeta = calculateRangeSliderMeta(v)
+        
+        updateRangedSlider(v, value, ((value-sliderMeta.min)/sliderMeta.step)*sliderMeta.inc)
+
+        // Make the entire slider clickable
+        v.onclick = (e) => {
+            // Ignore clicks on the track itself to prevent double handling
+            if(e.target === track) {
+                return
+            }
+            
+            // Calculate the click position relative to the slider width
+            const clickX = e.pageX - v.getBoundingClientRect().left
+            const sliderWidth = v.offsetWidth
+            
+            // Calculate the exact value based on position
+            const percentage = Math.min(Math.max(clickX / sliderWidth, 0), 1)
+            const exactValue = sliderMeta.min + percentage * (sliderMeta.max - sliderMeta.min)
+            
+            // Round to the nearest step increment
+            const steppedValue = Math.round(exactValue / sliderMeta.step) * sliderMeta.step
+            const cappedValue = Math.min(Math.max(steppedValue, sliderMeta.min), sliderMeta.max)
+            
+            // Calculate the notch percentage
+            const notchPercentage = ((cappedValue - sliderMeta.min) / (sliderMeta.max - sliderMeta.min)) * 100
+            
+            // Update slider value
+            updateRangedSlider(v, cappedValue, notchPercentage)
+        }
+
+        // The magic happens when we click on the track.
+        track.onmousedown = (e) => {
+            e.stopPropagation() // Prevent triggering the parent's click event
+            
+            // Get current slider rect
+            const sliderRect = v.getBoundingClientRect()
+            
+            // Initial positioning
+            const initialMouseX = e.clientX
+            const initialTrackLeft = parseFloat(track.style.left || '0')
+            
+            // Update track position for smoother drag
+            function updateTrackPosition(moveEvent) {
+                // Calculate the new position
+                const deltaX = moveEvent.clientX - initialMouseX
+                const sliderWidth = sliderRect.width
+                
+                // Calculate the percentage move and add to initial position
+                const percentage = (deltaX / sliderWidth) * 100
+                let newPercentage = initialTrackLeft + percentage
+                
+                // Clamp the percentage between 0 and 100
+                newPercentage = Math.min(Math.max(newPercentage, 0), 100)
+                
+                // Calculate exact value based on percentage
+                const exactValue = sliderMeta.min + (newPercentage / 100) * (sliderMeta.max - sliderMeta.min)
+                
+                // Round to the nearest step increment
+                const steppedValue = Math.round(exactValue / sliderMeta.step) * sliderMeta.step
+                const cappedValue = Math.min(Math.max(steppedValue, sliderMeta.min), sliderMeta.max)
+                
+                // Calculate the notch percentage
+                const notchPercentage = ((cappedValue - sliderMeta.min) / (sliderMeta.max - sliderMeta.min)) * 100
+                
+                // Update the slider value
+                updateRangedSlider(v, cappedValue, notchPercentage)
+            }
+            
+            // Update on mouse move
+            function handleMouseMove(moveEvent) {
+                moveEvent.preventDefault()
+                updateTrackPosition(moveEvent)
+            }
+            
+            // Stop dragging on mouse up
+            function handleMouseUp() {
+                document.removeEventListener('mousemove', handleMouseMove)
+                document.removeEventListener('mouseup', handleMouseUp)
+            }
+            
+            // Add event listeners for dragging
+            document.addEventListener('mousemove', handleMouseMove)
+            document.addEventListener('mouseup', handleMouseUp)
+        }
+    })
+}
+
+/**
+ * Update a ranged slider's value and position.
+ *
+ * @param {Element} element The ranged slider to update.
+ * @param {string | number} value The new value for the ranged slider.
+ * @param {number} percentage The percentage position for the slider (0-100).
+ */
+function updateRangedSlider(element, value, percentage){
+    const oldVal = element.getAttribute('value')
+    const bar = element.getElementsByClassName('rangeSliderBar')[0]
+    const track = element.getElementsByClassName('rangeSliderTrack')[0]
+
+    // Set the precise value
+    element.setAttribute('value', value)
+
+    // Make sure percentage is within bounds
+    percentage = Math.min(Math.max(percentage, 0), 100)
+
+    const event = new MouseEvent('change', {
+        target: element,
+        type: 'change',
+        bubbles: false,
+        cancelable: true
+    })
+
+    let cancelled = !element.dispatchEvent(event)
+
+    if(!cancelled){
+        // Update position with exact values
+        track.style.left = percentage + '%'
+        bar.style.width = percentage + '%'
+    } else {
+        element.setAttribute('value', oldVal)
+    }
+}
 
 // Bind on change event for min memory container.
 settingsMinRAMRange.onchange = (e) => {
@@ -1161,6 +1433,21 @@ settingsMinRAMRange.onchange = (e) => {
     // Current range values
     const sMaxV = Number(settingsMaxRAMRange.getAttribute('value'))
     const sMinV = Number(settingsMinRAMRange.getAttribute('value'))
+    
+    // Get available RAM
+    const availableRAM = Number(os.freemem()/1073741824)
+    
+    // Cap the value to available RAM
+    const cappedValue = Math.min(sMinV, availableRAM)
+    
+    // If value was capped, update the slider
+    if(cappedValue !== sMinV) {
+        const sliderMeta = calculateRangeSliderMeta(settingsMinRAMRange)
+        const notch = ((cappedValue-sliderMeta.min)/sliderMeta.step)*sliderMeta.inc
+        updateRangedSlider(settingsMinRAMRange, cappedValue, notch)
+        // After capping, return since updateRangedSlider will trigger this function again
+        return
+    }
 
     // Get reference to range bar.
     const bar = e.target.getElementsByClassName('rangeSliderBar')[0]
@@ -1181,11 +1468,18 @@ settingsMinRAMRange.onchange = (e) => {
         const sliderMeta = calculateRangeSliderMeta(settingsMaxRAMRange)
         updateRangedSlider(settingsMaxRAMRange, sMinV,
             ((sMinV-sliderMeta.min)/sliderMeta.step)*sliderMeta.inc)
-        settingsMaxRAMLabel.innerHTML = sMinV.toFixed(1) + 'G'
+        
+        // Update max RAM input field
+        const maxRAMInput = document.getElementById('settingsMaxRAMInput')
+        if(maxRAMInput) maxRAMInput.value = sMinV.toFixed(1)
     }
 
-    // Update label
-    settingsMinRAMLabel.innerHTML = sMinV.toFixed(1) + 'G'
+    // Update min RAM input field
+    const minRAMInput = document.getElementById('settingsMinRAMInput')
+    if(minRAMInput) minRAMInput.value = sMinV.toFixed(1)
+    
+    // Update Remaining Memory
+    updateUsedMemory(sMinV, sMaxV)
 }
 
 // Bind on change event for max memory container.
@@ -1193,6 +1487,21 @@ settingsMaxRAMRange.onchange = (e) => {
     // Current range values
     const sMaxV = Number(settingsMaxRAMRange.getAttribute('value'))
     const sMinV = Number(settingsMinRAMRange.getAttribute('value'))
+    
+    // Get available RAM
+    const availableRAM = Number(os.freemem()/1073741824)
+    
+    // Cap the value to available RAM
+    const cappedValue = Math.min(sMaxV, availableRAM)
+    
+    // If value was capped, update the slider
+    if(cappedValue !== sMaxV) {
+        const sliderMeta = calculateRangeSliderMeta(settingsMaxRAMRange)
+        const notch = ((cappedValue-sliderMeta.min)/sliderMeta.step)*sliderMeta.inc
+        updateRangedSlider(settingsMaxRAMRange, cappedValue, notch)
+        // After capping, return since updateRangedSlider will trigger this function again
+        return
+    }
 
     // Get reference to range bar.
     const bar = e.target.getElementsByClassName('rangeSliderBar')[0]
@@ -1213,111 +1522,32 @@ settingsMaxRAMRange.onchange = (e) => {
         const sliderMeta = calculateRangeSliderMeta(settingsMaxRAMRange)
         updateRangedSlider(settingsMinRAMRange, sMaxV,
             ((sMaxV-sliderMeta.min)/sliderMeta.step)*sliderMeta.inc)
-        settingsMinRAMLabel.innerHTML = sMaxV.toFixed(1) + 'G'
+        
+        // Update min RAM input field
+        const minRAMInput = document.getElementById('settingsMinRAMInput')
+        if(minRAMInput) minRAMInput.value = sMaxV.toFixed(1)
     }
-    settingsMaxRAMLabel.innerHTML = sMaxV.toFixed(1) + 'G'
+    
+    // Update max RAM input field
+    const maxRAMInput = document.getElementById('settingsMaxRAMInput')
+    if(maxRAMInput) maxRAMInput.value = sMaxV.toFixed(1)
+    
+    // Update Remaining Memory
+    updateUsedMemory(sMinV, sMaxV)
 }
 
 /**
- * Calculate common values for a ranged slider.
- *
- * @param {Element} v The range slider to calculate against.
- * @returns {Object} An object with meta values for the provided ranged slider.
+ * Update the Remaining Memory display based on current min and max RAM values
+ * 
+ * @param {number} minRAM The minimum RAM value
+ * @param {number} maxRAM The maximum RAM value
  */
-function calculateRangeSliderMeta(v){
-    const val = {
-        max: Number(v.getAttribute('max')),
-        min: Number(v.getAttribute('min')),
-        step: Number(v.getAttribute('step')),
-    }
-    val.ticks = (val.max-val.min)/val.step
-    val.inc = 100/val.ticks
-    return val
-}
-
-/**
- * Binds functionality to the ranged sliders. They're more than
- * just divs now :').
- */
-function bindRangeSlider(){
-    Array.from(document.getElementsByClassName('rangeSlider')).map((v) => {
-
-        // Reference the track (thumb).
-        const track = v.getElementsByClassName('rangeSliderTrack')[0]
-
-        // Set the initial slider value.
-        const value = v.getAttribute('value')
-        const sliderMeta = calculateRangeSliderMeta(v)
-
-        updateRangedSlider(v, value, ((value-sliderMeta.min)/sliderMeta.step)*sliderMeta.inc)
-
-        // The magic happens when we click on the track.
-        track.onmousedown = (e) => {
-
-            // Stop moving the track on mouse up.
-            document.onmouseup = (e) => {
-                document.onmousemove = null
-                document.onmouseup = null
-            }
-
-            // Move slider according to the mouse position.
-            document.onmousemove = (e) => {
-
-                // Distance from the beginning of the bar in pixels.
-                const diff = e.pageX - v.offsetLeft - track.offsetWidth/2
-
-                // Don't move the track off the bar.
-                if(diff >= 0 && diff <= v.offsetWidth-track.offsetWidth/2){
-
-                    // Convert the difference to a percentage.
-                    const perc = (diff/v.offsetWidth)*100
-                    // Calculate the percentage of the closest notch.
-                    const notch = Number(perc/sliderMeta.inc).toFixed(0)*sliderMeta.inc
-
-                    // If we're close to that notch, stick to it.
-                    if(Math.abs(perc-notch) < sliderMeta.inc/2){
-                        updateRangedSlider(v, sliderMeta.min+(sliderMeta.step*(notch/sliderMeta.inc)), notch)
-                    }
-                }
-            }
-        }
-    })
-}
-
-/**
- * Update a ranged slider's value and position.
- *
- * @param {Element} element The ranged slider to update.
- * @param {string | number} value The new value for the ranged slider.
- * @param {number} notch The notch that the slider should now be at.
- */
-function updateRangedSlider(element, value, notch){
-    const oldVal = element.getAttribute('value')
-    const bar = element.getElementsByClassName('rangeSliderBar')[0]
-    const track = element.getElementsByClassName('rangeSliderTrack')[0]
-
-    element.setAttribute('value', value)
-
-    if(notch < 0){
-        notch = 0
-    } else if(notch > 100) {
-        notch = 100
-    }
-
-    const event = new MouseEvent('change', {
-        target: element,
-        type: 'change',
-        bubbles: false,
-        cancelable: true
-    })
-
-    let cancelled = !element.dispatchEvent(event)
-
-    if(!cancelled){
-        track.style.left = notch + '%'
-        bar.style.width = notch + '%'
-    } else {
-        element.setAttribute('value', oldVal)
+function updateUsedMemory(minRAM, maxRAM) {
+    if(settingsMemoryUsed != null) {
+        const availableRAM = Number(os.freemem()/1073741824)
+        // Calculate how much will be left after allocating maxRAM
+        const remainingRAM = Math.max(0, availableRAM - maxRAM).toFixed(1)
+        settingsMemoryUsed.innerHTML = remainingRAM + 'G'
     }
 }
 
@@ -1325,58 +1555,31 @@ function updateRangedSlider(element, value, notch){
  * Display the total and available RAM.
  */
 function populateMemoryStatus(){
-    settingsMemoryTotal.innerHTML = Number((os.totalmem()-1073741824)/1073741824).toFixed(1) + 'G'
-    settingsMemoryAvail.innerHTML = Number(os.freemem()/1073741824).toFixed(1) + 'G'
-}
-
-/**
- * Validate the provided executable path and display the data on
- * the UI.
- *
- * @param {string} execPath The executable path to populate against.
- */
-async function populateJavaExecDetails(execPath){
-    const server = (await DistroAPI.getDistribution()).getServerById(ConfigManager.getSelectedServer())
-
-    const details = await validateSelectedJvm(ensureJavaDirIsRoot(execPath), server.effectiveJavaOptions.supported)
-
-    if(details != null) {
-        settingsJavaExecDetails.innerHTML = Lang.queryJS('settings.java.selectedJava', { version: details.semverStr, vendor: details.vendor })
-    } else {
-        settingsJavaExecDetails.innerHTML = Lang.queryJS('settings.java.invalidSelection')
-    }
-}
-
-function populateJavaReqDesc(server) {
-    settingsJavaReqDesc.innerHTML = Lang.queryJS('settings.java.requiresJava', { major: server.effectiveJavaOptions.suggestedMajor })
-}
-
-function populateJvmOptsLink(server) {
-    const major = server.effectiveJavaOptions.suggestedMajor
-    settingsJvmOptsLink.innerHTML = Lang.queryJS('settings.java.availableOptions', { major: major })
-    if(major >= 12) {
-        settingsJvmOptsLink.href = `https://docs.oracle.com/en/java/javase/${major}/docs/specs/man/java.html#extra-options-for-java`
-    }
-    else if(major >= 11) {
-        settingsJvmOptsLink.href = 'https://docs.oracle.com/en/java/javase/11/tools/java.html#GUID-3B1CE181-CD30-4178-9602-230B800D4FAE'
-    }
-    else if(major >= 9) {
-        settingsJvmOptsLink.href = `https://docs.oracle.com/javase/${major}/tools/java.htm`
-    }
-    else {
-        settingsJvmOptsLink.href = `https://docs.oracle.com/javase/${major}/docs/technotes/tools/${process.platform === 'win32' ? 'windows' : 'unix'}/java.html`
-    }
+    const totalRAM = Number((os.totalmem()-1073741824)/1073741824).toFixed(1)
+    const availableRAM = Number(os.freemem()/1073741824).toFixed(1)
+    
+    settingsMemoryTotal.innerHTML = totalRAM + 'G'
+    settingsMemoryAvail.innerHTML = availableRAM + 'G'
+    
+    // Initialize the Used memory display
+    const sMaxV = Number(settingsMaxRAMRange.getAttribute('value'))
+    const sMinV = Number(settingsMinRAMRange.getAttribute('value'))
+    updateUsedMemory(sMinV, sMaxV)
 }
 
 function bindMinMaxRam(server) {
     // Store maximum memory values.
     const SETTINGS_MAX_MEMORY = ConfigManager.getAbsoluteMaxRAM(server.rawServer.javaOptions?.ram)
     const SETTINGS_MIN_MEMORY = ConfigManager.getAbsoluteMinRAM(server.rawServer.javaOptions?.ram)
+    
+    // Get available RAM and use it as a cap if needed
+    const availableRAM = Number(os.freemem()/1073741824)
+    const cappedMaxMemory = Math.min(SETTINGS_MAX_MEMORY, availableRAM)
 
     // Set the max and min values for the ranged sliders.
-    settingsMaxRAMRange.setAttribute('max', SETTINGS_MAX_MEMORY)
+    settingsMaxRAMRange.setAttribute('max', cappedMaxMemory)
     settingsMaxRAMRange.setAttribute('min', SETTINGS_MIN_MEMORY)
-    settingsMinRAMRange.setAttribute('max', SETTINGS_MAX_MEMORY)
+    settingsMinRAMRange.setAttribute('max', cappedMaxMemory)
     settingsMinRAMRange.setAttribute('min', SETTINGS_MIN_MEMORY)
 }
 
@@ -1387,6 +1590,7 @@ async function prepareJavaTab(){
     const server = (await DistroAPI.getDistribution()).getServerById(ConfigManager.getSelectedServer())
     bindMinMaxRam(server)
     bindRangeSlider(server)
+    createRAMInputFields() // Add input fields for RAM values
     populateMemoryStatus()
     populateJavaReqDesc(server)
     populateJvmOptsLink(server)
