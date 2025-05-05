@@ -245,7 +245,7 @@
 #serverSelectListScrollable > .serverListing:not(:first-child):not(:last-child),
 #accountSelectListScrollable
     > .accountListing:not(:first-child):not(:last-child) {
-    margin: 5px 0px;
+    margin: 0px 0px;
 }
 #serverSelectListScrollable > .serverListing:first-child,
 #accountSelectListScrollable > .accountListing:first-child {
@@ -283,7 +283,7 @@
 .serverListingDescription {
     font-size: 10px;
     line-height: 10px;
-    font-weight: bold;
+    font-weight: lighter;
     text-align: left;
 }
 
