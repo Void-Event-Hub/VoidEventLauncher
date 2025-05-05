@@ -1,5 +1,5 @@
 appId: 'net.voideventhub.launcher'
-productName: 'Void-Event-Launcher'
+productName: 'Void Event Launcher'
 artifactName: '${productName}-setup-${channel}_${version}-${os}_${arch}.${ext}'
 
 copyright: 'Copyright © 2025 Tyrthurey'
