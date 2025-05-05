@@ -12,12 +12,14 @@
   "private": true,
   "main": "index.js",
   "scripts": {
-    "start": "electron .",
+    "start": "electron-forge start",
     "dist": "electron-builder build",
     "dist:win": "npm run dist -- -w",
     "dist:mac": "npm run dist -- -m",
     "dist:linux": "npm run dist -- -l",
-    "lint": "eslint --config .eslintrc.json ."
+    "lint": "eslint --config .eslintrc.json .",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "engines": {
     "node": "20.x.x"
@@ -28,6 +30,7 @@
     "discord-rpc-patch": "^4.0.1",
     "ejs": "^3.1.10",
     "ejs-electron": "^3.0.0",
+    "electron-squirrel-startup": "^1.0.1",
     "electron-updater": "^6.2.1",
     "fs-extra": "^11.1.1",
     "github-syntax-dark": "^0.5.0",
@@ -42,8 +45,15 @@
     "toml": "^3.0.0"
   },
   "devDependencies": {
+    "@electron-forge/cli": "^7.8.0",
+    "@electron-forge/maker-deb": "^7.8.0",
+    "@electron-forge/maker-rpm": "^7.8.0",
+    "@electron-forge/maker-squirrel": "^7.8.0",
+    "@electron-forge/maker-zip": "^7.8.0",
+    "@electron-forge/plugin-auto-unpack-natives": "^7.8.0",
+    "@electron-forge/plugin-fuses": "^7.8.0",
+    "@electron/fuses": "^1.8.0",
     "electron": "^30.4.0",
-    "electron-builder": "^24.13.3",
     "eslint": "^8.57.0"
   },
   "repository": {
