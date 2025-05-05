@@ -187,16 +187,6 @@
                 <div id="settingsMemoryContent">
                     <div id="settingsMemoryContentLeft">
                         <div class="settingsMemoryContentItem">
-                            <span class="settingsMemoryHeader"><%- lang('settings.maxRAM') %></span>
-                            <div class="settingsMemoryActionContainer">
-                                <div id="settingsMaxRAMRange" class="rangeSlider" cValue="MaxRAM" serverDependent min="3" max="8" value="3" step="0.5">
-                                    <div class="rangeSliderBar"></div>
-                                    <div class="rangeSliderTrack"></div>
-                                </div>
-                                <span id="settingsMaxRAMLabel" class="settingsMemoryLabel">3G</span>
-                            </div>
-                        </div>
-                        <div class="settingsMemoryContentItem">
                             <span class="settingsMemoryHeader"><%- lang('settings.minRAM') %></span>
                             <div class="settingsMemoryActionContainer">
                                 <div id="settingsMinRAMRange" class="rangeSlider" cValue="MinRAM" serverDependent min="3" max="8" value="3" step="0.5">
@@ -206,17 +196,29 @@
                                 <span id="settingsMinRAMLabel" class="settingsMemoryLabel">3G</span>
                             </div>
                         </div>
+                        <div class="settingsMemoryContentItem">
+                            <span class="settingsMemoryHeader"><%- lang('settings.maxRAM') %></span>
+                            <div class="settingsMemoryActionContainer">
+                                <div id="settingsMaxRAMRange" class="rangeSlider" cValue="MaxRAM" serverDependent min="3" max="8" value="3" step="0.5">
+                                    <div class="rangeSliderBar"></div>
+                                    <div class="rangeSliderTrack"></div>
+                                </div>
+                                <span id="settingsMaxRAMLabel" class="settingsMemoryLabel">3G</span>
+                            </div>
+                        </div>
                         <div id="settingsMemoryDesc"><%- lang('settings.memoryDesc') %></div>
                     </div>
                     <div id="settingsMemoryContentRight">
                         <div id="settingsMemoryStatus">
                             <div class="settingsMemoryStatusContainer">
-                                <span class="settingsMemoryStatusTitle"><%- lang('settings.memoryTotalTitle') %></span>
+                                <span class="settingsMemoryStatusTitle">Total Memory</span>
                                 <span id="settingsMemoryTotal" class="settingsMemoryStatusValue">16G</span>
-                            </div>
-                            <div class="settingsMemoryStatusContainer">
-                                <span class="settingsMemoryStatusTitle"><%- lang('settings.memoryAvailableTitle') %></span>
+                                <br>
+                                <span class="settingsMemoryStatusTitle">Available</span>
                                 <span id="settingsMemoryAvail" class="settingsMemoryStatusValue">7.3G</span>
+                                <br>
+                                <span class="settingsMemoryStatusTitle">Remaining Free</span>
+                                <span id="settingsMemoryUsed" class="settingsMemoryStatusValue">--</span>
                             </div>
                         </div>
                     </div>
