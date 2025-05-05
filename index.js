@@ -2,54 +2,68 @@ const remoteMain = require('@electron/remote/main')
 remoteMain.initialize()
 
 // Requirements
-const { app, BrowserWindow, ipcMain, Menu, shell } = require('electron')
-const autoUpdater                       = require('electron-updater').autoUpdater
-const ejse                              = require('ejs-electron')
-const fs                                = require('fs')
-const isDev                             = require('./app/assets/js/isdev')
-const path                              = require('path')
-const semver                            = require('semver')
-const { pathToFileURL }                 = require('url')
+const { app, BrowserWindow, ipcMain, Menu, shell, session } = require('electron')
+const autoUpdater = require('electron-updater').autoUpdater
+const ejse = require('ejs-electron')
+const fs = require('fs')
+const isDev = require('./app/assets/js/isdev')
+const path = require('path')
+const semver = require('semver')
+const { pathToFileURL } = require('url')
 const { AZURE_CLIENT_ID, MSFT_OPCODE, MSFT_REPLY_TYPE, MSFT_ERROR, SHELL_OPCODE } = require('./app/assets/js/ipcconstants')
-const LangLoader                        = require('./app/assets/js/langloader')
+const LangLoader = require('./app/assets/js/langloader')
 
 // Setup Lang
 LangLoader.setupLanguage()
+
+// Setup permission request handler to deny location permission
+app.on('ready', () => {
+    // Set up a permission handler that denies geolocation access
+    session.defaultSession.setPermissionRequestHandler((webContents, permission, callback) => {
+        if (permission === 'geolocation') {
+            // Deny location permission requests
+            return callback(false)
+        }
+
+        // Allow other permissions by default
+        callback(true)
+    })
+})
 
 // Setup auto updater.
 function initAutoUpdater(event, data) {
     autoUpdater.disableWebInstaller = true
     autoUpdater.disableDifferentialDownload = true // doesn't work anyway
 
-    if(data){
+    if (data) {
         autoUpdater.allowPrerelease = true
     } else {
         // Defaults to true if application version contains prerelease components (e.g. 0.12.1-alpha.1)
         // autoUpdater.allowPrerelease = true
     }
 
-    if(isDev){
+    if (isDev) {
         autoUpdater.autoInstallOnAppQuit = false
         autoUpdater.forceDevUpdateConfig = true
         console.log('App path is:', app.getAppPath())
     }
 
-    if(process.platform === 'darwin'){
+    if (process.platform === 'darwin') {
         autoUpdater.autoDownload = true
     }
-    autoUpdater.on('update-available', (info) => {
+    autoUpdater.on('update-available', info => {
         event.sender.send('autoUpdateNotification', 'update-available', info)
     })
-    autoUpdater.on('update-downloaded', (info) => {
+    autoUpdater.on('update-downloaded', info => {
         event.sender.send('autoUpdateNotification', 'update-downloaded', info)
     })
-    autoUpdater.on('update-not-available', (info) => {
+    autoUpdater.on('update-not-available', info => {
         event.sender.send('autoUpdateNotification', 'update-not-available', info)
     })
     autoUpdater.on('checking-for-update', () => {
         event.sender.send('autoUpdateNotification', 'checking-for-update')
     })
-    autoUpdater.on('error', (err) => {
+    autoUpdater.on('error', err => {
         console.log('update-error', err)
         event.sender.send('autoUpdateNotification', 'realerror', err)
     })
@@ -57,22 +71,21 @@ function initAutoUpdater(event, data) {
 
 // Open channel to listen for update actions.
 ipcMain.on('autoUpdateAction', (event, arg, data) => {
-    switch(arg){
+    switch (arg) {
         case 'initAutoUpdater':
             console.log('Initializing auto updater.')
             initAutoUpdater(event, data)
             event.sender.send('autoUpdateNotification', 'ready')
             break
         case 'checkForUpdate':
-            autoUpdater.checkForUpdatesAndNotify()
-                .catch(err => {
-                    event.sender.send('autoUpdateNotification', 'realerror', err)
-                })
+            autoUpdater.checkForUpdatesAndNotify().catch(err => {
+                event.sender.send('autoUpdateNotification', 'realerror', err)
+            })
             break
         case 'allowPrereleaseChange':
-            if(!data){
+            if (!data) {
                 const preRelComp = semver.prerelease(app.getVersion())
-                if(preRelComp != null && preRelComp.length > 0){
+                if (preRelComp != null && preRelComp.length > 0) {
                     autoUpdater.allowPrerelease = true
                 } else {
                     autoUpdater.allowPrerelease = data
@@ -99,12 +112,12 @@ ipcMain.handle(SHELL_OPCODE.TRASH_ITEM, async (event, ...args) => {
     try {
         await shell.trashItem(args[0])
         return {
-            result: true
+            result: true,
         }
-    } catch(error) {
+    } catch (error) {
         return {
             result: false,
-            error: error
+            error: error,
         }
     }
 })
@@ -112,7 +125,6 @@ ipcMain.handle(SHELL_OPCODE.TRASH_ITEM, async (event, ...args) => {
 // Disable hardware acceleration.
 // https://electronjs.org/docs/tutorial/offscreen-rendering
 app.disableHardwareAcceleration()
-
 
 const REDIRECT_URI_PREFIX = 'https://login.microsoftonline.com/common/oauth2/nativeclient?'
 
@@ -135,7 +147,7 @@ ipcMain.on(MSFT_OPCODE.OPEN_LOGIN, (ipcEvent, ...arguments_) => {
         width: 520,
         height: 600,
         frame: true,
-        icon: getPlatformIcon('VoidLogo')
+        icon: getPlatformIcon('VoidLogo'),
     })
 
     msftAuthWindow.on('closed', () => {
@@ -143,7 +155,7 @@ ipcMain.on(MSFT_OPCODE.OPEN_LOGIN, (ipcEvent, ...arguments_) => {
     })
 
     msftAuthWindow.on('close', () => {
-        if(!msftAuthSuccess) {
+        if (!msftAuthSuccess) {
             ipcEvent.reply(MSFT_OPCODE.REPLY_LOGIN, MSFT_REPLY_TYPE.ERROR, MSFT_ERROR.NOT_FINISHED, msftAuthViewOnClose)
         }
     })
@@ -167,7 +179,9 @@ ipcMain.on(MSFT_OPCODE.OPEN_LOGIN, (ipcEvent, ...arguments_) => {
     })
 
     msftAuthWindow.removeMenu()
-    msftAuthWindow.loadURL(`https://login.microsoftonline.com/consumers/oauth2/v2.0/authorize?prompt=select_account&client_id=${AZURE_CLIENT_ID}&response_type=code&scope=XboxLive.signin%20offline_access&redirect_uri=https://login.microsoftonline.com/common/oauth2/nativeclient`)
+    msftAuthWindow.loadURL(
+        `https://login.microsoftonline.com/consumers/oauth2/v2.0/authorize?prompt=select_account&client_id=${AZURE_CLIENT_ID}&response_type=code&scope=XboxLive.signin%20offline_access&redirect_uri=https://login.microsoftonline.com/common/oauth2/nativeclient`
+    )
 })
 
 // Microsoft Auth Logout
@@ -188,7 +202,7 @@ ipcMain.on(MSFT_OPCODE.OPEN_LOGOUT, (ipcEvent, uuid, isLastAccount) => {
         width: 520,
         height: 600,
         frame: true,
-        icon: getPlatformIcon('VoidLogo')
+        icon: getPlatformIcon('VoidLogo'),
     })
 
     msftLogoutWindow.on('closed', () => {
@@ -196,24 +210,24 @@ ipcMain.on(MSFT_OPCODE.OPEN_LOGOUT, (ipcEvent, uuid, isLastAccount) => {
     })
 
     msftLogoutWindow.on('close', () => {
-        if(!msftLogoutSuccess) {
+        if (!msftLogoutSuccess) {
             ipcEvent.reply(MSFT_OPCODE.REPLY_LOGOUT, MSFT_REPLY_TYPE.ERROR, MSFT_ERROR.NOT_FINISHED)
-        } else if(!msftLogoutSuccessSent) {
+        } else if (!msftLogoutSuccessSent) {
             msftLogoutSuccessSent = true
             ipcEvent.reply(MSFT_OPCODE.REPLY_LOGOUT, MSFT_REPLY_TYPE.SUCCESS, uuid, isLastAccount)
         }
     })
 
     msftLogoutWindow.webContents.on('did-navigate', (_, uri) => {
-        if(uri.startsWith('https://login.microsoftonline.com/common/oauth2/v2.0/logoutsession')) {
+        if (uri.startsWith('https://login.microsoftonline.com/common/oauth2/v2.0/logoutsession')) {
             msftLogoutSuccess = true
             setTimeout(() => {
-                if(!msftLogoutSuccessSent) {
+                if (!msftLogoutSuccessSent) {
                     msftLogoutSuccessSent = true
                     ipcEvent.reply(MSFT_OPCODE.REPLY_LOGOUT, MSFT_REPLY_TYPE.SUCCESS, uuid, isLastAccount)
                 }
 
-                if(msftLogoutWindow) {
+                if (msftLogoutWindow) {
                     msftLogoutWindow.close()
                     msftLogoutWindow = null
                 }
@@ -230,7 +244,6 @@ ipcMain.on(MSFT_OPCODE.OPEN_LOGOUT, (ipcEvent, uuid, isLastAccount) => {
 let win
 
 function createWindow() {
-
     win = new BrowserWindow({
         width: 1400,
         height: 750,
@@ -239,25 +252,36 @@ function createWindow() {
         webPreferences: {
             preload: path.join(__dirname, 'app', 'assets', 'js', 'preloader.js'),
             nodeIntegration: true,
-            contextIsolation: false
+            contextIsolation: false,
         },
-        backgroundColor: '#171614'
+        backgroundColor: '#171614',
     })
     remoteMain.enable(win.webContents)
 
+    // Also set permission handler on this window's session
+    win.webContents.session.setPermissionRequestHandler((webContents, permission, callback) => {
+        if (permission === 'geolocation') {
+            // Deny location permission requests
+            return callback(false)
+        }
+
+        // Allow other permissions by default
+        callback(true)
+    })
+
     // sometimes it picks up on `.DS_Store` , `Thumbs.db`, etc. (thanks macOS)
     const supportedBackgroundTypes = ['.jpg', '.jpeg', '.png', '.gif', '.webp']
-    const availableBackgrounds = fs.readdirSync(path.join(__dirname, 'app', 'assets', 'images', 'backgrounds'), {withFileTypes: true})
+    const availableBackgrounds = fs
+        .readdirSync(path.join(__dirname, 'app', 'assets', 'images', 'backgrounds'), {
+            withFileTypes: true,
+        })
         .filter(file => file.isFile() && supportedBackgroundTypes.includes(path.extname(file.name).toLowerCase()))
 
-    const backgroundPath = availableBackgrounds[
-        availableBackgrounds.length > 1
-            ? Math.floor(Math.random() * availableBackgrounds.length)
-            : 0
-    ]?.name ?? 'empty.png'
+    const backgroundPath =
+        availableBackgrounds[availableBackgrounds.length > 1 ? Math.floor(Math.random() * availableBackgrounds.length) : 0]?.name ?? 'empty.png'
     const data = {
         backgroundPath,
-        lang: (str, placeHolders) => LangLoader.queryEJS(str, placeHolders)
+        lang: (str, placeHolders) => LangLoader.queryEJS(str, placeHolders),
     }
     Object.entries(data).forEach(([key, val]) => ejse.data(key, val))
 
@@ -277,56 +301,66 @@ function createWindow() {
 }
 
 function createMenu() {
-
-    if(process.platform === 'darwin') {
-
+    if (process.platform === 'darwin') {
         // Extend default included application menu to continue support for quit keyboard shortcut
         let applicationSubMenu = {
             label: 'Application',
-            submenu: [{
-                label: 'About Application',
-                selector: 'orderFrontStandardAboutPanel:'
-            }, {
-                type: 'separator'
-            }, {
-                label: 'Quit',
-                accelerator: 'Command+Q',
-                click: () => {
-                    app.quit()
-                }
-            }]
+            submenu: [
+                {
+                    label: 'About Application',
+                    selector: 'orderFrontStandardAboutPanel:',
+                },
+                {
+                    type: 'separator',
+                },
+                {
+                    label: 'Quit',
+                    accelerator: 'Command+Q',
+                    click: () => {
+                        app.quit()
+                    },
+                },
+            ],
         }
 
         // New edit menu adds support for text-editing keyboard shortcuts
         let editSubMenu = {
             label: 'Edit',
-            submenu: [{
-                label: 'Undo',
-                accelerator: 'CmdOrCtrl+Z',
-                selector: 'undo:'
-            }, {
-                label: 'Redo',
-                accelerator: 'Shift+CmdOrCtrl+Z',
-                selector: 'redo:'
-            }, {
-                type: 'separator'
-            }, {
-                label: 'Cut',
-                accelerator: 'CmdOrCtrl+X',
-                selector: 'cut:'
-            }, {
-                label: 'Copy',
-                accelerator: 'CmdOrCtrl+C',
-                selector: 'copy:'
-            }, {
-                label: 'Paste',
-                accelerator: 'CmdOrCtrl+V',
-                selector: 'paste:'
-            }, {
-                label: 'Select All',
-                accelerator: 'CmdOrCtrl+A',
-                selector: 'selectAll:'
-            }]
+            submenu: [
+                {
+                    label: 'Undo',
+                    accelerator: 'CmdOrCtrl+Z',
+                    selector: 'undo:',
+                },
+                {
+                    label: 'Redo',
+                    accelerator: 'Shift+CmdOrCtrl+Z',
+                    selector: 'redo:',
+                },
+                {
+                    type: 'separator',
+                },
+                {
+                    label: 'Cut',
+                    accelerator: 'CmdOrCtrl+X',
+                    selector: 'cut:',
+                },
+                {
+                    label: 'Copy',
+                    accelerator: 'CmdOrCtrl+C',
+                    selector: 'copy:',
+                },
+                {
+                    label: 'Paste',
+                    accelerator: 'CmdOrCtrl+V',
+                    selector: 'paste:',
+                },
+                {
+                    label: 'Select All',
+                    accelerator: 'CmdOrCtrl+A',
+                    selector: 'selectAll:',
+                },
+            ],
         }
 
         // Bundle submenus into a single template and build a menu object with it
@@ -335,14 +369,12 @@ function createMenu() {
 
         // Assign it to the application
         Menu.setApplicationMenu(menuObject)
-
     }
-
 }
 
-function getPlatformIcon(filename){
+function getPlatformIcon(filename) {
     let ext
-    switch(process.platform) {
+    switch (process.platform) {
         case 'win32':
             ext = 'ico'
             break
