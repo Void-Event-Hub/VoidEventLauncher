@@ -1,0 +1,112 @@
+/*******************************************************************************
+ *                                                                             *
+ * Login Form Elements                                                         *
+ *                                                                             *
+ ******************************************************************************/
+
+/* Login form. */
+#loginForm {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Login form anchor styles. */
+#loginForm a {
+    font-size: 12px;
+    color: #848484;
+    font-weight: bold;
+    text-decoration: none;
+    transition: 0.25s ease;
+}
+#loginForm a:hover,
+#loginForm a:focus {
+    color: #a2a2a2;
+    outline: none;
+}
+#loginForm a:active {
+    color: #8b8b8b;
+}
+
+/* Container to organize login field elements. */
+.loginFieldContainer {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* SVG icons on the login view. */
+.loginSVG {
+    fill: #fff;
+    height: 20px;
+    width: 20px;
+}
+
+/* Span which displays errors related to login field content. */
+.loginErrorSpan {
+    font-family: var(--font-body);
+    font-weight: bold;
+    font-size: 8px;
+    color: #ff1b0c;
+    width: 100%;
+    text-align: right;
+    position: absolute;
+    top: 7px;
+    opacity: 0;
+    transition: 0.25s ease;
+}
+
+/* Login text input styles. */
+.loginField {
+    font-family: var(--font-body);
+    background: none;
+    border-width: 1.5px 0px 0px 0px;
+    border-style: solid;
+    width: 250px;
+    margin-bottom: 20px;
+    border-color: #fff;
+    color: rgba(255, 255, 255, 0.75);
+    font-weight: bold;
+    text-align: center;
+    box-sizing: border-box;
+    padding: 7.5px;
+    font-size: 10px;
+    letter-spacing: 1px;
+}
+.loginField:focus {
+    outline: none;
+}
+.loginField:disabled {
+    color: rgba(255, 255, 255, 0.5);
+}
+.loginField::-webkit-input-placeholder {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-align: center;
+    font-weight: bold;
+}
+.loginField:focus::-webkit-input-placeholder {
+    color: transparent;
+}
+
+/* Add spacing between password field and options bar. */
+#labelPassword {
+    margin-bottom: 13px;
+}
+
+/* Container which contains the forgot and remember options. */
+#loginOptions {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+/* Remember option text. */
+#loginRememberText {
+    padding-right: 10px;
+    transition: 0.25s ease;
+} 
