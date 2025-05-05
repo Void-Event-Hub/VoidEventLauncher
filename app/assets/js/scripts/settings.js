@@ -1604,11 +1604,26 @@ const settingsTabAbout             = document.getElementById('settingsTabAbout')
 const settingsAboutChangelogTitle  = settingsTabAbout.getElementsByClassName('settingsChangelogTitle')[0]
 const settingsAboutChangelogText   = settingsTabAbout.getElementsByClassName('settingsChangelogText')[0]
 const settingsAboutChangelogButton = settingsTabAbout.getElementsByClassName('settingsChangelogButton')[0]
+const settingsAboutMachineIdValue  = document.getElementById('settingsAboutMachineIdValue')
 
 // Bind the devtools toggle button.
 document.getElementById('settingsAboutDevToolsButton').onclick = (e) => {
     let window = remote.getCurrentWindow()
     window.toggleDevTools()
+}
+
+/**
+ * Populate the machine ID value on the About tab.
+ */
+function populateMachineId() {
+    try {
+        const { machineIdSync } = require('node-machine-id')
+        const id = machineIdSync({ original: true })
+        settingsAboutMachineIdValue.textContent = id
+    } catch (error) {
+        console.error('Error getting machine ID:', error)
+        settingsAboutMachineIdValue.textContent = 'Error: Could not retrieve machine ID'
+    }
 }
 
 /**
@@ -1689,6 +1704,7 @@ function populateReleaseNotes(){
 function prepareAboutTab(){
     populateAboutVersionInformation()
     populateReleaseNotes()
+    populateMachineId()
 }
 
 /**

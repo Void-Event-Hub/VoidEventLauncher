@@ -1,0 +1,35 @@
+/* Machine ID container. */
+#settingsAboutMachineId {
+    display: flex;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(126, 126, 126, 0.57);
+}
+
+/* Machine ID details container. */
+#settingsAboutMachineIdDetails {
+    margin-left: 37px;
+}
+
+/* Machine ID title text. */
+#settingsAboutMachineIdTitle {
+    font-size: 12px;
+    font-family: var(--font-body);
+    color: #737373;
+    font-weight: bold;
+}
+
+/* Machine ID text. */
+#settingsAboutMachineIdLine {
+    font-size: 10px;
+    color: grey;
+    font-weight: bold;
+}
+
+/* Machine ID value. */
+#settingsAboutMachineIdValue {
+    font-family: monospace;
+    user-select: text;
+    cursor: text;
+} 
