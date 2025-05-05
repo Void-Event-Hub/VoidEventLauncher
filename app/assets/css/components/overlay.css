@@ -137,17 +137,20 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 75%;
+    height: 80%;
+    width: 80%;
+    max-width: 1200px;
 }
 
 /* Server selection header. */
 #serverSelectHeader,
 #accountSelectHeader {
     font-family: var(--font-title);
-    font-size: 20px;
+    font-size: 24px;
     font-weight: bold;
-    color: #fff;
-    margin-bottom: 25px;
+    color: var(--color-primary);
+    margin-bottom: 15px;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
 }
 
 /* Wrapper div for the list of available servers. */
