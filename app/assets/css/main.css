@@ -1,0 +1,51 @@
+/* Main CSS file - imports all modules */
+
+/* Theme (default - can be overridden at runtime) */
+@import './themes/default.css';
+
+/* Core styles */
+@import './core/base.css';
+
+/* Components */
+@import './components/banners.css';
+@import './components/buttons.css';
+@import './components/frame.css';
+@import './components/loading.css';
+@import './components/media.css';
+@import './components/overlay.css';
+@import './components/modpack-selector.css';
+
+/* Settings */
+@import './settings/java.css';
+@import './settings/tabs.css';
+@import './settings/update.css';
+@import './settings/layout.css';
+@import './settings/components.css';
+@import './settings/account.css';
+@import './settings/minecraft.css';
+@import './settings/about/buttons.css';
+@import './settings/about/changelog-elements.css';
+@import './settings/about/changelog.css';
+@import './settings/about/container.css';
+@import './settings/about/header.css';
+@import './settings/about/version.css';
+@import './settings/about/machineId.css';
+@import './settings/mods/dropin.css';
+@import './settings/mods/general.css';
+@import './settings/mods/required-optional.css';
+@import './settings/mods/select.css';
+@import './settings/mods/shaderpack.css';
+
+/* Views */
+@import './views/landing/bottom.css';
+@import './views/landing/news.css';
+@import './views/landing/structure.css';
+@import './views/landing/top.css';
+@import './views/login/login-animations.css';
+@import './views/login/login-base.css';
+@import './views/login/login-buttons.css';
+@import './views/login/login-checkbox.css';
+@import './views/login/login-form.css';
+@import './views/login/login-options.css';
+@import './views/waiting.css';
+@import './views/welcome.css'; 
