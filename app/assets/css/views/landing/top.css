@@ -10,7 +10,7 @@
 
 /* Logo image. */
 #image_seal {
-    height: 70px;
+    height: 150px;
     width: auto;
     position: relative;
     box-sizing: border-box;
@@ -20,8 +20,8 @@
 /* Logo container styles. */
 #image_seal_container {
     position: relative;
-    height: 70px;
-    width: 70px;
+    height: 150px;
+    width: 150px;
     border-radius: 50%;
 }
 
@@ -108,7 +108,7 @@
     flex-direction: column;
     position: relative;
     top: 50px;
-    align-items: flex-start;
+    align-items: center; /* Changed from flex-start to center for horizontal centering */
     height: calc(100% - 50px);
 }
 
@@ -126,8 +126,8 @@
     border: 2px solid var(--color-primary);
     box-sizing: border-box;
     background: rgba(1, 2, 1, 0.5);
-    height: 70px;
-    width: 70px;
+    height: 95px;
+    width: 95px;
     box-shadow: 0px 0px 10px 0px rgb(0, 0, 0);
     overflow: hidden;
     position: relative;
@@ -166,7 +166,7 @@
     letter-spacing: 1px;
     text-shadow: 0px 0px 20px black;
     position: absolute;
-    right: 95px;
+    right: 110px;
     text-align: right;
     -webkit-user-select: initial;
 } 
