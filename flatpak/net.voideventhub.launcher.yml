@@ -31,7 +31,7 @@ finish-args:
   - --env=ELECTRON_TRASH=gio
     # launcher and game files
   - --filesystem=~/.voideventlauncher:create
-  - --filesystem=xdg-config/Create\ Academy\ Launcher:create
+  - --filesystem=xdg-config/Void\ Event\ Launcher:create
     # for Discord RPC mods
   - --filesystem=xdg-run/app/com.discordapp.Discord:create
     # Mod drag&drop
@@ -158,12 +158,12 @@ modules:
     modules:
       - shared-modules/glu/glu-9.json
 
-  - name: create-academy-launcher
+  - name: void-event-launcher
     buildsystem: simple
     build-options:
       env:
-        XDG_CACHE_HOME: /run/build/create-academy-launcher/flatpak-node/cache
-        npm_config_cache: /run/build/create-academy-launcher/flatpak-node/npm-cache
+        XDG_CACHE_HOME: /run/build/void-event-launcher/flatpak-node/cache
+        npm_config_cache: /run/build/void-event-launcher/flatpak-node/npm-cache
         npm_config_offline: 'true'
     build-commands:
       # Install npm dependencies
@@ -190,4 +190,4 @@ modules:
       - type: script
         dest-filename: run.sh
         commands:
-          - zypak-wrapper.sh /app/main/create-academy-launcher "$@"
+          - zypak-wrapper.sh /app/main/void-event-launcher "$@"
