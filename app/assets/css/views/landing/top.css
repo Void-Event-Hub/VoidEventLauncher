@@ -1,0 +1,172 @@
+/*******************************************************************************
+ *                                                                             *
+ * Landing View (Top Styles)                                                   *
+ *                                                                             *
+ ******************************************************************************/
+
+/* * *
+* Landing View (Top Styles) | Left Content
+* * */
+
+/* Logo image. */
+#image_seal {
+    height: 70px;
+    width: auto;
+    position: relative;
+    box-sizing: border-box;
+    border-radius: 2%;
+}
+
+/* Logo container styles. */
+#image_seal_container {
+    position: relative;
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+}
+
+/* Logo container styles w/ update. */
+#image_seal_container[update] {
+    cursor: pointer;
+}
+#image_seal_container[update]:before,
+#image_seal_container[update]:after {
+    cursor: pointer;
+    position: absolute;
+    content: '';
+    height: 100%;
+    width: 100%;
+    top: 0%;
+    left: 0%;
+    border-radius: 50%;
+    box-shadow: 0 0 15px #43c628;
+    animation: glow-grow 4s ease-out infinite;
+    background: rgba(0, 0, 0, 0.15);
+}
+#image_seal_container[update]:before {
+    animation-delay: 2s;
+}
+
+/* Update available tooltip styles. */
+#updateAvailableTooltip {
+    cursor: pointer;
+    visibility: hidden;
+    opacity: 0;
+    width: 100px;
+    height: 15px;
+    background-color: rgb(0, 0, 0);
+    color: #fff;
+    text-align: center;
+    border-radius: 4px;
+    padding: 2px;
+    position: absolute;
+    z-index: 1;
+    top: 115%;
+    left: -17.5px;
+    font-family: var(--font-body);
+    font-size: 12px;
+    transition: visibility 0s linear 0.25s, opacity 0.25s ease;
+}
+#updateAvailableTooltip::after {
+    content: ' ';
+    position: absolute;
+    left: 50%;
+    bottom: 100%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent rgb(0, 0, 0) transparent;
+}
+#image_seal_container[update]:hover #updateAvailableTooltip {
+    visibility: visible;
+    opacity: 1;
+    transition-delay: 0s;
+}
+
+/* Update available animation. */
+@keyframes glow-grow {
+    0% {
+        opacity: 0;
+        transform: scale(1);
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.5);
+        opacity: 0;
+    }
+}
+
+/* * *
+* Landing View (Bottom Styles) | Right Content
+* * */
+
+/*  Wrapper container for top, right content. */
+#rightContainer {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    top: 50px;
+    align-items: flex-start;
+    height: calc(100% - 50px);
+}
+
+/* Right hand user content container. */
+#user_content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* User profile avatar container. */
+#avatarContainer {
+    border: 2px solid var(--color-primary);
+    box-sizing: border-box;
+    background: rgba(1, 2, 1, 0.5);
+    height: 70px;
+    width: 70px;
+    box-shadow: 0px 0px 10px 0px rgb(0, 0, 0);
+    overflow: hidden;
+    position: relative;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+}
+
+/* Avatar edit overlay. */
+#avatarOverlay {
+    opacity: 0;
+    position: absolute;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.25s ease;
+    font-weight: bold;
+    letter-spacing: 2px;
+    background-color: rgba(255, 194, 115, 0.35);
+    -webkit-user-select: none;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    height: 100%;
+}
+#avatarOverlay:hover,
+#avatarOverlay:focus {
+    opacity: 1;
+}
+
+/* User profile name text. */
+#user_text {
+    font-size: 20pt;
+    min-width: 135px;
+    letter-spacing: 1px;
+    text-shadow: 0px 0px 20px black;
+    position: absolute;
+    right: 95px;
+    text-align: right;
+    -webkit-user-select: initial;
+} 
