@@ -1,0 +1,65 @@
+/* Styles for the changelog elements. */
+.settingsChangelogText p {
+    margin-bottom: 16px;
+    line-height: 1.5;
+}
+.settingsChangelogText blockquote {
+    border-left: 0.25em solid rgba(126, 126, 126, 0.95);
+    margin: 0px;
+    padding: 0 0 0 1em;
+    color: rgba(255, 255, 255, 0.85);
+}
+.settingsChangelogText code {
+    padding: 0.1em 0.4em;
+    font-size: 85%;
+    background-color: rgba(255, 255, 255, 0.25);
+    color: white;
+    border-radius: 3px;
+    font-family: var(--font-body);
+}
+.settingsChangelogText li + li {
+    margin-top: 0.25em;
+}
+.settingsChangelogText a.commit-link {
+    font-weight: 400;
+    color: #ffffff;
+    text-decoration: none;
+}
+.settingsChangelogText a.commit-link:hover {
+    text-decoration: underline !important;
+    text-decoration-color: black;
+}
+.settingsChangelogText tt {
+    padding: 0.1em 0.4em;
+    font-size: 86%;
+    background-color: white;
+    border-radius: 3px;
+    color: black;
+    font-weight: bold;
+}
+.settingsChangelogText a.commit-link:hover tt {
+    text-decoration: underline;
+    text-decoration-color: black;
+}
+.settingsChangelogText .highlight {
+    background: rgba(0, 0, 0, 0.3);
+    user-select: initial;
+    padding: 5px 10px;
+}
+.settingsChangelogText .highlight pre {
+    margin: 0px;
+}
+
+/* Style links on the About tab. */
+.settingsChangelogText a {
+    color: rgba(202, 202, 202, 0.75);
+    transition: 0.25s ease;
+    outline: none;
+}
+.settingsChangelogText a:hover,
+.settingsChangelogText a:focus {
+    color: rgba(255, 255, 255, 0.75);
+}
+.settingsChangelogText a:active {
+    color: rgba(165, 165, 165, 0.75);
+} 

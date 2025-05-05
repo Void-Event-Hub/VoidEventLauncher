@@ -1,0 +1,41 @@
+/* Current version container. */
+#settingsAboutCurrentVersion {
+    display: flex;
+    align-items: center;
+    padding-top: 10px;
+    border-bottom: 1px solid rgba(126, 126, 126, 0.57);
+}
+
+/* Checkmark next to the version information. */
+#settingsAboutCurrentVersionCheck {
+    border-radius: 50%;
+    background: #23aa23;
+    text-align: center;
+    font-weight: bold;
+    margin: 11px 12px;
+    color: white;
+    height: 15px;
+    width: 15px;
+    font-size: 12px;
+    line-height: 17px;
+}
+
+/* Current version details container. */
+#settingsAboutCurrentVersionDetails {
+    margin-left: 10px;
+}
+
+/* Release type text. */
+#settingsAboutCurrentVersionTitle {
+    font-size: 12px;
+    font-family: var(--font-body);
+    color: #23aa23;
+    font-weight: bold;
+}
+
+/* Current version text. */
+#settingsAboutCurrentVersionLine {
+    font-size: 10px;
+    color: grey;
+    font-weight: bold;
+} 

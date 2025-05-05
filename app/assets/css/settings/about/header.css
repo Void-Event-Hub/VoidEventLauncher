@@ -1,0 +1,16 @@
+/* About header elements. */
+#settingsAboutCurrentHeadline {
+    display: flex;
+    align-items: center;
+    padding-bottom: 5px;
+    border-bottom: 1px solid rgba(126, 126, 126, 0.57);
+}
+#settingsAboutLogo {
+    width: 30px;
+    height: 30px;
+    padding: 5px;
+}
+#settingsAboutTitle {
+    font-size: 23px;
+    padding-left: 10px;
+} 

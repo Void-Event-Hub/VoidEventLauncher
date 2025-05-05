@@ -1,0 +1,32 @@
+/* Shaderpack settings description. */
+#settingsShaderpackDesc {
+    font-size: 10px;
+    margin: 10px 0px;
+    color: lightgrey;
+    font-weight: bold;
+    width: 89%;
+}
+
+/* Wrapper container. */
+#settingsShaderpackWrapper {
+    display: flex;
+}
+
+/* Button to add shaderpacks. */
+#settingsShaderpackButton {
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(126, 126, 126, 0.57);
+    border-radius: 3px;
+    cursor: pointer;
+    outline: none;
+    transition: 0.25s ease;
+    font-size: 14px;
+    padding: 6px 11px;
+    margin-right: 5px;
+}
+#settingsShaderpackButton:hover,
+#settingsShaderpackButton:focus,
+#settingsShaderpackButton[drag] {
+    background: rgba(54, 54, 54, 0.25);
+    text-shadow: 0px 0px 20px white;
+} 

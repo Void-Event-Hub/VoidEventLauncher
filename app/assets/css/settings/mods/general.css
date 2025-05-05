@@ -1,0 +1,75 @@
+/* Main content container for the mod elements. */
+#settingsModsContainer {
+    width: 75%;
+}
+
+/* Mod sub-container header text. */
+.settingsModsHeader {
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+    margin-bottom: 10px;
+}
+
+/* Mod elements sub-containers. */
+#settingsReqModsContainer,
+#settingsOptModsContainer,
+#settingsDropinModsContainer {
+    padding-bottom: 25px;
+}
+
+/* Main content containers for mod elements. */
+#settingsReqModsContent,
+#settingsOptModsContent,
+#settingsDropinModsContent {
+    font-size: 12px;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 3px;
+    color: white;
+}
+
+/* Mod elements. */
+.settingsMod,
+.settingsDropinMod {
+    padding: 10px;
+}
+.settingsSubMod {
+    padding: 10px 0px 10px 15px;
+    margin-left: 20px;
+    border-left: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+/* Main content container for mod element information. */
+.settingsModContent {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: opacity 0.25s ease;
+}
+
+/* Wrapper container for the left side of a mod element. */
+.settingsModMainWrapper {
+    display: flex;
+    align-items: center;
+}
+
+/* Mod enabled/disabled status. */
+.settingsModStatus {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background-color: #c32625;
+    margin-right: 15px;
+    transition: 0.25s ease;
+}
+
+/* Mod details container. */
+.settingsModDetails {
+    display: flex;
+    flex-direction: column;
+}
+
+/* The version of the mod. */
+.settingsModVersion {
+    color: grey;
+    font-size: 10px;
+} 

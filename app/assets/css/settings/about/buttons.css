@@ -1,0 +1,33 @@
+/* About information links. */
+#settingsAboutButtons {
+    display: flex;
+    padding: 0px 15px;
+    margin-bottom: 5px;
+}
+.settingsAboutButton {
+    background: none;
+    border: none;
+    font-size: 10px;
+    color: grey;
+    padding: 0px 5px;
+    transition: 0.25s ease;
+    outline: none;
+    text-decoration: none;
+}
+.settingsAboutButton:hover,
+.settingsAboutButton:focus {
+    color: rgb(165, 165, 165);
+}
+.settingsAboutButton:active {
+    color: rgba(124, 124, 124, 0.75);
+}
+
+/* Container for the changelog button. */
+.settingsChangelogActions {
+    padding: 0px 15px 5px 15px;
+}
+
+/* Open changelog on GitHub. */
+.settingsChangelogButton {
+    padding: 0px;
+} 

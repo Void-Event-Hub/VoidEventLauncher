@@ -1,0 +1,6 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+Do not @import css files. It does not work. Instead make a direct file import in app/app.ejs
