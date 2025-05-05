@@ -1199,7 +1199,7 @@ const settingsJvmOptsLink     = document.getElementById('settingsJvmOptsLink')
 function createRAMInputFields() {
     // Check if the input fields already exist to prevent duplicates
     if(document.getElementById('settingsMaxRAMInput') || document.getElementById('settingsMinRAMInput')) {
-        return; // Fields already exist, no need to create them again
+        return // Fields already exist, no need to create them again
     }
     
     // Get available memory
@@ -1630,9 +1630,11 @@ function isPrerelease(version){
  * @param {Element} valueElement The value element.
  * @param {Element} titleElement The title element.
  * @param {Element} checkElement The check mark element.
+ * @param {Element} titleVersionElement The element to display the version in the title.
  */
-function populateVersionInformation(version, valueElement, titleElement, checkElement){
+function populateVersionInformation(version, valueElement, titleElement, checkElement, titleVersionElement){
     valueElement.innerHTML = version
+    titleVersionElement.innerHTML = version
     if(isPrerelease(version)){
         titleElement.innerHTML = Lang.queryJS('settings.about.preReleaseTitle')
         titleElement.style.color = '#ff886d'
@@ -1648,7 +1650,7 @@ function populateVersionInformation(version, valueElement, titleElement, checkEl
  * Retrieve the version information and display it on the UI.
  */
 function populateAboutVersionInformation(){
-    populateVersionInformation(remote.app.getVersion(), document.getElementById('settingsAboutCurrentVersionValue'), document.getElementById('settingsAboutCurrentVersionTitle'), document.getElementById('settingsAboutCurrentVersionCheck'))
+    populateVersionInformation(remote.app.getVersion(), document.getElementById('settingsAboutCurrentVersionValue'), document.getElementById('settingsAboutCurrentVersionTitle'), document.getElementById('settingsAboutCurrentVersionCheck'), document.getElementById('titleUpdateVersionValue'))
 }
 
 /**
@@ -1698,6 +1700,7 @@ const settingsUpdateTitle          = document.getElementById('settingsUpdateTitl
 const settingsUpdateVersionCheck   = document.getElementById('settingsUpdateVersionCheck')
 const settingsUpdateVersionTitle   = document.getElementById('settingsUpdateVersionTitle')
 const settingsUpdateVersionValue   = document.getElementById('settingsUpdateVersionValue')
+const titleUpdateVersionValue   = document.getElementById('titleUpdateVersionValue')
 const settingsUpdateChangelogTitle = settingsTabUpdate.getElementsByClassName('settingsChangelogTitle')[0]
 const settingsUpdateChangelogText  = settingsTabUpdate.getElementsByClassName('settingsChangelogText')[0]
 const settingsUpdateChangelogCont  = settingsTabUpdate.getElementsByClassName('settingsChangelogContainer')[0]
@@ -1729,7 +1732,7 @@ function populateSettingsUpdateInformation(data){
         settingsUpdateChangelogCont.style.display = null
         settingsUpdateChangelogTitle.innerHTML = data.releaseName
         settingsUpdateChangelogText.innerHTML = data.releaseNotes
-        populateVersionInformation(data.version, settingsUpdateVersionValue, settingsUpdateVersionTitle, settingsUpdateVersionCheck)
+        populateVersionInformation(data.version, settingsUpdateVersionValue, settingsUpdateVersionTitle, settingsUpdateVersionCheck, titleUpdateVersionValue)
 
         if(process.platform === 'darwin'){
             settingsUpdateButtonStatus(Lang.queryJS('settings.updates.downloadButton'), false, () => {
@@ -1741,7 +1744,7 @@ function populateSettingsUpdateInformation(data){
     } else {
         settingsUpdateTitle.innerHTML = Lang.queryJS('settings.updates.latestVersionTitle')
         settingsUpdateChangelogCont.style.display = 'none'
-        populateVersionInformation(remote.app.getVersion(), settingsUpdateVersionValue, settingsUpdateVersionTitle, settingsUpdateVersionCheck)
+        populateVersionInformation(remote.app.getVersion(), settingsUpdateVersionValue, settingsUpdateVersionTitle, settingsUpdateVersionCheck, titleUpdateVersionValue)
         settingsUpdateButtonStatus(Lang.queryJS('settings.updates.checkForUpdatesButton'), false, () => {
             ipcRenderer.send('autoUpdateAction', 'checkForUpdate')
             settingsUpdateButtonStatus(Lang.queryJS('settings.updates.checkingForUpdatesButton'), true)
