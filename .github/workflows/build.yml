@@ -1,30 +1,38 @@
-name: Build and Sign
+name: Build
 
 on:
     push:
         tags:
-            - '*'
+            - '*' # Run once per tag
 
 jobs:
-    build-all:
-        name: Build ${{ matrix.os }} ${{ matrix.arch }}
+    release:
+        name: Release ${{ matrix.os }} ${{ matrix.arch }}
         runs-on: ${{ matrix.os }}
+
+        permissions:
+            contents: write
 
         strategy:
             matrix:
+                # os: [macos-latest, ubuntu-latest, windows-latest]
                 include:
                     - os: ubuntu-latest
                       arch: x64
-                    - os: macos-latest
-                      arch: x64
                     - os: windows-latest
                       arch: x64
+                    - os: macos-latest
+                      arch: x64
+                    # - os: macos-latest
+                    #   arch: arm64
 
         steps:
-            - name: Checkout repository
+            - name: Check out Git repository
               uses: actions/checkout@v3
+              with:
+                  fetch-depth: 0
 
-            - name: Set up Node.js
+            - name: Set up Node
               uses: actions/setup-node@v3
               with:
                   node-version: 20
@@ -34,20 +42,23 @@ jobs:
               with:
                   python-version: 3.x
 
-            - name: Install dependencies
+            - name: Install Dependencies
               run: npm ci
+              shell: bash
 
             - name: Get version from Git tag
               id: get_tag
               run: |
                   TAG=${GITHUB_REF#refs/tags/}
                   VERSION=${TAG#v}
+                  echo "TAG=$TAG" >> $GITHUB_ENV
                   echo "VERSION=$VERSION" >> $GITHUB_ENV
+                  echo "Setting version to $VERSION from tag $TAG"
               shell: bash
 
             - name: Sync version with Git tag
               run: |
-                  echo "Syncing version to ${{ env.VERSION }}"
+                  echo "Setting version to ${{ env.VERSION }} from tag ${{ env.LATEST_TAG }}"
                   node -e "
                     const fs = require('fs');
                     const files = ['package.json', 'package-lock.json'];
@@ -67,67 +78,39 @@ jobs:
                     }
                   "
 
-            - name: Build app
+            - name: Build
+              run: npm run dist -- --publish never
+              shell: bash
+
+            - name: Sign Windows Artifacts
+              if: matrix.os == 'windows-latest'
+              uses: sslcom/esigner-codesign@develop
+              with:
+                  command: batch_sign
+                  username: ${{secrets.SSL_USERNAME}}
+                  password: ${{secrets.SSL_PASSWORD}}
+                  # credential_id: ${{secrets.CREDENTIAL_ID}}
+                  totp_secret: ${{secrets.SSL_TOTP_SECRET}}
+                  dir_path: ${{ github.workspace }}/dist
+                  output_path: ${{ github.workspace }}/signed
+                  malware_block: false
+                  environment_name: ${{ secrets.ES_ENV || 'PROD' }}
+                  clean_logs: true
+                  jvm_max_memory: 1024M
+                  signing_method: v1
+
+            - name: Publish Release
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              run: npm run dist
-
-            - name: Upload built artifact
-              uses: actions/upload-artifact@v3.1.3
-              with:
-                  name: build-${{ matrix.os }}-${{ matrix.arch }}
-                  path: dist/
-
-    sign-windows:
-        name: Sign Windows EXE
-        runs-on: windows-latest
-        needs: build-all
-
-        steps:
-            - name: Download Windows build artifact
-              uses: actions/download-artifact@v3.1.2
-              with:
-                  name: build-windows-latest-x64
-                  path: dist/
-
-            - name: Install Chocolatey and oathtool
+              if: matrix.os == 'windows-latest'
               run: |
-                  Set-ExecutionPolicy Bypass -Scope Process -Force
-                  iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-                  choco install oathtool -y
+                  echo "Publishing signed artifacts from ${{ github.workspace }}/signed"
+                  npx electron-builder --publish always --prepackaged "${{ github.workspace }}/signed"
+              shell: bash
 
-            - name: Generate TOTP
-              id: totp
-              shell: pwsh
-              run: |
-                  $code = oathtool --totp -b "${{ secrets.SSL_TOTP_SECRET }}"
-                  echo "totp=$code" >> $env:GITHUB_OUTPUT
-
-            - name: Download sslsigntool
-              run: |
-                  Invoke-WebRequest -Uri "https://cdn.ssl.com/sslsigntool/sslsigntool.exe" -OutFile "sslsigntool.exe"
-
-            - name: Find and sign Windows EXE
-              id: sign
-              shell: pwsh
-              run: |
-                  $exeFile = Get-ChildItem -Path dist -Filter *.exe | Where-Object { $_.Name -like "*setup*.exe" } | Select-Object -First 1
-                  if (-not $exeFile) { Write-Error "EXE not found."; exit 1 }
-                  $signedFile = "$($exeFile.DirectoryName)\$($exeFile.BaseName)-signed.exe"
-                  .\sslsigntool.exe sign `
-                    --username "${{ secrets.SSL_USERNAME }}" `
-                    --password "${{ secrets.SSL_PASSWORD }}" `
-                    --totp "${{ steps.totp.outputs.totp }}" `
-                    --input $exeFile.FullName `
-                    --output $signedFile `
-                    --name "Void Event Launcher" `
-                    --description "Void Event Launcher" `
-                    --url "https://voideventhub.net/"
-                  echo "signed=$signedFile" >> $env:GITHUB_OUTPUT
-
-            - name: Upload signed EXE to GitHub release
-              uses: softprops/action-gh-release@v1
-              with:
-                  files: ${{ steps.sign.outputs.signed }}
+            - name: Publish Release (Non-Windows)
               env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              if: matrix.os != 'windows-latest'
+              run: npx electron-builder --publish always
+              shell: bash
