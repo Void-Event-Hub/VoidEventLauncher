@@ -16,33 +16,52 @@ function sign(configuration) {
     // contains a space, meaning our .exe contains a space, which CodeSignTool
     // balks at even with attempted backslash escaping, so we rename to tmp.exe
     const tmpExe = `tmp-${Math.random()}.exe`
+    const tmpExePath = path.join(TEMP_DIR, tmpExe)
+
+    // Get the absolute path to the CodeSignTool
+    const codeSignToolPath = process.env.CODE_SIGN_TOOL_PATH || path.join(process.cwd(), 'code_signer')
+
+    console.log('CodeSignTool path:', codeSignToolPath)
+    console.log('Temp dir:', TEMP_DIR)
+    console.log('Configuration path:', configuration.path)
 
     // note: CodeSignTool can't sign in place without verifying the overwrite
     // with a y/m interaction so we are creating a new file in a temp directory
     // and then replacing the original file with the signed file.
     const signFile = [
-        // code_signer is directory containing the CodeSignTool script in
-        // products/jbrowse-desktop that is created by .github/workflows/release.sh
-        // on windows
-        'CODE_SIGN_TOOL_PATH=code_signer bash code_signer/CodeSignTool.sh sign',
-        `-input_file_path='${tmpExe}'`,
+        `bash ${codeSignToolPath}/CodeSignTool.sh sign`,
+        `-input_file_path='${tmpExePath}'`,
         `-output_dir_path='${TEMP_DIR}'`,
         `-credential_id='${process.env.WINDOWS_SIGN_CREDENTIAL_ID}'`,
         `-username='${process.env.WINDOWS_SIGN_USER_NAME}'`,
         `-password='${process.env.WINDOWS_SIGN_USER_PASSWORD}'`,
         `-totp_secret='${process.env.WINDOWS_SIGN_USER_TOTP}'`,
     ].join(' ')
-    const preMoveFile = `cp "${configuration.path}" "${tmpExe}"`
+
+    console.log('Copying file to temp location:', tmpExePath)
+    const preMoveFile = `cp "${configuration.path}" "${tmpExePath}"`
+
+    console.log('Will move signed file back from:', path.join(TEMP_DIR, tmpExe))
     const postMoveFile = `cp "${path.join(TEMP_DIR, tmpExe)}" "${configuration.path}"`
-    childProcess.execSync(preMoveFile, {
-        stdio: 'inherit',
-    })
-    childProcess.execSync(signFile, {
-        stdio: 'inherit',
-    })
-    childProcess.execSync(postMoveFile, {
-        stdio: 'inherit',
-    })
+
+    try {
+        childProcess.execSync(preMoveFile, {
+            stdio: 'inherit',
+        })
+        console.log('Executing signing command')
+        childProcess.execSync(signFile, {
+            stdio: 'inherit',
+        })
+        console.log('Moving signed file back')
+        childProcess.execSync(postMoveFile, {
+            stdio: 'inherit',
+        })
+        console.log('Signing completed successfully')
+    } catch (error) {
+        console.error('Error during signing process:', error.message)
+        console.error('Command stdout/stderr:', error.stdout?.toString(), error.stderr?.toString())
+        throw error
+    }
 }
 
 exports.default = sign
