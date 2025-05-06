@@ -1,0 +1,157 @@
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 0 auto;
+    position: relative;
+}
+
+#launchButton.minecraft-play-button {
+    width: 900px !important;
+}
+
+.minecraft-play-button {
+    max-width: 450px;
+    height: 6rem;
+    padding: 0 2.5em;
+    background: linear-gradient(135deg, #fade90, #eec12d, #d8b236, #d4af37);
+    background-size: 300% 300%;
+    border: 3px solid #af8824;
+    border-radius: 4px;
+    display: flex;
+    font-size: 2.2em;
+    font-weight: bold;
+    color: #dfdfdf;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    position: relative;
+    text-shadow: 1px 3px 5px #9c9c9c;
+    z-index: 2;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.5), 0 4px 0 #8b6914, 0 6px 10px rgba(0, 0, 0, 0.3);
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    animation: gradientShift 8s ease infinite;
+}
+
+@keyframes gradientShift {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+.minecraft-play-button:hover {
+    background-size: 200% 200%;
+    animation: gradientShift 2s ease infinite;
+    transform: translateY(2px);
+    box-shadow: inset 0 0 15px rgba(255, 255, 255, 0.7), 0 2px 0 #8b6914, 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.minecraft-play-button:active {
+    transform: translateY(4px);
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2), 0 0 0 #8b6914;
+    animation: none;
+    background: linear-gradient(135deg, #d4af37, #aa8c2c);
+    transition: all 0.4s ease;
+}
+
+/* Glow effect */
+.minecraft-play-button::before {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    border: 3px solid #8b6914;
+    border-radius: 4px;
+    pointer-events: none;
+    z-index: -1;
+    transition: all 0.3s ease;
+}
+
+.minecraft-play-button:hover::before {
+    box-shadow: 0 0 15px rgba(255, 215, 0, 0.7);
+}
+
+/* Pixel texture */
+.minecraft-play-button::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACCAYAAABytg0kAAAAFElEQVQIW2NkYGD4z8DAwMjIAAUADikBA/gvnngAAAAASUVORK5CYII=');
+    opacity: 0.1;
+    pointer-events: none;
+}
+
+/* Shine effect */
+.shine {
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 243, 131, 0.295) 50%, rgba(250, 253, 63, 0) 100%);
+    transform: skewX(-25deg);
+    z-index: 1;
+}
+
+.minecraft-play-button:hover .shine {
+    animation: shine 1.5s infinite;
+}
+
+@keyframes shine {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 200%;
+    }
+}
+
+/* Pulse effect */
+.minecraft-play-button:hover {
+    animation: pulse 2s infinite, gradientShift 3s ease infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: translateY(2px) scale(1);
+    }
+    50% {
+        transform: translateY(2px) scale(1.02);
+    }
+    100% {
+        transform: translateY(2px) scale(1);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .minecraft-play-button span {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .minecraft-play-button {
+        padding: 12px 16px;
+    }
+    .minecraft-play-button span {
+        font-size: 18px;
+    }
+}
