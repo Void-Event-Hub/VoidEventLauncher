@@ -130,10 +130,13 @@ if (process.env.CODE_SIGN_SCRIPT_PATH) {
                 jvm_max_memory: process.env.INPUT_JVM_MAX_MEMORY,
             }
             console.log('env:', JSON.stringify(env, null, 2))
-            const output = execSync(`node "${scriptPath}"`, {
+            console.log('Executing code signing script...')
+            execSync(`node "${scriptPath}"`, {
                 env: { ...process.env, ...env },
-            }).toString()
-            console.log(`Script output: ${output}`)
+                timeout: 300000, // 5 minute timeout
+                stdio: 'inherit', // Stream output directly to parent process
+            })
+            console.log('Code signing completed successfully')
         } catch (error) {
             console.error(`Error executing script: ${error.message}`)
             if (error.stdout) {
