@@ -89,12 +89,11 @@ jobs:
                   command: batch_sign
                   username: ${{secrets.SSL_USERNAME}}
                   password: ${{secrets.SSL_PASSWORD}}
-                  # credential_id: ${{secrets.CREDENTIAL_ID}}
+                  credential_id: ${{secrets.SSL_CREDENTIAL_ID}}
                   totp_secret: ${{secrets.SSL_TOTP_SECRET}}
                   dir_path: ${{ github.workspace }}/dist
                   output_path: ${{ github.workspace }}/signed
                   malware_block: false
-                  environment_name: ${{ secrets.ES_ENV || 'PROD' }}
                   clean_logs: true
                   jvm_max_memory: 1024M
                   signing_method: v1
