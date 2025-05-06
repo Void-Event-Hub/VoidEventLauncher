@@ -34,10 +34,10 @@
     cursor: pointer;
     position: absolute;
     content: '';
-    height: 100%;
-    width: 100%;
-    top: 0%;
-    left: 0%;
+    height: 80%;
+    width: 80%;
+    top: 10%;
+    left: 10%;
     border-radius: 50%;
     box-shadow: 0 0 15px #43c628;
     animation: glow-grow 4s ease-out infinite;
@@ -58,23 +58,23 @@
     color: #fff;
     text-align: center;
     border-radius: 6px;
-    padding: 6px 8px;
+    padding: 6px 0px 6px 19px;
     position: absolute;
     z-index: 100;
     top: 99%;
     left: 50%;
-    transform: translateX(-50%) scale(0.95);
+    transform: translateX(-50%) translateY(5px) scale(0.95);
     font-family: var(--font-body);
     font-size: 12px;
     font-weight: 500;
     letter-spacing: 0.5px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 8px rgba(67, 198, 40, 0.5);
     border: 1px solid rgba(67, 198, 40, 0.3);
-    transition: visibility 0s linear 0.25s, opacity 0.25s ease, transform 0.2s ease;
+    transition: visibility 0s linear 0.25s, opacity 0.3s ease, transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 5px;
+    gap: 2px;
 }
 #updateAvailableTooltip::before {
     content: '↻';
@@ -83,23 +83,29 @@
     animation: spin 2s linear infinite;
     display: inline-block;
     color: #43c628;
+    transform-origin: center;
 }
 #updateAvailableTooltip::after {
     content: ' ';
     position: absolute;
     left: 50%;
-    bottom: 100%;
+    bottom: 107.5%;
     margin-left: -5px;
     border-width: 5px;
     border-style: solid;
     border-color: transparent transparent #333 transparent;
+    transform: translateY(0);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 #image_seal_container[update]:hover #updateAvailableTooltip {
     visibility: visible;
     opacity: 1;
-    transform: translateX(-50%) translateY(2px) scale(1);
+    transform: translateX(-50%) translateY(0) scale(1);
     transition-delay: 0s;
-    animation: pulse 1.5s ease-in-out infinite;
+    animation: float 3s ease-in-out infinite, pulsing 1.5s ease-in-out infinite;
+}
+#image_seal_container[update]:hover #updateAvailableTooltip::after {
+    transform: translateY(3px);
 }
 
 /* Tooltip animations */
@@ -112,15 +118,42 @@
     }
 }
 
-@keyframes pulse {
+@keyframes pulsing {
     0% {
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 8px rgba(67, 198, 40, 0.5);
     }
     50% {
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 15px rgba(67, 198, 40, 0.8);
+        letter-spacing: 0.7px;
     }
     100% {
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3), 0 0 8px rgba(67, 198, 40, 0.5);
+        letter-spacing: 0.5px;
+    }
+}
+
+@keyframes float {
+    0% {
+        transform: translateX(-50%) translateY(0);
+    }
+    50% {
+        transform: translateX(-50%) translateY(-3px);
+    }
+    100% {
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+/* Text animation for tooltip */
+@keyframes textPulse {
+    0% {
+        opacity: 0.9;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0.9;
     }
 }
 
