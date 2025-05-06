@@ -1,14 +1,14 @@
 /**
  * Electron Builder Configuration
  */
-const { execSync } = require('child_process')
+// const { execSync } = require('child_process')
 
 const config = {
     appId: 'net.voideventhub.launcher',
     productName: 'Void Event Launcher',
     artifactName: '${productName}-setup-${channel}_${version}-${os}_${arch}.${ext}',
 
-    copyright: 'Copyright © 2025 Tyrthurey',
+    copyright: 'Copyright © 2025 Void Event Hub',
 
     asar: true,
     compression: 'maximum',
@@ -25,6 +25,10 @@ const config = {
 
     // Windows Configuration
     win: {
+        sign: './sign.js',
+        signingHashAlgorithms: ['sha256'],
+        publish: ['github'],
+        artifactName: '${productName}-setup-${channel}_${version}-${os}_${arch}.${ext}',
         target: [
             {
                 target: 'nsis',
@@ -89,70 +93,70 @@ const config = {
     },
 }
 
-if (process.env.CODE_SIGN_SCRIPT_PATH) {
-    console.log('CODE_SIGN_SCRIPT_PATH found in env vars:', process.env.CODE_SIGN_SCRIPT_PATH)
-    config.win.sign = configuration => {
-        console.log('Requested signing for ', configuration.path)
+// if (process.env.CODE_SIGN_SCRIPT_PATH) {
+//     console.log('CODE_SIGN_SCRIPT_PATH found in env vars:', process.env.CODE_SIGN_SCRIPT_PATH)
+//     config.win.sign = configuration => {
+//         console.log('Requested signing for ', configuration.path)
 
-        // Only proceed if it's an exe file in the dist directory
-        if (!configuration.path.includes('.exe') || (!configuration.path.includes('/dist/') && !configuration.path.includes('\\dist\\'))) {
-            console.log('This is not an executable or not in the dist directory, skip signing')
-            return true
-        }
+//         // Only proceed if it's an exe file in the dist directory
+//         if (!configuration.path.includes('.exe') || (!configuration.path.includes('/dist/') && !configuration.path.includes('\\dist\\'))) {
+//             console.log('This is not an executable or not in the dist directory, skip signing')
+//             return true
+//         }
 
-        // Only sign the primary installer
-        const filename = configuration.path.split(/[/\\]/).pop().toLowerCase()
-        if (!filename.includes('void') || !filename.includes('launcher') || !filename.includes('setup')) {
-            console.log('This is not the main installer, skip signing')
-            return true
-        }
+//         // Only sign the primary installer
+//         const filename = configuration.path.split(/[/\\]/).pop().toLowerCase()
+//         if (!filename.includes('void') || !filename.includes('launcher') || !filename.includes('setup')) {
+//             console.log('This is not the main installer, skip signing')
+//             return true
+//         }
 
-        console.log('Signing the executable:', configuration.path)
+//         console.log('Signing the executable:', configuration.path)
 
-        const scriptPath = process.env.CODE_SIGN_SCRIPT_PATH
+//         const scriptPath = process.env.CODE_SIGN_SCRIPT_PATH
 
-        try {
-            // Execute the sign script synchronously
-            process.env.INPUT_COMMAND = 'sign'
-            process.env.INPUT_FILE_PATH = configuration.path
-            const env = {
-                command: process.env.INPUT_COMMAND,
-                username: process.env.INPUT_USERNAME,
-                password: process.env.INPUT_PASSWORD,
-                credential_id: process.env.INPUT_CREDENTIAL_ID,
-                totp_secret: process.env.INPUT_TOTP_SECRET,
-                file_path: process.env.INPUT_FILE_PATH,
-                output_path: process.env.INPUT_OUTPUT_PATH,
-                malware_block: process.env.INPUT_MALWARE_BLOCK,
-                override: process.env.INPUT_OVERRIDE,
-                clean_logs: process.env.INPUT_CLEAN_LOGS,
-                environment_name: process.env.INPUT_ENVIRONMENT_NAME,
-                jvm_max_memory: process.env.INPUT_JVM_MAX_MEMORY,
-            }
-            console.log('env:', JSON.stringify(env, null, 2))
-            console.log('Executing code signing script...')
-            execSync(`node "${scriptPath}"`, {
-                env: { ...process.env, ...env },
-                timeout: 300000, // 5 minute timeout
-                stdio: 'inherit', // Stream output directly to parent process
-            })
-            console.log('Code signing completed successfully')
-        } catch (error) {
-            console.error(`Error executing script: ${error.message}`)
-            if (error.stdout) {
-                console.log(`Script stdout: ${error.stdout.toString()}`)
-            }
-            if (error.stderr) {
-                console.error(`Script stderr: ${error.stderr.toString()}`)
-            }
-            return false
-        }
+//         try {
+//             // Execute the sign script synchronously
+//             process.env.INPUT_COMMAND = 'sign'
+//             process.env.INPUT_FILE_PATH = configuration.path
+//             const env = {
+//                 command: process.env.INPUT_COMMAND,
+//                 username: process.env.INPUT_USERNAME,
+//                 password: process.env.INPUT_PASSWORD,
+//                 credential_id: process.env.INPUT_CREDENTIAL_ID,
+//                 totp_secret: process.env.INPUT_TOTP_SECRET,
+//                 file_path: process.env.INPUT_FILE_PATH,
+//                 output_path: process.env.INPUT_OUTPUT_PATH,
+//                 malware_block: process.env.INPUT_MALWARE_BLOCK,
+//                 override: process.env.INPUT_OVERRIDE,
+//                 clean_logs: process.env.INPUT_CLEAN_LOGS,
+//                 environment_name: process.env.INPUT_ENVIRONMENT_NAME,
+//                 jvm_max_memory: process.env.INPUT_JVM_MAX_MEMORY,
+//             }
+//             console.log('env:', JSON.stringify(env, null, 2))
+//             console.log('Executing code signing script...')
+//             execSync(`node "${scriptPath}"`, {
+//                 env: { ...process.env, ...env },
+//                 timeout: 300000, // 5 minute timeout
+//                 stdio: 'inherit', // Stream output directly to parent process
+//             })
+//             console.log('Code signing completed successfully')
+//         } catch (error) {
+//             console.error(`Error executing script: ${error.message}`)
+//             if (error.stdout) {
+//                 console.log(`Script stdout: ${error.stdout.toString()}`)
+//             }
+//             if (error.stderr) {
+//                 console.error(`Script stderr: ${error.stderr.toString()}`)
+//             }
+//             return false
+//         }
 
-        return true // Return true at the end of successful signing
-    }
+//         return true // Return true at the end of successful signing
+//     }
 
-    // sign only for Windows 10 and above - adjust for your code as needed
-    config.win.signingHashAlgorithms = ['sha256']
-}
+//     // sign only for Windows 10 and above - adjust for your code as needed
+//     config.win.signingHashAlgorithms = ['sha256']
+// }
 
 module.exports = config

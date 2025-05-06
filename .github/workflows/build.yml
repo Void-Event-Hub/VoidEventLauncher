@@ -100,58 +100,69 @@ jobs:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               shell: bash
 
-            # For Windows, use code signing
-            # download 'SSLcom/esigner-codesign' to a folder called 'esigner-codesign' in the root of the project
-            - name: Checkout esigner-codesign repository (Windows)
-              if: matrix.os == 'windows-latest'
+    buildwindows:
+        name: Build Windows desktop app
+        environment: SSL_USERNAME
+        runs-on: ubuntu-latest
+        container:
+            image: docker://node:20-bullseye
+        steps:
+            - name: Check out Git repository
               uses: actions/checkout@v3
               with:
-                  repository: 'SSLcom/esigner-codesign'
-                  path: esigner-codesign
+                  fetch-depth: 0
 
-            # Verify the esigner-codesign checkout
-            - name: Verify esigner-codesign checkout (Windows)
-              if: matrix.os == 'windows-latest'
+            - name: Set up Node
+              uses: actions/setup-node@v3
+              with:
+                  node-version: 20
+
+            - name: Set up Python
+              uses: actions/setup-python@v4
+              with:
+                  python-version: 3.x
+
+            - name: Install Dependencies
+              run: npm ci
+              shell: bash
+
+            - name: Setup java
+              uses: actions/setup-java@v4
+              with:
+                  # eclipse 'temurin' openjdk https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#Selecting-a-Java-distribution
+                  distribution: 'temurin'
+                  java-version: '21'
+
+            - name: Install wine
+              # https://wiki.debian.org/Wine
               run: |
-                  echo "Checking esigner-codesign directory structure..."
-                  Get-ChildItem -Path ${{ github.workspace }}/esigner-codesign -Recurse | Select-Object FullName
-                  echo "Checking if index.js exists..."
-                  if (Test-Path "${{ github.workspace }}/esigner-codesign/dist/index.js") {
-                      echo "✅ index.js found"
-                  } else {
-                      echo "❌ index.js not found!"
-                      Get-ChildItem -Path ${{ github.workspace }}/esigner-codesign -Recurse
-                  }
-              shell: pwsh
+                  dpkg --add-architecture i386
+                  apt update
+                  apt install --yes wine wine32 wine64 libwine libwine:i386 fonts-wine
 
-            # builds, signs, and publishes - actual signing happens within electron-builder.js
-            - name: Build and Publish (Windows)
-              if: matrix.os == 'windows-latest'
+            - name: Install build deps
               run: |
-                  echo "Starting Windows build and sign process..."
-                  echo "Using code signing script at: ${{ github.workspace }}/esigner-codesign/dist/index.js"
-                  echo "Checking for credentials: ${{ secrets.SSL_USERNAME != '' && secrets.SSL_PASSWORD != '' && secrets.SSL_TOTP_SECRET != '' && secrets.CREDENTIAL_ID != '' }}"
+                  apt install --yes python3 make gcc libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
 
-                  # Run the build with verbose logging and explicit config file
-                  npx electron-builder build --config electron-builder.js --verbose -p always
+            # We are just cloning the esigner repo instead of calling their github
+            # action directly https://github.com/SSLcom/esigner-codesign
+            - name: Get ssl.com esigner zip file and unzip
+              run: |
+                  mkdir code_signer
+                  cd code_signer
+                  wget  https://www.ssl.com/download/codesigntool-for-linux-and-macos -O out.zip
+                  unzip out.zip
+                  chmod +x CodeSignTool.sh
+                  cd ../../../
 
-                  echo "Build and sign process completed"
+            - name: Build app
               env:
+                  WINDOWS_SIGN_USER_NAME: ${{ secrets.SSL_USERNAME }}
+                  WINDOWS_SIGN_USER_PASSWORD: ${{ secrets.SSL_PASSWORD }}
+                  WINDOWS_SIGN_CREDENTIAL_ID: ${{ secrets.SSL_TOTP_SECRET }}
+                  WINDOWS_SIGN_USER_TOTP: ${{ secrets.CREDENTIAL_ID }}
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  # NOTE: must explicitly pass in even the parameters that esigner-codesign says are optional since we're not using the action directly, but rather passing the params in as env vars:
-                  CODE_SIGN_SCRIPT_PATH: '${{ github.workspace }}/esigner-codesign/dist/index.js'
-                  INPUT_COMMAND: 'sign'
-                  # Let the electron-builder.js determine the exact file path
-                  INPUT_FILE_PATH: '${{ github.workspace }}/dist'
-                  INPUT_OVERRIDE: 'true'
-                  INPUT_MALWARE_BLOCK: 'false'
-                  INPUT_CLEAN_LOGS: 'false'
-                  INPUT_JVM_MAX_MEMORY: '1024M'
-                  INPUT_ENVIRONMENT_NAME: 'PROD'
-                  INPUT_USERNAME: ${{ secrets.SSL_USERNAME || 'none' }}
-                  INPUT_PASSWORD: ${{ secrets.SSL_PASSWORD || 'none' }}
-                  INPUT_TOTP_SECRET: ${{ secrets.SSL_TOTP_SECRET || 'none' }}
-                  INPUT_CREDENTIAL_ID: ${{ secrets.CREDENTIAL_ID || 'none' }}
-                  DEBUG: 'electron-builder,electron-builder:*'
-              shell: pwsh
-
+              run: |
+                  chown --recursive root:root /github/home
+                  yarn build-electron:win --publish always
+              working-directory: /
