@@ -6,9 +6,21 @@ on:
             - '*' # Run once per tag
 
 jobs:
+    get-versions:
+        runs-on: ubuntu-latest
+        outputs:
+            package_version: ${{ steps.set_versions.outputs.package_version }}
+        steps:
+            - uses: actions/checkout@v3
+            - name: Get the version
+              id: set_versions
+              run: |
+                  echo "package_version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
     release:
         name: Release ${{ matrix.os }} ${{ matrix.arch }}
         runs-on: ${{ matrix.os }}
+        needs: get-versions
 
         permissions:
             contents: write
@@ -82,29 +94,33 @@ jobs:
               run: npm run dist -- --publish never
               shell: bash
 
-            - name: Sign Windows Artifacts
+            # download 'SSLcom/esigner-codesign' to a folder called 'esigner-codesign' in the root of the project
+            - name: Checkout esigner-codesign repository (Windows)
               if: matrix.os == 'windows-latest'
-              uses: sslcom/esigner-codesign@develop
+              uses: actions/checkout@v3
               with:
-                  command: batch_sign
-                  username: ${{secrets.SSL_USERNAME}}
-                  password: ${{secrets.SSL_PASSWORD}}
-                  credential_id: ${{secrets.SSL_CREDENTIAL_ID}}
-                  totp_secret: ${{secrets.SSL_TOTP_SECRET}}
-                  dir_path: ${{ github.workspace }}/dist
-                  output_path: ${{ github.workspace }}/signed
-                  malware_block: false
-                  clean_logs: true
-                  jvm_max_memory: 1024M
-                  signing_method: v1
+                  repository: 'SSLcom/esigner-codesign'
+                  path: esigner-codesign
 
-            - name: Publish Release
+            # builds, signs, and publishes - actual signing happens within electron-builder.js
+            - name: Publish (Windows)
+              if: matrix.os == 'windows-latest'
+              run: npm run dist && npx electron-builder build --config electron-builder.js -p always
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              if: matrix.os == 'windows-latest'
-              run: |
-                  echo "Publishing signed artifacts from ${{ github.workspace }}/signed"
-                  npx electron-builder --publish always --prepackaged "${{ github.workspace }}/signed"
+                  # NOTE: must explicitly pass in even the parameters that esigner-codesign says are optional since we're not using the action directly, but rather passing the params in as env vars:
+                  CODE_SIGN_SCRIPT_PATH: '${{ github.workspace }}/esigner-codesign/dist/index.js'
+                  INPUT_COMMAND: 'sign'
+                  INPUT_FILE_PATH: '${{ github.workspace }}/dist/Void Event Launcher Setup ${{ needs.get-versions.outputs.package_version }}.exe'
+                  INPUT_OVERRIDE: 'true'
+                  INPUT_MALWARE_BLOCK: 'false'
+                  INPUT_CLEAN_LOGS: 'false'
+                  INPUT_JVM_MAX_MEMORY: '1024M'
+                  INPUT_ENVIRONMENT_NAME: 'PROD'
+                  INPUT_USERNAME: ${{ secrets.SSL_USERNAME }}
+                  INPUT_PASSWORD: ${{ secrets.SSL_PASSWORD }}
+                  INPUT_TOTP_SECRET: ${{ secrets.SSL_TOTP_SECRET }}
+                  INPUT_CREDENTIAL_ID: ${{ secrets.CREDENTIAL_ID }}
               shell: bash
 
             - name: Publish Release (Non-Windows)
