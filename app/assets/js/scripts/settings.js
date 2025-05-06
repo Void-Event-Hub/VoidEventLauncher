@@ -1310,83 +1310,30 @@ function bindRangeSlider(){
 
         // Make the entire slider clickable
         v.onclick = (e) => {
-            // Ignore clicks on the track itself to prevent double handling
-            if(e.target === track) {
-                return
-            }
-            
-            // Calculate the click position relative to the slider width
-            const clickX = e.pageX - v.getBoundingClientRect().left
-            const sliderWidth = v.offsetWidth
-            
-            // Calculate the exact value based on position
-            const percentage = Math.min(Math.max(clickX / sliderWidth, 0), 1)
-            const exactValue = sliderMeta.min + percentage * (sliderMeta.max - sliderMeta.min)
-            
-            // Round to the nearest step increment
-            const steppedValue = Math.round(exactValue / sliderMeta.step) * sliderMeta.step
-            const cappedValue = Math.min(Math.max(steppedValue, sliderMeta.min), sliderMeta.max)
-            
-            // Calculate the notch percentage
-            const notchPercentage = ((cappedValue - sliderMeta.min) / (sliderMeta.max - sliderMeta.min)) * 100
-            
-            // Update slider value
-            updateRangedSlider(v, cappedValue, notchPercentage)
+            const rect = track.getBoundingClientRect()
+            const clickPos = e.clientX - rect.left
+            const percentage = (clickPos / rect.width) * 100
+            const newValue = sliderMeta.min + Math.round((percentage / sliderMeta.inc)) * sliderMeta.step
+            updateRangedSlider(v, newValue, ((newValue-sliderMeta.min)/sliderMeta.step)*sliderMeta.inc)
         }
 
         // The magic happens when we click on the track.
         track.onmousedown = (e) => {
-            e.stopPropagation() // Prevent triggering the parent's click event
-            
-            // Get current slider rect
-            const sliderRect = v.getBoundingClientRect()
-            
-            // Initial positioning
-            const initialMouseX = e.clientX
-            const initialTrackLeft = parseFloat(track.style.left || '0')
-            
-            // Update track position for smoother drag
-            function updateTrackPosition(moveEvent) {
-                // Calculate the new position
-                const deltaX = moveEvent.clientX - initialMouseX
-                const sliderWidth = sliderRect.width
-                
-                // Calculate the percentage move and add to initial position
-                const percentage = (deltaX / sliderWidth) * 100
-                let newPercentage = initialTrackLeft + percentage
-                
-                // Clamp the percentage between 0 and 100
-                newPercentage = Math.min(Math.max(newPercentage, 0), 100)
-                
-                // Calculate exact value based on percentage
-                const exactValue = sliderMeta.min + (newPercentage / 100) * (sliderMeta.max - sliderMeta.min)
-                
-                // Round to the nearest step increment
-                const steppedValue = Math.round(exactValue / sliderMeta.step) * sliderMeta.step
-                const cappedValue = Math.min(Math.max(steppedValue, sliderMeta.min), sliderMeta.max)
-                
-                // Calculate the notch percentage
-                const notchPercentage = ((cappedValue - sliderMeta.min) / (sliderMeta.max - sliderMeta.min)) * 100
-                
-                // Update the slider value
-                updateRangedSlider(v, cappedValue, notchPercentage)
+            const onMouseMove = (e) => {
+                const rect = track.getBoundingClientRect()
+                const dragPos = e.clientX - rect.left
+                const percentage = (dragPos / rect.width) * 100
+                const newValue = sliderMeta.min + Math.round((percentage / sliderMeta.inc)) * sliderMeta.step
+                updateRangedSlider(v, newValue, ((newValue-sliderMeta.min)/sliderMeta.step)*sliderMeta.inc)
             }
-            
-            // Update on mouse move
-            function handleMouseMove(moveEvent) {
-                moveEvent.preventDefault()
-                updateTrackPosition(moveEvent)
+
+            const onMouseUp = () => {
+                document.removeEventListener('mousemove', onMouseMove)
+                document.removeEventListener('mouseup', onMouseUp)
             }
-            
-            // Stop dragging on mouse up
-            function handleMouseUp() {
-                document.removeEventListener('mousemove', handleMouseMove)
-                document.removeEventListener('mouseup', handleMouseUp)
-            }
-            
-            // Add event listeners for dragging
-            document.addEventListener('mousemove', handleMouseMove)
-            document.addEventListener('mouseup', handleMouseUp)
+
+            document.addEventListener('mousemove', onMouseMove)
+            document.addEventListener('mouseup', onMouseUp)
         }
     })
 }
