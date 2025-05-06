@@ -129,6 +129,38 @@ jobs:
               run: npm ci
               shell: bash
 
+            - name: Get version from Git tag
+              id: get_tag
+              run: |
+                  TAG=${GITHUB_REF#refs/tags/}
+                  VERSION=${TAG#v}
+                  echo "TAG=$TAG" >> $GITHUB_ENV
+                  echo "VERSION=$VERSION" >> $GITHUB_ENV
+                  echo "Setting version to $VERSION from tag $TAG"
+              shell: bash
+
+            - name: Sync version with Git tag
+              run: |
+                  echo "Setting version to ${{ env.VERSION }} from tag ${{ env.LATEST_TAG }}"
+                  node -e "
+                    const fs = require('fs');
+                    const files = ['package.json', 'package-lock.json'];
+                    const version = '${{ env.VERSION }}';
+                    for (const file of files) {
+                      if (!fs.existsSync(file)) continue;
+                      const json = JSON.parse(fs.readFileSync(file, 'utf8'));
+                      json.version = version;
+                      if (
+                        file === 'package-lock.json' &&
+                        json.packages &&
+                        typeof json.packages[''] === 'object'
+                      ) {
+                        json.packages[''].version = version;
+                      }
+                      fs.writeFileSync(file, JSON.stringify(json, null, 2) + '\n');
+                    }
+                  "
+
             - name: Setup java
               uses: actions/setup-java@v4
               with:
@@ -170,4 +202,3 @@ jobs:
                   export PATH=$PATH:$(pwd)/code_signer
                   export CODE_SIGN_TOOL_PATH=$(pwd)/code_signer
                   npm run dist:win -- --publish always
-
