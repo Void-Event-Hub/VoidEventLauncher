@@ -18,11 +18,20 @@ function sign(configuration) {
     const tmpExe = `tmp-${Math.random()}.exe`
     const tmpExePath = path.join(TEMP_DIR, tmpExe)
 
+    // Create a different output path to avoid source/destination being the same
+    const outputDir = path.join(TEMP_DIR, 'signed')
+
+    // Ensure output directory exists
+    if (!fs.existsSync(outputDir)) {
+        fs.mkdirSync(outputDir, { recursive: true })
+    }
+
     // Get the absolute path to the CodeSignTool
     const codeSignToolPath = process.env.CODE_SIGN_TOOL_PATH || path.join(process.cwd(), 'code_signer')
 
     console.log('CodeSignTool path:', codeSignToolPath)
     console.log('Temp dir:', TEMP_DIR)
+    console.log('Output dir:', outputDir)
     console.log('Configuration path:', configuration.path)
 
     // note: CodeSignTool can't sign in place without verifying the overwrite
@@ -31,7 +40,7 @@ function sign(configuration) {
     const signFile = [
         `bash ${codeSignToolPath}/CodeSignTool.sh sign`,
         `-input_file_path='${tmpExePath}'`,
-        `-output_dir_path='${TEMP_DIR}'`,
+        `-output_dir_path='${outputDir}'`,
         `-credential_id='${process.env.WINDOWS_SIGN_CREDENTIAL_ID}'`,
         `-username='${process.env.WINDOWS_SIGN_USER_NAME}'`,
         `-password='${process.env.WINDOWS_SIGN_USER_PASSWORD}'`,
@@ -41,8 +50,10 @@ function sign(configuration) {
     console.log('Copying file to temp location:', tmpExePath)
     const preMoveFile = `cp "${configuration.path}" "${tmpExePath}"`
 
-    console.log('Will move signed file back from:', path.join(TEMP_DIR, tmpExe))
-    const postMoveFile = `cp "${path.join(TEMP_DIR, tmpExe)}" "${configuration.path}"`
+    // The signed file will be in the output directory with the same name as the input file
+    const signedFilePath = path.join(outputDir, tmpExe)
+    console.log('Will move signed file back from:', signedFilePath)
+    const postMoveFile = `cp "${signedFilePath}" "${configuration.path}"`
 
     try {
         childProcess.execSync(preMoveFile, {

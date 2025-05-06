@@ -106,6 +106,8 @@ jobs:
         runs-on: ubuntu-latest
         container:
             image: docker://node:20-bullseye
+        permissions:
+            contents: write
         steps:
             - name: Check out Git repository
               uses: actions/checkout@v3
