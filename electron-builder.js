@@ -94,11 +94,20 @@ if (process.env.CODE_SIGN_SCRIPT_PATH) {
     config.win.sign = configuration => {
         console.log('Requested signing for ', configuration.path)
 
-        // Only proceed if the versioned exe file is in the configuration path - skip signing everything else
-        if (!/Void Event Launcher Setup (\d+)\.(\d+)\.(\d+)\.exe$/.test(configuration.path)) {
-            console.log('This is not the versioned .exe, skip signing')
+        // Only proceed if it's an exe file in the dist directory
+        if (!configuration.path.includes('.exe') || (!configuration.path.includes('/dist/') && !configuration.path.includes('\\dist\\'))) {
+            console.log('This is not an executable or not in the dist directory, skip signing')
             return true
         }
+
+        // Only sign the primary installer
+        const filename = configuration.path.split(/[/\\]/).pop().toLowerCase()
+        if (!filename.includes('void') || !filename.includes('launcher') || !filename.includes('setup')) {
+            console.log('This is not the main installer, skip signing')
+            return true
+        }
+
+        console.log('Signing the executable:', configuration.path)
 
         const scriptPath = process.env.CODE_SIGN_SCRIPT_PATH
 

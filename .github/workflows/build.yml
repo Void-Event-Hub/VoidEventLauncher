@@ -90,10 +90,15 @@ jobs:
                     }
                   "
 
-            - name: Build
-              run: npm run dist -- --publish never
+            # Build non-Windows platforms normally
+            - name: Build and Publish (Non-Windows)
+              if: matrix.os != 'windows-latest'
+              run: npx electron-builder build -p always
+              env:
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
               shell: bash
 
+            # For Windows, use code signing
             # download 'SSLcom/esigner-codesign' to a folder called 'esigner-codesign' in the root of the project
             - name: Checkout esigner-codesign repository (Windows)
               if: matrix.os == 'windows-latest'
@@ -103,15 +108,16 @@ jobs:
                   path: esigner-codesign
 
             # builds, signs, and publishes - actual signing happens within electron-builder.js
-            - name: Publish (Windows)
+            - name: Build and Publish (Windows)
               if: matrix.os == 'windows-latest'
-              run: npm run dist && npx electron-builder build --config electron-builder.js -p always
+              run: npx electron-builder build --config electron-builder.js -p always
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   # NOTE: must explicitly pass in even the parameters that esigner-codesign says are optional since we're not using the action directly, but rather passing the params in as env vars:
                   CODE_SIGN_SCRIPT_PATH: '${{ github.workspace }}/esigner-codesign/dist/index.js'
                   INPUT_COMMAND: 'sign'
-                  INPUT_FILE_PATH: '${{ github.workspace }}/dist/Void Event Launcher Setup ${{ needs.get-versions.outputs.package_version }}.exe'
+                  # Let the electron-builder.js determine the exact file path
+                  INPUT_FILE_PATH: '${{ github.workspace }}/dist'
                   INPUT_OVERRIDE: 'true'
                   INPUT_MALWARE_BLOCK: 'false'
                   INPUT_CLEAN_LOGS: 'false'
@@ -123,9 +129,3 @@ jobs:
                   INPUT_CREDENTIAL_ID: ${{ secrets.CREDENTIAL_ID }}
               shell: bash
 
-            - name: Publish Release (Non-Windows)
-              env:
-                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              if: matrix.os != 'windows-latest'
-              run: npx electron-builder --publish always
-              shell: bash
