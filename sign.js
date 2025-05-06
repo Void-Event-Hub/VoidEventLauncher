@@ -1,5 +1,9 @@
 // this script adapted from
 // https://github.com/electron-userland/electron-builder/issues/6158#issuecomment-899798533
+
+// Windows App Signing Script for SSL.com CodeSignTool
+// I swear, whoever tampers with this, I will personally cook and send to the pits of hell. -Tyr
+
 const childProcess = require('child_process')
 const fs = require('fs')
 const path = require('path')

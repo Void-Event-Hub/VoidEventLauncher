@@ -101,6 +101,7 @@ jobs:
               shell: bash
 
     buildwindows:
+        # We're using Wine to build the windows desktop app because CodeSignTool.sh works better than the .exe version.
         name: Build Windows desktop app
         environment: SSL_USERNAME
         runs-on: ubuntu-latest
