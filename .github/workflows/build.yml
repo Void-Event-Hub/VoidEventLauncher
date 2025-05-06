@@ -165,4 +165,3 @@ jobs:
               run: |
                   chown --recursive root:root /github/home
                   yarn build-electron:win --publish always
-              working-directory: /
