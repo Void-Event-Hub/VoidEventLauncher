@@ -33,8 +33,8 @@ jobs:
                 include:
                     - os: ubuntu-latest
                       arch: x64
-                    - os: windows-latest
-                      arch: x64
+                    # - os: windows-latest
+                    #   arch: x64
                     - os: macos-latest
                       arch: x64
                     # - os: macos-latest
