@@ -1,6 +1,8 @@
 name: Bug Report
 description: Report a bug
 labels: ["bug"]
+title: "[BUG] "
+assignees: ["BoredHF"]
 body:
   - type: markdown
     attributes:
