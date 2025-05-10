@@ -243,7 +243,8 @@
 
 /* Add spacing between server listings. */
 #serverSelectListScrollable > .serverListing:not(:first-child):not(:last-child),
-#accountSelectListScrollable > .accountListing:not(:first-child):not(:last-child) {
+#accountSelectListScrollable
+    > .accountListing:not(:first-child):not(:last-child) {
     margin: 0px 0px;
 }
 #serverSelectListScrollable > .serverListing:first-child,
@@ -414,4 +415,4 @@
 #serverSelectCancel:active,
 #accountSelectCancel:active {
     color: rgba(165, 165, 165, 0.75);
-}
+} 

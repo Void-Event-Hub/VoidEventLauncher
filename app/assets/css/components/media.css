@@ -28,7 +28,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 100%;
+    width: 100%;    
     height: 100%;
 }
 
@@ -73,6 +73,43 @@
 .mediaButton:focus #settingsSVG,
 .mediaButton:active #settingsSVG {
     height: 23px;
+}
+
+/* Settings tooltip styles. */
+#settingsTooltip {
+    visibility: hidden;
+    opacity: 0;
+    width: 75px;
+    height: 20px;
+    background-color: rgba(0, 0, 0, 0.75);
+    text-align: center;
+    border-radius: 4px;
+    position: absolute;
+    z-index: 1000;
+    right: 130%;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 12px;
+    line-height: 20px;
+    box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.5);
+    transition: visibility 0s linear 0.25s, opacity 0.25s ease;
+}
+#settingsTooltip::after {
+    content: ' ';
+    position: absolute;
+    top: 50%;
+    left: 100%;
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent rgba(0, 0, 0, 0.75);
+}
+.mediaButton:hover #settingsTooltip,
+.mediaButton:focus #settingsTooltip,
+.mediaButton:active #settingsTooltip {
+    visibility: visible;
+    opacity: 1;
+    transition-delay: 0s;
 }
 
 /* Twitter icon colors. */
@@ -126,7 +163,7 @@
     align-items: center;
     justify-content: center;
     margin-right: 12px;
-    transition: transform 0.18s cubic-bezier(0.4, 1.3, 0.6, 1); /* Add transition for scaling */
+    transition: transform 0.18s cubic-bezier(.4,1.3,.6,1); /* Add transition for scaling */
 }
 #externalMedia .mediaURL.button.button-small.button-primary:last-child {
     margin-right: 0;
@@ -147,11 +184,11 @@
     width: 24px;
     height: 24px;
     display: block;
-    transition: transform 0.18s cubic-bezier(0.4, 1.3, 0.6, 1);
+    transition: transform 0.18s cubic-bezier(.4,1.3,.6,1);
 }
 
 #externalMedia .mediaURL.button.button-small.button-primary:hover .mediaSVG,
 #externalMedia .mediaURL.button.button-small.button-primary:focus .mediaSVG,
 #externalMedia .mediaURL.button.button-small.button-primary:active .mediaSVG {
     transform: scale(1.18);
-}
+} 

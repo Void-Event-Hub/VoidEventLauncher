@@ -41,7 +41,8 @@
     text-shadow: 0px 0px 20px white, 0px 0px 20px white, 0px 0px 20px white;
 }
 .settingsAddAuthAccount:active {
-    text-shadow: 0px 0px 20px rgba(255, 255, 255, 0.75), 0px 0px 20px rgba(255, 255, 255, 0.75),
+    text-shadow: 0px 0px 20px rgba(255, 255, 255, 0.75),
+        0px 0px 20px rgba(255, 255, 255, 0.75),
         0px 0px 20px rgba(255, 255, 255, 0.75);
     color: rgba(255, 255, 255, 0.75);
 }
@@ -171,4 +172,4 @@
 }
 .settingsAuthAccount:hover .settingsAuthAccountLogOut {
     opacity: 1;
-}
+} 

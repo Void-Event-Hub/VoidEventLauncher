@@ -14,8 +14,6 @@
 @import './components/media.css';
 @import './components/overlay.css';
 @import './components/modpack-selector.css';
-@import './components/minecraft-buttons.css';
-@import './components/minecraft-play-button.css';
 
 /* Settings */
 @import './settings/java.css';
@@ -50,4 +48,4 @@
 @import './views/login/login-form.css';
 @import './views/login/login-options.css';
 @import './views/waiting.css';
-@import './views/welcome.css';
+@import './views/welcome.css'; 

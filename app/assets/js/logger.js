@@ -7,6 +7,7 @@ const { EventEmitter } = require('events')
 // custom logging transport that behaves like the game
 // not native to Winston
 class FileLoggingTransport extends winston.Transport {
+
     constructor(options) {
         super(options)
         this.logFileName = options.logFileName || 'app'
@@ -25,10 +26,7 @@ class FileLoggingTransport extends winston.Transport {
 
         try {
             const latestStats = fs.statSync(fileNameFull)
-            fs.renameSync(
-                fileNameFull,
-                path.join(dirName, `${this.logFileName}-${Math.floor(latestStats.atimeMs)}.${this.logFileExt}`)
-            )
+            fs.renameSync(fileNameFull, path.join(dirName, `${this.logFileName}-${Math.floor(latestStats.atimeMs)}.${this.logFileExt}`))
         } catch (e) {
             if (e.code !== 'ENOENT' && e.code !== 'EBUSY') throw e
         }
@@ -68,7 +66,7 @@ EventEmitter.defaultMaxListeners = 100
 const fileTransport = new FileLoggingTransport({
     format: winston.format.uncolorize(),
     logFileName: 'launcher',
-    maxLogFiles: 5,
+    maxLogFiles: 5
 })
 // Setting max listeners for the shared instance as well
 fileTransport.setMaxListeners(100) // Increasing from 30
