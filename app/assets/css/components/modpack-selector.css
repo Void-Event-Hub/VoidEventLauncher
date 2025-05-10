@@ -88,7 +88,7 @@
     z-index: 5;
 }
 
-.serverListing:hover,
+.serverListing:hover, 
 .serverListing:focus {
     opacity: 1;
     border-color: white !important;
@@ -140,7 +140,7 @@
 }
 
 .serverListingImg {
-    max-width: 60px;
+    max-width: 60px; 
     max-height: 60px;
     margin: 0px 10px 0px 5px;
     height: 50px;
@@ -223,7 +223,7 @@
 
 /* Handle potential clipping of the SELECTED label */
 .serverListing[selected]::after {
-    content: 'SELECTED';
+    content: "SELECTED";
     position: absolute;
     top: 10px;
     right: 10px;
@@ -262,23 +262,23 @@
         grid-template-columns: 1fr;
         gap: 10px;
     }
-
+    
     .serverListing {
         height: 100px;
     }
-
+    
     .serverListingDescription {
         -webkit-line-clamp: 1;
     }
-
+    
     .serverListingName {
         font-size: 1.1rem;
     }
-
+    
     .serverListingDescription {
         font-size: 0.8rem;
     }
-
+    
     #modpackTitle {
         font-size: 32px;
         color: var(--font-title);
@@ -290,30 +290,30 @@
         grid-template-columns: 1fr;
         gap: 10px;
     }
-
+    
     .serverListing {
         height: 90px;
     }
-
+    
     .serverListingImgContainer {
         width: 70px;
         min-width: 70px;
     }
-
+    
     .serverListingImg {
         max-width: 50px;
         max-height: 50px;
     }
-
+    
     .serverListingName {
         font-size: 1rem;
     }
-
+    
     #serverSelectActions {
         flex-direction: column;
         gap: 10px;
     }
-
+    
     #modpackTitle {
         font-size: 28px;
         margin-bottom: 10px;
@@ -376,8 +376,7 @@
     /* Default .button:hover styles will be applied */
 }
 
-#serverSelectListScrollable > .serverListing:not(:first-child):not(:last-child),
-#accountSelectListScrollable {
+#serverSelectListScrollable > .serverListing:not(:first-child):not(:last-child), #accountSelectListScrollable {
     border-color: var(--color-primary);
 }
 
@@ -387,4 +386,4 @@
     opacity: 1;
     border-color: var(--color-primary-light);
     box-shadow: 0 0 8px var(--color-primary-light);
-}
+} 

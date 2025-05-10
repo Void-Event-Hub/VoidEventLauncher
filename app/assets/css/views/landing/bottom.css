@@ -13,7 +13,7 @@
 }
 
 .gray_color {
-    color: silver;
+    color: silver
 }
 
 /* Divider used on the bottom of the landing view. */
@@ -166,10 +166,11 @@
     display: grid;
     grid-template-columns: 1fr auto;
     grid-template-areas:
-        'service    progress'
-        'launch     server'
-        'launch     modpack';
-    gap: 5px;
+        "service    progress"
+        "launch     server"
+        "launch     modpack";
+    width: 70vw;
+    gap: 4px;
 }
 
 #launchButton {
@@ -270,4 +271,4 @@
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-}
+} 

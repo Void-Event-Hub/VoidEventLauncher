@@ -1,5 +1,6 @@
 <div id="landingControls">
     <div class="content">
+
         <div id="landingServiceStatus" class="hidden-when-inactive" active>
             <div id="mojangStatusWrapper" class="content">
                 <span class="bot_label"><%- lang('landing.mojangStatus') %></span>
@@ -33,9 +34,7 @@
                 <!-- <p class="bot_label">
                     <%- lang('landing.serverSelectDetails') %>
                 </p> -->
-                <button id="server_selection_button" class="bot_label button">
-                    <%- lang('landing.launchButtonPlaceholder') %>
-                </button>
+                <button id="server_selection_button" class="bot_label button"><%- lang('landing.launchButtonPlaceholder') %></button>
             </div>
         </div>
 
@@ -45,18 +44,17 @@
             </div>
             <!-- <div class="bot_divider"></div> -->
             <div id="launch_details_right">
-                <span id="launchDetailsText" class="bot_label"> <%- lang('landing.launchDetails') %> </span>
+                <span id="launchDetailsText" class="bot_label">
+                    <%- lang('landing.launchDetails') %>
+                </span>
             </div>
             <progress id="launchProgress" value="22" max="100"></progress>
         </div>
 
         <div id="landingLauncher">
-            <div class="button-container">
-                <button id="launchButton" class="minecraft-play-button">
-                    <span><%- lang('landing.launchButton') %></span>
-                    <div class="shine"></div>
-                </button>
-            </div>
+            <button id="launchButton" class="button button-primary button-large">
+                <%- lang('landing.launchButton') %>
+            </button>
         </div>
     </div>
-</div>
+</div> 
