@@ -10,7 +10,13 @@ const isDev = require('./app/assets/js/isdev')
 const path = require('path')
 const semver = require('semver')
 const { pathToFileURL } = require('url')
-const { AZURE_CLIENT_ID, MSFT_OPCODE, MSFT_REPLY_TYPE, MSFT_ERROR, SHELL_OPCODE } = require('./app/assets/js/ipcconstants')
+const {
+    AZURE_CLIENT_ID,
+    MSFT_OPCODE,
+    MSFT_REPLY_TYPE,
+    MSFT_ERROR,
+    SHELL_OPCODE,
+} = require('./app/assets/js/ipcconstants')
 const LangLoader = require('./app/assets/js/langloader')
 
 // Setup hot reload in development mode
@@ -294,7 +300,9 @@ function createWindow() {
         .filter(file => file.isFile() && supportedBackgroundTypes.includes(path.extname(file.name).toLowerCase()))
 
     const backgroundPath =
-        availableBackgrounds[availableBackgrounds.length > 1 ? Math.floor(Math.random() * availableBackgrounds.length) : 0]?.name ?? 'empty.png'
+        availableBackgrounds[
+            availableBackgrounds.length > 1 ? Math.floor(Math.random() * availableBackgrounds.length) : 0
+        ]?.name ?? 'empty.png'
     const data = {
         backgroundPath,
         lang: (str, placeHolders) => LangLoader.queryEJS(str, placeHolders),

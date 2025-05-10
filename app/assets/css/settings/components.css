@@ -223,4 +223,4 @@ input:checked + .toggleSwitchSlider:before {
 }
 .settingsFileSelDesc strong {
     font-family: var(--font-body);
-} 
+}
