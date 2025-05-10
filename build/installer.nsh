@@ -1,35 +1,58 @@
 ; Custom NSIS Script for Void Event Launcher
-; This adds additional customization to the installer
+; Uses the recommended approach with macros for customization
 
-; Include Modern UI 2
-!include MUI2.nsh
-!include LogicLib.nsh
-!include FileFunc.nsh
+; Custom header - executed before any other code
+!macro customHeader
+  !define MUI_BGCOLOR "101020"
+  !define MUI_TEXTCOLOR "FFFFFF"
+!macroend
 
-; General Interface Settings
-; Don't redefine these as they are set by electron-builder
-; !define MUI_ICON "build\icon.ico"
-; !define MUI_UNICON "build\uninstall.ico"
+; Pre-initialization - executed at the beginning of the .onInit callback
+!macro preInit
+  ; Add any pre-initialization code here
+!macroend
 
-; Use custom colors for the installer
-!define MUI_BGCOLOR "101020"
-!define MUI_TEXTCOLOR "FFFFFF"
+; Custom initialization - executed in the .onInit callback after preInit
+!macro customInit
+  ; Set up any custom initialization
+!macroend
 
-; Header image - don't redefine
-; !define MUI_HEADERIMAGE
-; !define MUI_HEADERIMAGE_BITMAP "build\header.bmp"
-!define MUI_HEADERIMAGE_RIGHT
+; Custom welcome page - only used if oneClick is false
+!macro customWelcomePage
+  !define MUI_WELCOMEPAGE_TITLE "Welcome to Void Event Launcher"
+  !define MUI_WELCOMEPAGE_TEXT "This wizard will guide you through the installation of Void Event Launcher.$\r$\n$\r$\nVoid Event Launcher is a custom launcher for modded Minecraft, designed for Void Event Hub events.$\r$\n$\r$\nClick Next to continue."
+  !insertmacro MUI_PAGE_WELCOME
+!macroend
 
-; Welcome/Finish page
-; Use the defined MUI_WELCOMEFINISHPAGE_BITMAP if it exists
-!ifndef MUI_WELCOMEFINISHPAGE_BITMAP
-  !define MUI_WELCOMEFINISHPAGE_BITMAP "${NSISDIR}\Contrib\Graphics\Wizard\win.bmp"
-!endif
+; Custom installation mode - used to force per-machine or per-user installation
+!macro customInstallMode
+  ; Uncomment to force per-machine installation
+  ; $isForceMachineInstall = 1
+  
+  ; Uncomment to force per-user installation
+  ; $isForceCurrentInstall = 1
+!macroend
 
-!define MUI_WELCOMEPAGE_TITLE "Welcome to Void Event Launcher Setup"
-!define MUI_WELCOMEPAGE_TEXT "This wizard will guide you through the installation of Void Event Launcher.$\r$\n$\r$\nVoid Event Launcher is a custom launcher for modded Minecraft, designed for Void Event Hub events.$\r$\n$\r$\nClick Next to continue."
+; Custom installation - executed during the installation process
+!macro customInstall
+  ; Custom installation steps go here
+  DetailPrint "Installing Void Event Launcher..."
+!macroend
 
-; Finish page customization
+; Custom uninstall welcome page - only used if oneClick is false
+!macro customUnWelcomePage
+  !define MUI_WELCOMEPAGE_TITLE "Uninstall Void Event Launcher"
+  !define MUI_WELCOMEPAGE_TEXT "This wizard will guide you through the uninstallation of Void Event Launcher.$\r$\n$\r$\nBefore starting, please make sure Void Event Launcher is not running.$\r$\n$\r$\nClick Next to continue."
+  !insertmacro MUI_UNPAGE_WELCOME
+!macroend
+
+; Custom uninstallation - executed during the uninstallation process
+!macro customUnInstall
+  ; Custom uninstallation steps go here
+  DetailPrint "Uninstalling Void Event Launcher..."
+!macroend
+
+; Custom finish page options
 !define MUI_FINISHPAGE_RUN "$INSTDIR\Void Event Launcher.exe"
 !define MUI_FINISHPAGE_RUN_TEXT "Launch Void Event Launcher"
 !define MUI_FINISHPAGE_SHOWREADME "$INSTDIR\README.txt"
@@ -37,62 +60,21 @@
 !define MUI_FINISHPAGE_LINK "Visit Void Event Hub website"
 !define MUI_FINISHPAGE_LINK_LOCATION "https://voideventhub.net"
 
-; Abort warning
-!define MUI_ABORTWARNING
-
-; License page
-!define MUI_LICENSEPAGE_CHECKBOX
-
-; Components page
-!define MUI_COMPONENTSPAGE_SMALLDESC
-
-; Custom pages
-Function CustomPageFunction
-  !insertmacro MUI_HEADER_TEXT "Void Event Launcher" "Customize your installation"
-  ; Add custom NSDialogs code here if needed
-FunctionEnd
-
-; Add our custom page - NOTE: electron-builder handles the standard pages
-; so we don't need to define them all here, just our custom one
-!ifndef ELECTRON_BUILDER_INCLUDED_PAGES
-  Page custom CustomPageFunction
-!endif
-
-; Uninstaller pages are handled by electron-builder
-; !insertmacro MUI_UNPAGE_WELCOME
-; !insertmacro MUI_UNPAGE_CONFIRM
-; !insertmacro MUI_UNPAGE_INSTFILES
-; !insertmacro MUI_UNPAGE_FINISH
-
-; Language files - electron-builder will include English by default
-!ifndef ELECTRON_BUILDER_INCLUDED_LANGUAGES
-  !insertmacro MUI_LANGUAGE "French"
-  !insertmacro MUI_LANGUAGE "German"
-  !insertmacro MUI_LANGUAGE "Spanish"
-!endif
-
-; Custom functions
-Function .onInit
-  ; Only show language selection if multiple languages are defined
-  !ifdef MUI_LANGDLL_DISPLAY
-    !insertmacro MUI_LANGDLL_DISPLAY
-  !endif
-FunctionEnd
-
-; Reserve files for solid compression
-!insertmacro MUI_RESERVEFILE_LANGDLL
-
-; Custom component descriptions
+; Component descriptions for the installer
 !define DESC_SecCore "Core files required for Void Event Launcher."
 !define DESC_SecOptional "Optional components and additional themes."
 
+Function .onInit
+  ; This is handled by electron-builder through customInit macro
+FunctionEnd
+
 Section "Core Files" SecCore
   SectionIn RO
-  ; Core installation files
+  ; Core installation files - handled by electron-builder
 SectionEnd
 
 Section "Optional Components" SecOptional
-  ; Optional components
+  ; Optional components - add any extra files here
 SectionEnd
 
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN

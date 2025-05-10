@@ -26,7 +26,6 @@ const config = {
     // Windows Configuration
     win: {
         publish: ['github'],
-        artifactName: '${productName}-setup-${channel}_${version}-${os}_${arch}.${ext}',
         target: [
             {
                 target: 'nsis',
@@ -37,28 +36,36 @@ const config = {
         signtoolOptions: {
             sign: './sign.js',
         },
-        // SHA-256 is usually the default, so no need to specify hash algorithms
     },
 
-    // Windows Installer Configuration
+    // Windows Installer Configuration - NSIS
     nsis: {
-        oneClick: false,
-        perMachine: false,
-        allowElevation: true,
-        allowToChangeInstallationDirectory: true,
-        include: 'build/installer.nsh',
-        installerIcon: 'build/icon.ico',
-        uninstallerIcon: 'build/uninstall.ico',
-        installerHeader: 'build/header.bmp',
-        // installerSidebar: 'build/sidebar.bmp',
-        // uninstallerSidebar: 'build/sidebar.bmp',
-        createDesktopShortcut: true,
-        createStartMenuShortcut: true,
-        shortcutName: 'Void Event Launcher',
-        license: 'LICENSE.txt',
-        multiLanguageInstaller: true,
-        runAfterFinish: true,
-        differentialPackage: true,
+        // Installer type
+        oneClick: false, // Use assisted installer rather than one-click
+        allowElevation: true, // Allow installer to request admin rights
+        allowToChangeInstallationDirectory: true, // Let user choose install location
+
+        // Installation and shortcuts
+        perMachine: false, // Default to per-user, but show option for per-machine
+        createDesktopShortcut: true, // Create desktop shortcut
+        createStartMenuShortcut: true, // Create start menu shortcut
+        shortcutName: 'Void Event Launcher', // Shortcut name
+        runAfterFinish: true, // Run app after installation
+        menuCategory: 'Void Event Hub', // Start menu category
+
+        // Branding elements
+        installerIcon: 'build/icon.ico', // Installer icon
+        uninstallerIcon: 'build/uninstall.ico', // Uninstaller icon
+        installerHeader: 'build/header.bmp', // Header image (150x57px)
+
+        // Installer options
+        include: 'build/installer.nsh', // Custom NSIS include script
+        license: 'LICENSE.txt', // License file
+        multiLanguageInstaller: true, // Support multiple languages
+        deleteAppDataOnUninstall: false, // Don't delete app data by default
+
+        // Automatic updates
+        // differentialPackage: true, // Enable differential updates
     },
 
     // macOS Configuration
