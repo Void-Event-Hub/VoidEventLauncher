@@ -6,23 +6,9 @@
 !include LogicLib.nsh
 !include FileFunc.nsh
 
-; Check if our custom image files exist
-!macro CheckImageFile FILE DEFAULT
-  ${If} ${FileExists} "${FILE}"
-    !define MUI_TEMP_FILE "${FILE}"
-  ${Else}
-    !define MUI_TEMP_FILE "${DEFAULT}"
-  ${EndIf}
-!macroend
-
 ; General Interface Settings
-!insertmacro CheckImageFile "build\icon.ico" "${NSISDIR}\Contrib\Graphics\Icons\modern-install.ico"
-!define MUI_ICON "${MUI_TEMP_FILE}"
-!undef MUI_TEMP_FILE
-
-!insertmacro CheckImageFile "build\uninstall.ico" "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall.ico"
-!define MUI_UNICON "${MUI_TEMP_FILE}"
-!undef MUI_TEMP_FILE
+!define MUI_ICON "build\icon.ico"
+!define MUI_UNICON "build\uninstall.ico"
 
 ; Use custom colors for the installer
 !define MUI_BGCOLOR "101020"
@@ -30,15 +16,11 @@
 
 ; Header image
 !define MUI_HEADERIMAGE
-!insertmacro CheckImageFile "build\header.bmp" "${NSISDIR}\Contrib\Graphics\Header\nsis.bmp"
-!define MUI_HEADERIMAGE_BITMAP "${MUI_TEMP_FILE}"
-!undef MUI_TEMP_FILE
+!define MUI_HEADERIMAGE_BITMAP "build\header.bmp"
 !define MUI_HEADERIMAGE_RIGHT
 
 ; Welcome/Finish page
-!insertmacro CheckImageFile "build\sidebar.bmp" "${NSISDIR}\Contrib\Graphics\Wizard\win.bmp"
-!define MUI_WELCOMEFINISHPAGE_BITMAP "${MUI_TEMP_FILE}"
-!undef MUI_TEMP_FILE
+!define MUI_WELCOMEFINISHPAGE_BITMAP "${NSISDIR}\Contrib\Graphics\Wizard\win.bmp"
 !define MUI_WELCOMEPAGE_TITLE "Welcome to Void Event Launcher Setup"
 !define MUI_WELCOMEPAGE_TEXT "This wizard will guide you through the installation of Void Event Launcher.$\r$\n$\r$\nVoid Event Launcher is a custom launcher for modded Minecraft, designed for Void Event Hub events.$\r$\n$\r$\nClick Next to continue."
 
