@@ -10,25 +10,21 @@ let loginOptionsViewOnLoginCancel
 let loginOptionsViewOnCancel
 let loginOptionsViewCancelHandler
 
-function loginOptionsCancelEnabled(val){
-    if(val){
+function loginOptionsCancelEnabled(val) {
+    if (val) {
         $(loginOptionsCancelContainer).show()
     } else {
         $(loginOptionsCancelContainer).hide()
     }
 }
 
-loginOptionMicrosoft.onclick = (e) => {
+loginOptionMicrosoft.onclick = e => {
     switchView(getCurrentView(), VIEWS.waiting, 500, 500, () => {
-        ipcRenderer.send(
-            MSFT_OPCODE.OPEN_LOGIN,
-            loginOptionsViewOnLoginSuccess,
-            loginOptionsViewOnLoginCancel
-        )
+        ipcRenderer.send(MSFT_OPCODE.OPEN_LOGIN, loginOptionsViewOnLoginSuccess, loginOptionsViewOnLoginCancel)
     })
 }
 
-loginOptionMojang.onclick = (e) => {
+loginOptionMojang.onclick = e => {
     switchView(getCurrentView(), VIEWS.login, 500, 500, () => {
         loginViewOnSuccess = loginOptionsViewOnLoginSuccess
         loginViewOnCancel = loginOptionsViewOnLoginCancel
@@ -36,13 +32,13 @@ loginOptionMojang.onclick = (e) => {
     })
 }
 
-loginOptionsCancelButton.onclick = (e) => {
+loginOptionsCancelButton.onclick = e => {
     switchView(getCurrentView(), loginOptionsViewOnCancel, 500, 500, () => {
         // Clear login values (Mojang login)
         // No cleanup needed for Microsoft.
         loginUsername.value = ''
         loginPassword.value = ''
-        if(loginOptionsViewCancelHandler != null){
+        if (loginOptionsViewCancelHandler != null) {
             loginOptionsViewCancelHandler()
             loginOptionsViewCancelHandler = null
         }

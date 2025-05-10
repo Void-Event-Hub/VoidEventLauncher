@@ -5,10 +5,7 @@
 }
 
 /* Set the status color of an enabled mod. */
-.settingsBaseMod[enabled]
-    > .settingsModContent
-    > .settingsModMainWrapper
-    > .settingsModStatus {
+.settingsBaseMod[enabled] > .settingsModContent > .settingsModMainWrapper > .settingsModStatus {
     background-color: rgb(165, 195, 37);
 }
 
@@ -32,4 +29,4 @@
 /* Wrapper container for all submods. */
 .settingsSubModContainer {
     margin-top: 10px;
-} 
+}
