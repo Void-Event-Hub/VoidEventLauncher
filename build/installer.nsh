@@ -3,10 +3,26 @@
 
 ; Include Modern UI 2
 !include MUI2.nsh
+!include LogicLib.nsh
+!include FileFunc.nsh
+
+; Check if our custom image files exist
+!macro CheckImageFile FILE DEFAULT
+  ${If} ${FileExists} "${FILE}"
+    !define MUI_TEMP_FILE "${FILE}"
+  ${Else}
+    !define MUI_TEMP_FILE "${DEFAULT}"
+  ${EndIf}
+!macroend
 
 ; General Interface Settings
-!define MUI_ICON "${NSISDIR}\Contrib\Graphics\Icons\modern-install.ico"
-!define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall.ico"
+!insertmacro CheckImageFile "build\icon.ico" "${NSISDIR}\Contrib\Graphics\Icons\modern-install.ico"
+!define MUI_ICON "${MUI_TEMP_FILE}"
+!undef MUI_TEMP_FILE
+
+!insertmacro CheckImageFile "build\uninstall.ico" "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall.ico"
+!define MUI_UNICON "${MUI_TEMP_FILE}"
+!undef MUI_TEMP_FILE
 
 ; Use custom colors for the installer
 !define MUI_BGCOLOR "101020"
@@ -14,13 +30,17 @@
 
 ; Header image
 !define MUI_HEADERIMAGE
-!define MUI_HEADERIMAGE_BITMAP "build\header.bmp"
+!insertmacro CheckImageFile "build\header.bmp" "${NSISDIR}\Contrib\Graphics\Header\nsis.bmp"
+!define MUI_HEADERIMAGE_BITMAP "${MUI_TEMP_FILE}"
+!undef MUI_TEMP_FILE
 !define MUI_HEADERIMAGE_RIGHT
 
 ; Welcome/Finish page
-!define MUI_WELCOMEFINISHPAGE_BITMAP "build\sidebar.bmp"
+!insertmacro CheckImageFile "build\sidebar.bmp" "${NSISDIR}\Contrib\Graphics\Wizard\win.bmp"
+!define MUI_WELCOMEFINISHPAGE_BITMAP "${MUI_TEMP_FILE}"
+!undef MUI_TEMP_FILE
 !define MUI_WELCOMEPAGE_TITLE "Welcome to Void Event Launcher Setup"
-!define MUI_WELCOMEPAGE_TEXT "This wizard will guide you through the installation of Void Event Launcher.$\r$\n$\r$\nVoid Event Launcher is a custom launcher for modded Minecraft servers, designed for Void Event Hub events.$\r$\n$\r$\nClick Next to continue."
+!define MUI_WELCOMEPAGE_TEXT "This wizard will guide you through the installation of Void Event Launcher.$\r$\n$\r$\nVoid Event Launcher is a custom launcher for modded Minecraft, designed for Void Event Hub events.$\r$\n$\r$\nClick Next to continue."
 
 ; Finish page customization
 !define MUI_FINISHPAGE_RUN "$INSTDIR\Void Event Launcher.exe"
@@ -72,8 +92,6 @@ Function .onInit
 FunctionEnd
 
 ; Reserve files for solid compression
-ReserveFile "build\header.bmp"
-ReserveFile "build\sidebar.bmp"
 !insertmacro MUI_RESERVEFILE_LANGDLL
 
 ; Custom component descriptions
