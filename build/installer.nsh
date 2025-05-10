@@ -3,8 +3,12 @@
 
 ; Custom header - executed before any other code
 !macro customHeader
-  !define MUI_BGCOLOR "101020"
-  !define MUI_TEXTCOLOR "FFFFFF"
+  !ifndef MUI_BGCOLOR
+    !define MUI_BGCOLOR "101020"
+  !endif
+  !ifndef MUI_TEXTCOLOR
+    !define MUI_TEXTCOLOR "FFFFFF"
+  !endif
 !macroend
 
 ; Pre-initialization - executed at the beginning of the .onInit callback
@@ -19,8 +23,12 @@
 
 ; Custom welcome page - only used if oneClick is false
 !macro customWelcomePage
-  !define MUI_WELCOMEPAGE_TITLE "Welcome to Void Event Launcher"
-  !define MUI_WELCOMEPAGE_TEXT "This wizard will guide you through the installation of Void Event Launcher.$\r$\n$\r$\nVoid Event Launcher is a custom launcher for modded Minecraft, designed for Void Event Hub events.$\r$\n$\r$\nClick Next to continue."
+  !ifndef MUI_WELCOMEPAGE_TITLE
+    !define MUI_WELCOMEPAGE_TITLE "Welcome to Void Event Launcher"
+  !endif
+  !ifndef MUI_WELCOMEPAGE_TEXT
+    !define MUI_WELCOMEPAGE_TEXT "This wizard will guide you through the installation of Void Event Launcher.$\r$\n$\r$\nVoid Event Launcher is a custom launcher for modded Minecraft, designed for Void Event Hub events.$\r$\n$\r$\nClick Next to continue."
+  !endif
 !macroend
 
 ; Custom installation mode - used to force per-machine or per-user installation
@@ -40,8 +48,12 @@
 
 ; Custom uninstall welcome page - only used if oneClick is false
 !macro customUnWelcomePage
-  !define MUI_WELCOMEPAGE_TITLE "Uninstall Void Event Launcher"
-  !define MUI_WELCOMEPAGE_TEXT "This wizard will guide you through the uninstallation of Void Event Launcher.$\r$\n$\r$\nBefore starting, please make sure Void Event Launcher is not running.$\r$\n$\r$\nClick Next to continue."
+  !ifndef MUI_WELCOMEPAGE_TITLE
+    !define MUI_WELCOMEPAGE_TITLE "Uninstall Void Event Launcher"
+  !endif
+  !ifndef MUI_WELCOMEPAGE_TEXT
+    !define MUI_WELCOMEPAGE_TEXT "This wizard will guide you through the uninstallation of Void Event Launcher.$\r$\n$\r$\nBefore starting, please make sure Void Event Launcher is not running.$\r$\n$\r$\nClick Next to continue."
+  !endif
 !macroend
 
 ; Custom uninstallation - executed during the uninstallation process
@@ -51,9 +63,21 @@
 !macroend
 
 ; These are used by electron-builder directly, we don't need to use insertmacro
-!define MUI_FINISHPAGE_RUN "$INSTDIR\Void Event Launcher.exe"
-!define MUI_FINISHPAGE_RUN_TEXT "Launch Void Event Launcher"
-!define MUI_FINISHPAGE_SHOWREADME "$INSTDIR\README.txt"
-!define MUI_FINISHPAGE_SHOWREADME_TEXT "Show README file"
-!define MUI_FINISHPAGE_LINK "Visit Void Event Hub website"
-!define MUI_FINISHPAGE_LINK_LOCATION "https://voideventhub.net" 
+!ifndef MUI_FINISHPAGE_RUN
+  !define MUI_FINISHPAGE_RUN "$INSTDIR\Void Event Launcher.exe"
+!endif
+!ifndef MUI_FINISHPAGE_RUN_TEXT
+  !define MUI_FINISHPAGE_RUN_TEXT "Launch Void Event Launcher"
+!endif
+!ifndef MUI_FINISHPAGE_SHOWREADME
+  !define MUI_FINISHPAGE_SHOWREADME "$INSTDIR\README.txt"
+!endif
+!ifndef MUI_FINISHPAGE_SHOWREADME_TEXT
+  !define MUI_FINISHPAGE_SHOWREADME_TEXT "Show README file"
+!endif
+!ifndef MUI_FINISHPAGE_LINK
+  !define MUI_FINISHPAGE_LINK "Visit Void Event Hub website"
+!endif
+!ifndef MUI_FINISHPAGE_LINK_LOCATION
+  !define MUI_FINISHPAGE_LINK_LOCATION "https://voideventhub.net"
+!endif 

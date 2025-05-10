@@ -44,6 +44,7 @@ const config = {
         oneClick: false, // Use assisted installer rather than one-click
         allowElevation: true, // Allow installer to request admin rights
         allowToChangeInstallationDirectory: true, // Let user choose install location
+        selectPerMachineByDefault: true,
 
         // Installation and shortcuts
         perMachine: false, // Default to per-user, but show option for per-machine
@@ -62,7 +63,7 @@ const config = {
         include: 'build/installer.nsh', // Custom NSIS include script
         license: 'LICENSE.txt', // License file
         multiLanguageInstaller: true, // Support multiple languages
-        deleteAppDataOnUninstall: false, // Don't delete app data by default
+        // deleteAppDataOnUninstall: false, // Don't delete app data by default (Oneclick installer only)
 
         // Automatic updates
         // differentialPackage: true, // Enable differential updates
