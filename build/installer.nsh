@@ -56,26 +56,4 @@
 !define MUI_FINISHPAGE_SHOWREADME "$INSTDIR\README.txt"
 !define MUI_FINISHPAGE_SHOWREADME_TEXT "Show README file"
 !define MUI_FINISHPAGE_LINK "Visit Void Event Hub website"
-!define MUI_FINISHPAGE_LINK_LOCATION "https://voideventhub.net"
-
-; Component descriptions for the installer
-!define DESC_SecCore "Core files required for Void Event Launcher."
-!define DESC_SecOptional "Optional components and additional themes."
-
-Function .onInit
-  ; This is handled by electron-builder through customInit macro
-FunctionEnd
-
-Section "Core Files" SecCore
-  SectionIn RO
-  ; Core installation files - handled by electron-builder
-SectionEnd
-
-Section "Optional Components" SecOptional
-  ; Optional components - add any extra files here
-SectionEnd
-
-Section "Component Description"
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecCore} "${DESC_SecCore}"
-  !insertmacro MUI_DESCRIPTION_TEXT ${SecOptional} "${DESC_SecOptional}"
-SectionEnd 
+!define MUI_FINISHPAGE_LINK_LOCATION "https://voideventhub.net" 
