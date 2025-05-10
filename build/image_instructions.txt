@@ -6,28 +6,44 @@ To complete the NSIS installer customization, please create the following files:
 1. header.bmp
    - Location: build/header.bmp
    - Size: 150x57 pixels
+   - Format: BMP (24-bit color)
    - Purpose: Header image that appears at the top of the installer
 
 2. sidebar.bmp
    - Location: build/sidebar.bmp  
    - Size: 164x314 pixels
+   - Format: BMP (24-bit color)
    - Purpose: Left sidebar image for welcome and finish pages
 
 3. icon.ico
    - Location: build/icon.ico
+   - Format: ICO file with multiple sizes (16x16, 32x32, 48x48, 256x256 pixels)
+   - Important: Must be a valid Windows ICO format
    - Purpose: Installer icon
    
 4. uninstall.ico
    - Location: build/uninstall.ico
+   - Format: ICO file with multiple sizes (16x16, 32x32, 48x48, 256x256 pixels)
+   - Important: Must be a valid Windows ICO format
    - Purpose: Uninstaller icon
 
+IMPORTANT FOR ICONS:
+-------------------
+1. Create a PNG image of your logo in multiple sizes (16x16, 32x32, 48x48, 256x256)
+2. Convert to ICO format using a tool like:
+   - Online converters: https://convertico.com/ or https://icoconvert.com/
+   - Desktop software: GIMP, Photoshop with ICO plugin, or IcoFX
+3. Make sure to include multiple sizes in one ICO file
+4. Use 32-bit depth (RGBA) to support transparency
+
+Until valid icon files are created, the installer settings have been modified to use default icons.
+
 Design Recommendations:
+-------------------
 - Use the Void Event Hub color scheme and branding
 - For the header, include your logo and name
 - For the sidebar, consider a vertical banner with key features
 - Use high-quality transparent icons for the .ico files
 - Ensure all images match the specified dimensions exactly
 
-You can create these files using image editing software like Photoshop, GIMP, or online tools.
-
-Once created, place them in the build/ directory to complete the NSIS installer customization. 
+Once created, place them in the build/ directory and uncomment the related settings in electron-builder.js. 
