@@ -61,23 +61,3 @@
   ; Custom uninstallation steps go here
   DetailPrint "Uninstalling Void Event Launcher..."
 !macroend
-
-; These are used by electron-builder directly, we don't need to use insertmacro
-!ifndef MUI_FINISHPAGE_RUN
-  !define MUI_FINISHPAGE_RUN "$INSTDIR\Void Event Launcher.exe"
-!endif
-!ifndef MUI_FINISHPAGE_RUN_TEXT
-  !define MUI_FINISHPAGE_RUN_TEXT "Launch Void Event Launcher"
-!endif
-!ifndef MUI_FINISHPAGE_SHOWREADME
-  !define MUI_FINISHPAGE_SHOWREADME "$INSTDIR\README.txt"
-!endif
-!ifndef MUI_FINISHPAGE_SHOWREADME_TEXT
-  !define MUI_FINISHPAGE_SHOWREADME_TEXT "Show README file"
-!endif
-!ifndef MUI_FINISHPAGE_LINK
-  !define MUI_FINISHPAGE_LINK "Visit Void Event Hub website"
-!endif
-!ifndef MUI_FINISHPAGE_LINK_LOCATION
-  !define MUI_FINISHPAGE_LINK_LOCATION "https://voideventhub.net"
-!endif 
