@@ -130,8 +130,7 @@
     text-shadow: 0px 0px 20px white, 0px 0px 20px white, 0px 0px 20px white;
 }
 #settingsNavDone:active {
-    text-shadow: 0px 0px 20px rgba(255, 255, 255, 0.75),
-        0px 0px 20px rgba(255, 255, 255, 0.75),
+    text-shadow: 0px 0px 20px rgba(255, 255, 255, 0.75), 0px 0px 20px rgba(255, 255, 255, 0.75),
         0px 0px 20px rgba(255, 255, 255, 0.75);
     color: rgba(255, 255, 255, 0.75);
 }
@@ -172,4 +171,4 @@
 /* Add spacing to the bottom of each settings tab. */
 .settingsTab > *:last-child {
     margin-bottom: 20%;
-} 
+}

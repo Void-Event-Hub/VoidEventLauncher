@@ -59,4 +59,4 @@
 /* Class which is applied when the spinner image is spinning. */
 .rotating {
     animation: rotating 5s linear infinite;
-} 
+}
