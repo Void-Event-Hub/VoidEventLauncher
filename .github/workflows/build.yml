@@ -1,30 +1,52 @@
-name: Build and Sign
+name: Build
 
 on:
     push:
         tags:
-            - '*'
+            - '*' # Run once per tag
 
 jobs:
-    build-all:
-        name: Build ${{ matrix.os }} ${{ matrix.arch }}
+    get-versions:
+        runs-on: ubuntu-latest
+        environment: SSL_USERNAME
+        outputs:
+            package_version: ${{ steps.set_versions.outputs.package_version }}
+        steps:
+            - uses: actions/checkout@v3
+            - name: Get the version
+              id: set_versions
+              run: |
+                  echo "package_version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
+    release:
+        name: Release ${{ matrix.os }} ${{ matrix.arch }}
         runs-on: ${{ matrix.os }}
+        environment: SSL_USERNAME
+        needs: get-versions
+
+        permissions:
+            contents: write
 
         strategy:
             matrix:
+                # os: [macos-latest, ubuntu-latest, windows-latest]
                 include:
                     - os: ubuntu-latest
                       arch: x64
+                    # - os: windows-latest
+                    #   arch: x64
                     - os: macos-latest
                       arch: x64
-                    - os: windows-latest
-                      arch: x64
+                    # - os: macos-latest
+                    #   arch: arm64
 
         steps:
-            - name: Checkout repository
+            - name: Check out Git repository
               uses: actions/checkout@v3
+              with:
+                  fetch-depth: 0
 
-            - name: Set up Node.js
+            - name: Set up Node
               uses: actions/setup-node@v3
               with:
                   node-version: 20
@@ -34,20 +56,23 @@ jobs:
               with:
                   python-version: 3.x
 
-            - name: Install dependencies
+            - name: Install Dependencies
               run: npm ci
+              shell: bash
 
             - name: Get version from Git tag
               id: get_tag
               run: |
                   TAG=${GITHUB_REF#refs/tags/}
                   VERSION=${TAG#v}
+                  echo "TAG=$TAG" >> $GITHUB_ENV
                   echo "VERSION=$VERSION" >> $GITHUB_ENV
+                  echo "Setting version to $VERSION from tag $TAG"
               shell: bash
 
             - name: Sync version with Git tag
               run: |
-                  echo "Syncing version to ${{ env.VERSION }}"
+                  echo "Setting version to ${{ env.VERSION }} from tag ${{ env.LATEST_TAG }}"
                   node -e "
                     const fs = require('fs');
                     const files = ['package.json', 'package-lock.json'];
@@ -67,67 +92,113 @@ jobs:
                     }
                   "
 
-            - name: Build app
+            # Build non-Windows platforms normally
+            - name: Build and Publish (Non-Windows)
+              if: matrix.os != 'windows-latest'
+              run: npm run dist
               env:
                   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-              run: npm run dist
+              shell: bash
 
-            - name: Upload built artifact
-              uses: actions/upload-artifact@v3.1.3
-              with:
-                  name: build-${{ matrix.os }}-${{ matrix.arch }}
-                  path: dist/
-
-    sign-windows:
-        name: Sign Windows EXE
-        runs-on: windows-latest
-        needs: build-all
-
+    buildwindows:
+        # We're using Wine to build the windows desktop app because CodeSignTool.sh works better than the .exe version.
+        name: Build Windows desktop app
+        environment: SSL_USERNAME
+        runs-on: ubuntu-latest
+        container:
+            image: docker://node:20-bullseye
+        permissions:
+            contents: write
         steps:
-            - name: Download Windows build artifact
-              uses: actions/download-artifact@v3.1.2
+            - name: Check out Git repository
+              uses: actions/checkout@v3
               with:
-                  name: build-windows-latest-x64
-                  path: dist/
+                  fetch-depth: 0
 
-            - name: Install Chocolatey and oathtool
-              run: |
-                  Set-ExecutionPolicy Bypass -Scope Process -Force
-                  iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
-                  choco install oathtool -y
-
-            - name: Generate TOTP
-              id: totp
-              shell: pwsh
-              run: |
-                  $code = oathtool --totp -b "${{ secrets.SSL_TOTP_SECRET }}"
-                  echo "totp=$code" >> $env:GITHUB_OUTPUT
-
-            - name: Download sslsigntool
-              run: |
-                  Invoke-WebRequest -Uri "https://cdn.ssl.com/sslsigntool/sslsigntool.exe" -OutFile "sslsigntool.exe"
-
-            - name: Find and sign Windows EXE
-              id: sign
-              shell: pwsh
-              run: |
-                  $exeFile = Get-ChildItem -Path dist -Filter *.exe | Where-Object { $_.Name -like "*setup*.exe" } | Select-Object -First 1
-                  if (-not $exeFile) { Write-Error "EXE not found."; exit 1 }
-                  $signedFile = "$($exeFile.DirectoryName)\$($exeFile.BaseName)-signed.exe"
-                  .\sslsigntool.exe sign `
-                    --username "${{ secrets.SSL_USERNAME }}" `
-                    --password "${{ secrets.SSL_PASSWORD }}" `
-                    --totp "${{ steps.totp.outputs.totp }}" `
-                    --input $exeFile.FullName `
-                    --output $signedFile `
-                    --name "Void Event Launcher" `
-                    --description "Void Event Launcher" `
-                    --url "https://voideventhub.net/"
-                  echo "signed=$signedFile" >> $env:GITHUB_OUTPUT
-
-            - name: Upload signed EXE to GitHub release
-              uses: softprops/action-gh-release@v1
+            - name: Set up Node
+              uses: actions/setup-node@v3
               with:
-                  files: ${{ steps.sign.outputs.signed }}
+                  node-version: 20
+
+            - name: Set up Python
+              uses: actions/setup-python@v4
+              with:
+                  python-version: 3.x
+
+            - name: Install Dependencies
+              run: npm ci
+              shell: bash
+
+            - name: Get version from Git tag
+              id: get_tag
+              run: |
+                  TAG=${GITHUB_REF#refs/tags/}
+                  VERSION=${TAG#v}
+                  echo "TAG=$TAG" >> $GITHUB_ENV
+                  echo "VERSION=$VERSION" >> $GITHUB_ENV
+                  echo "Setting version to $VERSION from tag $TAG"
+              shell: bash
+
+            - name: Sync version with Git tag
+              run: |
+                  echo "Setting version to ${{ env.VERSION }} from tag ${{ env.LATEST_TAG }}"
+                  node -e "
+                    const fs = require('fs');
+                    const files = ['package.json', 'package-lock.json'];
+                    const version = '${{ env.VERSION }}';
+                    for (const file of files) {
+                      if (!fs.existsSync(file)) continue;
+                      const json = JSON.parse(fs.readFileSync(file, 'utf8'));
+                      json.version = version;
+                      if (
+                        file === 'package-lock.json' &&
+                        json.packages &&
+                        typeof json.packages[''] === 'object'
+                      ) {
+                        json.packages[''].version = version;
+                      }
+                      fs.writeFileSync(file, JSON.stringify(json, null, 2) + '\n');
+                    }
+                  "
+
+            - name: Setup java
+              uses: actions/setup-java@v4
+              with:
+                  # eclipse 'temurin' openjdk https://github.com/actions/setup-java/blob/main/docs/advanced-usage.md#Selecting-a-Java-distribution
+                  distribution: 'temurin'
+                  java-version: '21'
+
+            - name: Install wine
+              # https://wiki.debian.org/Wine
+              run: |
+                  dpkg --add-architecture i386
+                  apt update
+                  apt install --yes wine wine32 wine64 libwine libwine:i386 fonts-wine
+
+            - name: Install build deps
+              run: |
+                  apt install --yes python3 make gcc libcairo2-dev libpango1.0-dev libjpeg-dev libgif-dev librsvg2-dev
+
+            # We are just cloning the esigner repo instead of calling their github
+            # action directly https://github.com/SSLcom/esigner-codesign
+            - name: Get ssl.com esigner zip file and unzip
+              run: |
+                  mkdir code_signer
+                  cd code_signer
+                  wget  https://www.ssl.com/download/codesigntool-for-linux-and-macos -O out.zip
+                  unzip out.zip
+                  chmod +x CodeSignTool.sh
+                  cd ..
+
+            - name: Build app
               env:
-                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  WINDOWS_SIGN_USER_NAME: ${{ secrets.SSL_USERNAME }}
+                  WINDOWS_SIGN_USER_PASSWORD: ${{ secrets.SSL_PASSWORD }}
+                  WINDOWS_SIGN_CREDENTIAL_ID: ${{ secrets.CREDENTIAL_ID }}
+                  WINDOWS_SIGN_USER_TOTP: ${{ secrets.SSL_TOTP_SECRET }}
+                  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+              run: |
+                  chown --recursive root:root /github/home
+                  export PATH=$PATH:$(pwd)/code_signer
+                  export CODE_SIGN_TOOL_PATH=$(pwd)/code_signer
+                  npm run dist:win -- --publish always
